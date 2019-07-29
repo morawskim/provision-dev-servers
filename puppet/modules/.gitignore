@@ -1,0 +1,5 @@
+*
+!.gitignore
+!/sensi/
+!/sensi/manifests/
+!/sensi/manifests/*
