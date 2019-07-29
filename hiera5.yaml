@@ -1,0 +1,10 @@
+version: 5
+defaults:
+  datadir: hieradata5
+  data_hash: yaml_data
+hierarchy:
+  - name: "config"
+    paths:
+      - "nodes/config/%{facts.fqdn}.yaml"
+      - "os/config/%{facts.osfamily}/%{facts.operatingsystemrelease}.yaml"
+      - "config.yaml"
