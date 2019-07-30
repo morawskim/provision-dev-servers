@@ -4,6 +4,13 @@ class sensi::docker_swarm_manager {
   }
 
   docker::swarm {'cluster_manager':
-    init           => true,
-  }    
+    init    => true,
+    require => Package['docker.io']
+  }
+
+  service {'docker':
+    ensure  => running,
+    enable  => true,
+    require => Package['docker.io']
+  }
 }
