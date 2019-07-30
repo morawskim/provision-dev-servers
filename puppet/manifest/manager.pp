@@ -4,4 +4,7 @@ node default {
   class { 'sensi::timezone':
     timezone => lookup('timezone'),
   }
+  class { 'sensi::node':
+    require => Class['sensi::docker_swarm_manager']
+  }
 }
