@@ -13,4 +13,24 @@ class sensi::docker_swarm_manager {
     enable  => true,
     require => Package['docker.io']
   }
+
+  group {'deployer': }
+
+  user {'deployer':
+    ensure => present,
+    home => '/home/deployer',
+    purge_ssh_keys => true,
+    managehome => true,
+    gid => 'deployer',
+    groups => [docker],
+    require => [Group['deployer'], Package['docker.io']]
+  }
+
+  ssh_authorized_key { 'ssorder-deploy':
+    ensure => present,
+    user   => 'deployer',
+    type   => lookup('ssh_keys')['ssorder-deploy']['type'],
+    key    => lookup('ssh_keys')['ssorder-deploy']['key'],
+    require => [User['deployer']]
+  }
 }
