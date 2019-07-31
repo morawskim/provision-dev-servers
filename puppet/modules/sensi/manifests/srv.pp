@@ -20,4 +20,24 @@ class sensi::srv {
     key    => lookup('ssh_keys')['marcin.morawski@sensilabs.pl']['key'],
     require => [User['marcin']]
   }
+
+  group {'tomek': }
+
+  user {'tomek':
+    ensure => present,
+    home => '/home/tomek',
+    purge_ssh_keys => true,
+    managehome => true,
+    gid => 'tomek',
+    groups => [adm, cdrom, sudo, dip, plugdev, lxd],
+    require => Group['tomek']
+  }
+
+  ssh_authorized_key { 'tomasz.zalewski@sensilabs.pl':
+    ensure => present,
+    user   => 'tomek',
+    type   => lookup('ssh_keys')['tomasz.zalewski@sensilabs.pl']['type'],
+    key    => lookup('ssh_keys')['tomasz.zalewski@sensilabs.pl']['key'],
+    require => [User['tomek']]
+  }
 }
