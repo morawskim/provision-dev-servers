@@ -1,4 +1,5 @@
 timezone: 'Europe/Warsaw'
+user_default_shell: '/bin/bash'
 users:
   marcin:
     home: '/home/marcin'

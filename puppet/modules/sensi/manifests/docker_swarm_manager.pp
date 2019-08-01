@@ -21,6 +21,7 @@ class sensi::docker_swarm_manager {
     home => '/home/deployer',
     purge_ssh_keys => true,
     managehome => true,
+    shell => lookup('user_default_shell'),
     gid => 'deployer',
     groups => [docker],
     require => [Group['deployer'], Package['docker.io']]

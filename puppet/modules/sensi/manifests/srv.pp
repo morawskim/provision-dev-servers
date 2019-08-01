@@ -8,6 +8,7 @@ class sensi::srv {
     home => '/home/marcin',
     purge_ssh_keys => true,
     managehome => true,
+    shell => lookup('user_default_shell'),
     gid => 'marcin',
     groups => [adm, cdrom, sudo, dip, plugdev, lxd],
     require => [Package['virtualbox']]
@@ -28,6 +29,7 @@ class sensi::srv {
     home => '/home/tomek',
     purge_ssh_keys => true,
     managehome => true,
+    shell => lookup('user_default_shell'),
     gid => 'tomek',
     groups => [adm, cdrom, sudo, dip, plugdev, lxd],
     require => Group['tomek']
