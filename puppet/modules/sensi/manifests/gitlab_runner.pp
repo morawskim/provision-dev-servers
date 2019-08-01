@@ -29,5 +29,11 @@ class sensi::gitlab_runner {
     gid => 'gitlab-runner',
     groups => ['docker'],
     require => [Package['docker.io'], Package['gitlab-runner']]
-  }   
+  }
+
+  service {'docker':
+    ensure  => running,
+    enable  => true,
+    require => Package['docker.io']
+  }
 }
