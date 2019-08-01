@@ -1,12 +1,6 @@
 class sensi::node {
-  package { ['etcd', 'etcd-client', 'nginx-full']:
+  package { ['etcd', 'etcd-client']:
     ensure => present
-  }
-
-  service {'nginx':
-    ensure  => running,
-    enable  => true,
-    require => Package['nginx-full']
   }
 
   service {'etcd':
@@ -14,4 +8,6 @@ class sensi::node {
     enable  => true,
     require => Package['etcd']
   }
+
+  class {'sensi::nginx': }
 }

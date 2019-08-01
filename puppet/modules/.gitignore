@@ -3,3 +3,7 @@
 !/sensi/
 !/sensi/manifests/
 !/sensi/manifests/*
+!/sensi/templates/
+!/sensi/templates/*
+!/sensi/templates/nginx/
+!/sensi/templates/nginx/*
