@@ -4,4 +4,5 @@ node default {
   class { 'sensi::timezone':
     timezone => lookup('timezone'),
   }
+  class {'sensi::provision_repo': }
 }

@@ -7,4 +7,5 @@ node default {
   class { 'sensi::node':
     require => Class['sensi::docker_swarm_manager']
   }
+  class {'sensi::provision_repo': }
 }

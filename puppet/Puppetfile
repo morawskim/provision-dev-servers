@@ -10,6 +10,7 @@ forge "https://forgeapi.puppetlabs.com"
 mod 'puppetlabs-apt'
 mod 'puppetlabs-docker', '3.7.0'
 mod 'reidmv-yamlfile', '0.2.0'
+mod 'puppetlabs-vcsrepo', '3.0.0'
 
 # A module from git
 # mod 'puppetlabs-ntp',
