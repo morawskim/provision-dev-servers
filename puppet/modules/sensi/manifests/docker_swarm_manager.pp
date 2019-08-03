@@ -1,17 +1,9 @@
 class sensi::docker_swarm_manager {
-  package { ['docker.io']:
-    ensure => present
-  }
 
+  class {'sensi::docker': }
   docker::swarm {'cluster_manager':
     init    => true,
-    require => Package['docker.io']
-  }
-
-  service {'docker':
-    ensure  => running,
-    enable  => true,
-    require => Package['docker.io']
+    require => Class['sensi::docker']
   }
 
   group {'deployer': }
@@ -24,7 +16,7 @@ class sensi::docker_swarm_manager {
     shell => lookup('user_default_shell'),
     gid => 'deployer',
     groups => [docker],
-    require => [Group['deployer'], Package['docker.io']]
+    require => [Group['deployer'], Class['sensi::docker']]
   }
 
   ssh_authorized_key { 'ssorder-deploy':

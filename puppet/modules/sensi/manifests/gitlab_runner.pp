@@ -1,5 +1,6 @@
 class sensi::gitlab_runner {
- package { ['gnupg', 'apt-transport-https', 'docker.io']:
+  class {'sensi::docker': }
+  package { ['gnupg', 'apt-transport-https']:
     ensure => present
   }
 
@@ -28,12 +29,6 @@ class sensi::gitlab_runner {
     ensure => present,
     gid => 'gitlab-runner',
     groups => ['docker'],
-    require => [Package['docker.io'], Package['gitlab-runner']]
-  }
-
-  service {'docker':
-    ensure  => running,
-    enable  => true,
-    require => Package['docker.io']
+    require => [Package['gitlab-runner'], Class['sensi::docker']]
   }
 }
