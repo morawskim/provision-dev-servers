@@ -1,0 +1,5 @@
+lookup_options:
+  gitlab_runners:
+    merge:
+      strategy: deep
+      merge_hash_arrays: true

@@ -22,4 +22,8 @@ ssh_keys:
       type: 'ssh-rsa'
       key: 'AAAAB3NzaC1yc2EAAAADAQABAAABAQDWkGjR/hTbWe9Ik7/3IEFt5KCNx9VSGgI7GIMXSYZKHJ+Js1c2h5rWN2+/MoYu703CgkYGL9YRTGqd7M9/m4yCuaTAqdmVfS2OtnvaPh8NMPTW+r5hmxZhH1Sg8cArt4QMZy/yIGiLIvPKpAog7i7HyjhxmzAGbdVenSSmlu0odJ9ZljFIDKZwJ2vz7/kdMnnhYjYgIrdCbCNpdlF7GiA4ShKdABmVaYsNzBGLnXj4lL130Tl0Mkk0xBLzBywbdE1MolnjwbIemJVooFYFgWHO8vCPHAuxIXK2OgK8Dcmc5tmgswCJ2sXth9MHOZ4OQcQlqbS5w86xT6fpuTloSLBt'
 
+gitlab_runners:
+  mmo:
+    url: https://gitlab.sensilabs.pl/
+    #token: "ZDEFINIOWANY_W_SECRET"
 sensi::provision_repo::repo_url: 'https://github.com/morawskim/provision-dev-servers.git'

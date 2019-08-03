@@ -8,3 +8,11 @@ hierarchy:
       - "nodes/config/%{facts.fqdn}.yaml"
       - "os/config/%{facts.osfamily}/%{facts.operatingsystemrelease}.yaml"
       - "config.yaml"
+  - name: "secret"
+    paths:
+      - "nodes/secret/%{facts.fqdn}.yaml"
+      - "os/secret/%{facts.osfamily}/%{facts.operatingsystemrelease}.yaml"
+      - "secret.yaml"
+  - name: "lookup"
+    paths:
+      - "lookup.yaml"
