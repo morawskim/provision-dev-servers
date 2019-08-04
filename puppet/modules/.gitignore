@@ -7,3 +7,9 @@
 !/sensi/templates/*
 !/sensi/templates/nginx/
 !/sensi/templates/nginx/*
+!/sensi/templates/gitlab/
+!/sensi/templates/gitlab/*
+!/sensi/templates/systemd/
+!/sensi/templates/systemd/*
+!/sensi/templates/systemd/duplicity/
+!/sensi/templates/systemd/duplicity/*

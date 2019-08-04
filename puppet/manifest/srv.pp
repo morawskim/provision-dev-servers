@@ -5,4 +5,10 @@ node default {
     timezone => lookup('timezone'),
   }
   class {'sensi::provision_repo': }
+  class {'sensi::duplicity': }
+  class {'sensi::duplicity_service':
+    ftp_password => lookup('backup')['password'],
+    dir => lookup('backup')['dir'],
+    url => lookup('backup')['url'],
+  }
 }

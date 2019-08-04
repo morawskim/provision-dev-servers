@@ -11,6 +11,9 @@ mod 'puppetlabs-apt'
 mod 'puppetlabs-docker', '3.7.0'
 mod 'reidmv-yamlfile', '0.2.0'
 mod 'puppetlabs-vcsrepo', '3.0.0'
+mod 'puppet-systemd',
+  :git => "git://github.com/camptocamp/puppet-systemd.git",
+  :ref => '2.6.0'
 
 # A module from git
 # mod 'puppetlabs-ntp',
