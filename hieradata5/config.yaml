@@ -30,6 +30,6 @@ gitlab_runners:
     #token: "ZDEFINIOWANY_W_SECRET"
 backup:
   url: 'ftp://backup28@192.168.15.20'
-  dir: '/home/marcin/backups/'
+  dir: '/home/deployer/backup/'
   #password: 'ZDEFINIOWANY_W_SECRET'
 sensi::provision_repo::repo_url: 'https://github.com/morawskim/provision-dev-servers.git'
