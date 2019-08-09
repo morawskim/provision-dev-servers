@@ -21,6 +21,9 @@ ssh_keys:
     'deployer-ssorder':
       type: 'ssh-rsa'
       key: 'AAAAB3NzaC1yc2EAAAADAQABAAABAQDWkGjR/hTbWe9Ik7/3IEFt5KCNx9VSGgI7GIMXSYZKHJ+Js1c2h5rWN2+/MoYu703CgkYGL9YRTGqd7M9/m4yCuaTAqdmVfS2OtnvaPh8NMPTW+r5hmxZhH1Sg8cArt4QMZy/yIGiLIvPKpAog7i7HyjhxmzAGbdVenSSmlu0odJ9ZljFIDKZwJ2vz7/kdMnnhYjYgIrdCbCNpdlF7GiA4ShKdABmVaYsNzBGLnXj4lL130Tl0Mkk0xBLzBywbdE1MolnjwbIemJVooFYFgWHO8vCPHAuxIXK2OgK8Dcmc5tmgswCJ2sXth9MHOZ4OQcQlqbS5w86xT6fpuTloSLBt'
+    'deployer-packtpub':
+      type: 'ssh-rsa'
+      key: 'AAAAB3NzaC1yc2EAAAADAQABAAABAQDDu2Kfm+RCJw64oBXdTxgYZvPb1RPTpUaYlGOpGuyUUx0W1io/uijuyOCM6TgQl13QBkLfQRbay2UdLsR7oUTXFUrsq2uK/h5dbbvF2KitjqZHprp1aBSzolclOi+SDg+32rUwlL8aNxSgIolOe2MI3rNKrdJRh4+kOdGZKZSzVDX8f2Rq8pRnXknbOoFwQOISip2VSM1sE9CeJhcVqk5GC1/hqRxBrAXeR0z60Gj7suprXgFJHkIi8x3PzlHkI+dwes42MKGxJ8MeOV4fqGRwcFG8Sy8LGTDkGSuUPyb5c9AggvX4oQqXJq18+N+fqD70o/597SXOml/ktzqUgVXF'
 gitlab_runners:
   mmo:
     url: https://gitlab.sensilabs.pl/
