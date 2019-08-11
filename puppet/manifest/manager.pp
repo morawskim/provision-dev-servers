@@ -12,4 +12,8 @@ node default {
     require => Class['sensi::docker_swarm_manager']
   }
   realize Sensi::User['deployer']
+  sensi::loginctl_linger {'deployer':
+    username => 'deployer',
+    require => Sensi::User['deployer']
+  }
 }
