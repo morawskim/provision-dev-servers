@@ -8,6 +8,4 @@ class sensi::node {
     enable  => true,
     require => Package['etcd']
   }
-
-  class {'sensi::nginx': }
 }
