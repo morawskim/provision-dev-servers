@@ -33,3 +33,7 @@ backup:
   dir: '/home/deployer/backup/'
   #password: 'ZDEFINIOWANY_W_SECRET'
 sensi::provision_repo::repo_url: 'https://github.com/morawskim/provision-dev-servers.git'
+
+sensi::nullmailer::admin_addr: 'marcin.morawski@sensilabs.pl'
+sensi::nullmailer::me: 'mailgun.morawskim.pl'
+sensi::nullmailer::remote: "smtp.mailgun.org smtp --port=587 --starttls --user=%{hiera('mailgun::username')} --pass=%{hiera('mailgun::password')}"
