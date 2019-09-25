@@ -26,9 +26,9 @@ class sensi::gitlab_runner {
   }
 
   user {'gitlab-runner':
-    ensure => present,
-    gid => 'gitlab-runner',
-    groups => ['docker'],
+    ensure  => present,
+    gid     => 'gitlab-runner',
+    groups  => ['docker'],
     require => [Package['gitlab-runner'], Class['sensi::docker']]
   }
 }

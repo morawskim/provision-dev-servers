@@ -10,6 +10,6 @@ class sensi::provision_repo (
     ensure   => present,
     provider => git,
     source   => $repo_url,
-    require => Package['git']
+    require  => Package['git']
   }
 }

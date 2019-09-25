@@ -5,14 +5,14 @@ define sensi::user(
   group {$name: }
 
   user {$name:
-    ensure => present,
-    home => "/home/${name}",
+    ensure         => present,
+    home           => "/home/${name}",
     purge_ssh_keys => true,
-    managehome => true,
-    shell => lookup('user_default_shell'),
-    gid => $name,
-    groups => $groups,
-    require => [Group[$name]]
+    managehome     => true,
+    shell          => lookup('user_default_shell'),
+    gid            => $name,
+    groups         => $groups,
+    require        => [Group[$name]]
   }
 
   create_resources('ssh_authorized_key', $ssh_authorized_keys, {'user' => $name})

@@ -10,18 +10,18 @@ class sensi::nginx {
   }
 
   file {'/etc/nginx/sites-enabled/default':
-    ensure => absent,
+    ensure  => absent,
     require => Package['nginx-full'],
-    notify => Service['nginx']
+    notify  => Service['nginx']
   }
 
   file {'/etc/nginx/sites-enabled/proxy':
-    ensure => present,
-    owner => 'root',
-    group => 'root',
-    mode => '0644',
+    ensure  => present,
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
     content => template('sensi/nginx/proxy.erb'),
     require => Package['nginx-full'],
-    notify => Service['nginx']
+    notify  => Service['nginx']
   }
 }

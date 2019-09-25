@@ -9,7 +9,7 @@ node default {
   class {'sensi::nullmailer': }
   class {'sensi::duplicity_service':
     ftp_password => lookup('backup')['password'],
-    dir => lookup('backup')['dir'],
-    url => lookup('backup')['url'],
+    dir          => lookup('backup')['dir'],
+    url          => lookup('backup')['url'],
   }
 }

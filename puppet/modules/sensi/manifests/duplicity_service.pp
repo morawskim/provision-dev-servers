@@ -6,12 +6,12 @@ class sensi::duplicity_service (
 
   systemd::unit_file { 'duplicity.timer':
     content => template('sensi/systemd/duplicity/duplicity.timer.erb'),
-    mode => '0400',
+    mode    => '0400',
     require => Systemd::Unit_file['duplicity.service']
   }
 
   systemd::unit_file { 'duplicity.service':
-    mode => '0400',
+    mode    => '0400',
     content => template('sensi/systemd/duplicity/duplicity.service.erb'),
   }
 

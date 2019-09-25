@@ -8,12 +8,12 @@ node default {
   class {'sensi::provision_repo': }
   @sensi::user {'deployer':
     ssh_authorized_keys => lookup('ssh_keys')['deployer'],
-    groups => [docker],
-    require => Class['sensi::docker_swarm_manager']
+    groups              => [docker],
+    require             => Class['sensi::docker_swarm_manager']
   }
   realize Sensi::User['deployer']
   sensi::loginctl_linger {'deployer':
     username => 'deployer',
-    require => Sensi::User['deployer']
+    require  => Sensi::User['deployer']
   }
 }
