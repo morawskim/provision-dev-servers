@@ -7,7 +7,7 @@ check_interval = 0
 [[runners]]
   name = "MMO private docker-runner"
   url = "<%= @url %>"
-  token = "<%= @token %>"
+  token = "<%= @tokens['docker'] %>"
   executor = "docker"
   limit = 3
   [runners.custom_build_dir]
@@ -20,6 +20,19 @@ check_interval = 0
     disable_cache = false
     volumes = ["/cache"]
     shm_size = 0
+  [runners.cache]
+    [runners.cache.s3]
+    [runners.cache.gcs]
+  [runners.custom]
+    run_exec = ""
+
+[[runners]]
+  name = "MMO private shell executor"
+  limit = 1
+  url = "https://gitlab.sensilabs.pl"
+  token = "<%= @tokens['shell'] %>"
+  executor = "shell"
+  [runners.custom_build_dir]
   [runners.cache]
     [runners.cache.s3]
     [runners.cache.gcs]

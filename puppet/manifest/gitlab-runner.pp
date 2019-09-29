@@ -1,5 +1,6 @@
 node default {
   class { 'sensi::gitlab_runner': }
+  class { 'sensi::packer': }
   class { 'sensi::collectd': }
   class { 'sensi::timezone':
     timezone => lookup('timezone'),

@@ -27,7 +27,7 @@ ssh_keys:
 gitlab_runners:
   mmo:
     url: https://gitlab.sensilabs.pl/
-    #token: "ZDEFINIOWANY_W_SECRET"
+    #tokens: %{lookup('gitlab_runners::tokens')}
 backup:
   url: 'ftp://backup28@192.168.15.20'
   dir: '/home/deployer/backup/'

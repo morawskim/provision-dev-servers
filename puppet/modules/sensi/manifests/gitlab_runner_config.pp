@@ -1,6 +1,6 @@
 define sensi::gitlab_runner_config (
     String $url,
-    String $token
+    Hash[String, String] $tokens
 ) {
 
   file {'/etc/gitlab-runner/config.toml':
