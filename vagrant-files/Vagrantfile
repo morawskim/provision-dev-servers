@@ -72,6 +72,6 @@ Vagrant.configure("2") do |config|
      pushd /provision/puppet
      librarian-puppet install
      popd
-     puppet apply --modulepath=/provision/puppet/modules /provision/puppet/manifest/gitlab-runner.pp
+     puppet apply --hiera_config=/provision/hiera5.yaml --modulepath=/provision/puppet/modules /provision/puppet/manifest/gitlab-runner.pp
   SHELL
 end
