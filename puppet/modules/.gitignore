@@ -13,3 +13,5 @@
 !/sensi/templates/systemd/*
 !/sensi/templates/systemd/duplicity/
 !/sensi/templates/systemd/duplicity/*
+!/sensi/templates/collectd/
+!/sensi/templates/collectd/*
