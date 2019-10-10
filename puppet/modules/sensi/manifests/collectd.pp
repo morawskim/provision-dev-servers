@@ -1,4 +1,7 @@
-class sensi::collectd {
+class sensi::collectd(
+    $logstash_ip = undef,
+    $logstash_port = undef,
+) {
   package { ['collectd']:
     ensure => present
   }

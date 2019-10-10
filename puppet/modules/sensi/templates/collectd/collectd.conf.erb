@@ -4,7 +4,7 @@ FQDNLookup false
 LoadPlugin cpu
 LoadPlugin df
 LoadPlugin interface
-#LoadPlugin network
+LoadPlugin network
 LoadPlugin memory
 LoadPlugin swap
 LoadPlugin rrdtool
@@ -74,6 +74,13 @@ LoadPlugin fhcount
 #	RRATimespan 158112000
 #	XFF 0.1
 </Plugin>
+
+<% if @logstash_ip && @logstash_port %>
+<Plugin network>
+    <Server "<%= @logstash_ip %>" "<%= @logstash_port %>">
+    </Server>
+</Plugin>
+<% end %>
 
 <Include "/etc/collectd/collectd.conf.d">
 	Filter "*.conf"
