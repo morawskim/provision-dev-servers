@@ -37,3 +37,5 @@ sensi::provision_repo::repo_url: 'https://github.com/morawskim/provision-dev-ser
 sensi::nullmailer::admin_addr: 'marcin.morawski@sensilabs.pl'
 sensi::nullmailer::me: 'mailgun.morawskim.pl'
 sensi::nullmailer::remote: "smtp.mailgun.org smtp --port=587 --starttls --user=%{hiera('mailgun::username')} --pass=%{hiera('mailgun::password')}"
+
+sensi::docker_stack::nexus::traefik_frontend_rule: 'nexus.192.168.15.28.xip.io'

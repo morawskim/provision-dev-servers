@@ -2,6 +2,7 @@ node default {
   class { 'sensi::docker_swarm_manager': }
   class { 'sensi::collectd': }
   class { 'sensi::traefik': }
+  class { 'sensi::docker_stack::nexus': }
   class { 'sensi::timezone':
     timezone => lookup('timezone'),
   }

@@ -3,6 +3,8 @@
 !/sensi/
 !/sensi/manifests/
 !/sensi/manifests/*
+!/sensi/manifests/docker_stack/
+!/sensi/manifests/docker_stack/*
 !/sensi/templates/
 !/sensi/templates/*
 !/sensi/templates/nginx/
@@ -15,3 +17,5 @@
 !/sensi/templates/systemd/duplicity/*
 !/sensi/templates/collectd/
 !/sensi/templates/collectd/*
+!/sensi/templates/docker-swarm/
+!/sensi/templates/docker-swarm/*

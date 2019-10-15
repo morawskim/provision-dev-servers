@@ -1,0 +1,22 @@
+version: "3.3"
+
+services:
+  nexus3:
+    image: sonatype/nexus3:3.19.1
+    networks:
+      - traefik
+    volumes:
+      - nexus-data:/nexus-data
+    networks:
+      - default
+      - traefik
+    deploy:
+      labels:
+        traefik.port: 8081
+        traefik.backend: "nexus"
+        traefik.frontend.rule: "Host: <%= @traefik_frontend_rule %>"
+volumes:
+  nexus-data:
+networks:
+  traefik:
+    external: true
