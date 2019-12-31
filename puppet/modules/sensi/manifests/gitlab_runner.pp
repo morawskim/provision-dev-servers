@@ -1,8 +1,7 @@
 class sensi::gitlab_runner {
   class {'sensi::docker': }
-  package { ['gnupg', 'apt-transport-https']:
-    ensure => present
-  }
+  include sensi::apt_transport_https
+  include sensi::gnupg
 
   apt::source { 'gitlab-runner':
     location => 'https://packages.gitlab.com/runner/gitlab-runner/ubuntu/',
@@ -11,7 +10,8 @@ class sensi::gitlab_runner {
     key      => {
       id     => '1A4C919DB987D435939638B914219A96E15E78F4',
       source => 'https://packages.gitlab.com/gpg.key'
-    }
+    },
+    require  => [Class['sensi::apt_transport_https'], Class['sensi::gnupg']]
   }
 
   package {'gitlab-runner':
