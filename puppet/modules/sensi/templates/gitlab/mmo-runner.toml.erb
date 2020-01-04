@@ -1,4 +1,4 @@
-concurrent = 3
+concurrent = 4
 check_interval = 0
 
 [session_server]
@@ -9,7 +9,7 @@ check_interval = 0
   url = "<%= @url %>"
   token = "<%= @tokens['docker'] %>"
   executor = "docker"
-  limit = 3
+  limit = 4
   [runners.custom_build_dir]
   [runners.docker]
     tls_verify = false
@@ -28,7 +28,7 @@ check_interval = 0
 
 [[runners]]
   name = "MMO private shell executor"
-  limit = 1
+  limit = 2
   url = "https://gitlab.sensilabs.pl"
   token = "<%= @tokens['shell'] %>"
   executor = "shell"
