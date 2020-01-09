@@ -15,6 +15,13 @@ mod 'puppet-systemd',
   :git => "git://github.com/camptocamp/puppet-systemd.git",
   :ref => '2.6.0'
 mod 'puppet-archive', '4.2.0'
+mod 'puppet-rpmkey',
+  :git => "git://github.com/stschulte/puppet-rpmkey.git",
+  :ref => 'v1.0.3'
+mod 'puppet-zypprepo',
+  :git => "git://github.com/deadpoint/puppet-zypprepo.git",
+  :ref => 'v2.2.1'
+
 
 # A module from git
 # mod 'puppetlabs-ntp',

@@ -7,6 +7,9 @@ init:
 graph: checkManifest
 	sudo -E /usr/bin/puppet apply --noop --graph --graphdir=$(PWD) --modulepath=puppet/modules/ --hiera_config=hiera5.yaml puppet/manifest/${MANIFEST}.pp
 
+workstation:
+	FACTER_operatingsystemmajrelease=15 FACTER_operatingsystemrelease="15.1" FACTER_operatingsystem="OpenSuSE" FACTER_osfamily="Suse" sudo -E /usr/bin/puppet apply   --hiera_config=hiera5.yaml --modulepath=puppet/modules/ puppet/manifest/workstation.pp
+
 checkManifest:
 ifndef MANIFEST
 	$(error MANIFEST is undefined)

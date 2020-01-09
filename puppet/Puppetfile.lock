@@ -32,9 +32,25 @@ GIT
       puppetlabs-inifile (< 4.0.0, >= 1.6.0)
       puppetlabs-stdlib (< 7.0.0, >= 4.13.1)
 
+GIT
+  remote: git://github.com/deadpoint/puppet-zypprepo.git
+  ref: v2.2.1
+  sha: 713445d073def325996263812d4531d65b13e09d
+  specs:
+    puppet-zypprepo (2.2.1)
+
+GIT
+  remote: git://github.com/stschulte/puppet-rpmkey.git
+  ref: v1.0.3
+  sha: 740308229b152ce0a5d343afac351efa782eeee0
+  specs:
+    puppet-rpmkey (1.0.3)
+
 DEPENDENCIES
   puppet-archive (= 4.2.0)
+  puppet-rpmkey (>= 0)
   puppet-systemd (>= 0)
+  puppet-zypprepo (>= 0)
   puppetlabs-apt (>= 0)
   puppetlabs-docker (= 3.7.0)
   puppetlabs-vcsrepo (= 3.0.0)

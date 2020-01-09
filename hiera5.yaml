@@ -16,3 +16,6 @@ hierarchy:
   - name: "lookup"
     paths:
       - "lookup.yaml"
+  - name: "workstation"
+    paths:
+      - "workstation.yaml"
