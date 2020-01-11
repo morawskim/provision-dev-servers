@@ -21,7 +21,7 @@ mod 'puppet-rpmkey',
 mod 'puppet-zypprepo',
   :git => "git://github.com/deadpoint/puppet-zypprepo.git",
   :ref => 'v2.2.1'
-
+mod 'puppet-firewalld', '4.1.1'
 
 # A module from git
 # mod 'puppetlabs-ntp',

@@ -58,6 +58,8 @@ node default {
     lookup('workstation::services')['snapd']
   )
 
+  class {'firewalld': }
+
   Rpmkey<||> -> Zypprepo<||>
   Zypprepo<||> -> Package<||>
   Package<||> -> Service<||>

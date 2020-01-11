@@ -4,6 +4,8 @@ FORGE
     adrien-filemapper (1.1.3)
     puppet-archive (4.2.0)
       puppetlabs-stdlib (< 7.0.0, >= 4.18.0)
+    puppet-firewalld (4.1.1)
+      puppetlabs-stdlib (< 7.0.0, >= 4.25.0)
     puppetlabs-apt (7.0.1)
       puppetlabs-stdlib (< 7.0.0, >= 4.16.0)
       puppetlabs-translate (< 2.0.0, >= 1.0.0)
@@ -48,6 +50,7 @@ GIT
 
 DEPENDENCIES
   puppet-archive (= 4.2.0)
+  puppet-firewalld (= 4.1.1)
   puppet-rpmkey (>= 0)
   puppet-systemd (>= 0)
   puppet-zypprepo (>= 0)

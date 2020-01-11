@@ -894,3 +894,72 @@ workstation::services:
         enable     : true
         hasrestart : true
         hasstatus  : true
+
+firewalld::package: firewalld
+firewalld::package_ensure: present
+firewalld::config_package: undef
+firewalld::install_gui: false
+firewalld::service_ensure: running
+firewalld::service_enable: true
+firewalld::default_zone: block
+firewalld:zones:
+  internal:
+    ensure: present
+    target: 'default'
+    interfaces: ['wlan0']
+    masquerade: true
+    purge_rich_rules: false
+    purge_services: false
+    purge_ports: false
+    sources:
+        - 172.17.0.0/16
+        - 172.18.0.0/16
+        - 172.19.0.0/16
+        - 172.20.0.0/16
+        - 10.8.0.0/24
+
+firewalld::services:
+  'Allow SSH from the internal zone':
+    ensure: present
+    service: ssh
+    zone: internal
+  'Allow jenkins (8080) from the internal zone':
+    ensure: present
+    service: jenkins
+    zone: internal
+  'Allow git from the internal zone':
+    ensure: present
+    service: git
+    zone: internal
+  'Allow http from the internal zone':
+    ensure: present
+    service: http
+    zone: internal
+  'Allow https from the internal zone':
+    ensure: present
+    service: https
+    zone: internal
+  'Allow vnc-server from the internal zone':
+    ensure: present
+    service: vnc-server
+    zone: internal
+  'Allow dns from the internal zone':
+    ensure: present
+    service: dns
+    zone: internal
+  'Allow kdeconnect from the internal zone':
+    ensure: present
+    service: kdeconnect-kde
+    zone: internal
+
+firewalld::ports:
+  'Open port 7171/tcp in the internal zone':
+    ensure: present
+    zone: internal
+    port: 7171
+    protocol: 'tcp'
+  'Open port 9000/tcp in the internal zone':
+    ensure: present
+    zone: internal
+    port: 9000
+    protocol: 'tcp'
