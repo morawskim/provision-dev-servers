@@ -37,6 +37,27 @@ node default {
   zypprepo { 'vivaldi': * => $zypprepos['vivaldi']}
   zypprepo { 'yarn': * => $zypprepos['yarn']}
 
+  ensure_resource(
+    'service',
+    'apache2',
+    lookup('workstation::services')['apache2']
+  )
+  ensure_resource(
+    'service',
+    'cups',
+    lookup('workstation::services')['cups']
+  )
+  ensure_resource(
+    'service',
+    'docker',
+    lookup('workstation::services')['docker']
+  )
+  ensure_resource(
+    'service',
+    'snapd',
+    lookup('workstation::services')['snapd']
+  )
+
   Rpmkey<||> -> Zypprepo<||>
   Zypprepo<||> -> Package<||>
   Package<||> -> Service<||>
