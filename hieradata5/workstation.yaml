@@ -1,37 +1,52 @@
 workstation::packages:
+    - apache2
     - bash-completion
     - bcal
     - bind-utils
+    - bsdtar
     - bvi
     - colordiff
     - colout
+    - cpupower
     - createrepo
     - ctags
+    - cups
     - dateutils
     - docker
     - docker-bash-completion
     - docker-compose
+    - exa
     - fzf
+    - gettext-tools
+    - gettext-runtime
     - git
     - git-extras
     - git-review
     - graphviz
     - guestfs-tools
     - hub
+    - iotop
     - ipcalc
     - jq
     - lftp
+    - libxml2-tools
     - license
     - mariadb-client
     - mutt
     - ncdu
+    - nethogs
+    - netsed
+    - ngrep
     - ngrok-client
+    - nmap
     - nodejs
     - nodejs-devel
     - nullmailer
     - offlineimap
     - openvpn
     - osc
+    - packer
+    - pandoc
     - password-store
     - password-store-import
     - patchutils
@@ -69,17 +84,28 @@ workstation::packages:
     - php7-xdebug
     - powerline
     - pwgen
+    - python-devel
+    - python3-devel
+    - python3-virtualenv
     - quilt
+    - rar
     - rpm-build
     - rpmdevtools
     - rpmlint
+    - rpmorphan
+    - sensors
     - sshfs
+    - susepaste
+    - sysstat
     - systemd-logger
     - tcpdump
+    - texlive-latex-bin-bin
     - the_silver_searcher
+    - tig
     - tmux
     - tmux-powerline
     - tree
+    - valgrind-devel
     - vagrant
     - vifm
     - vim
@@ -88,6 +114,7 @@ workstation::packages:
     - wireshark
     - yadm
     - yarn
+    - yum-scripts
 
 workstation::packages-gui:
     - 4pane
@@ -95,12 +122,16 @@ workstation::packages-gui:
     - calibre
     - calligra-plan
     - chromium
+    - chromium-ffmpeg-extra
     - d-feet
+    - fbcat
     - ghex
     - gitg
     - gitk
+    - glogg
     - google-chrome-stable
     - gvim
+    - httrack
     - jetbrains-toolbox
     - kate
     - kcachegrind
@@ -109,25 +140,31 @@ workstation::packages-gui:
     - krdc
     - krunner-skypeforlinux
     - krusader
+    - libnotify-tools
+    - lshw-gui
     - MozillaThunderbird
+    - mozilla-nss-tools
     - mysql-workbench
     - peek
     - plasma-browser-integration
     - plasma-nm5-openvpn
     - poedit
     - redshift
+    - retext
     - scrot
     - shutter
     - skrooge
     - skypeforlinux
     - snapd
     - sqlitebrowser
+    - susepaste-qt
     - telegram-desktop
     - virtualbox-qt
     - vivaldi-stable
     - wireshark-ui-qt
     - x11vnc
     - xbindkeys
+    - xclip
     - xrectsel
     - xsel
     - xvfb-run
