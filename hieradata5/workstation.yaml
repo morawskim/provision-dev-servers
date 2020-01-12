@@ -36,6 +36,7 @@ workstation::packages:
     - libxml2-tools
     - license
     - mariadb-client
+    - msmtp
     - mutt
     - ncdu
     - nethogs
