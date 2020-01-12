@@ -4,6 +4,12 @@ class sensi::nullmailer (
     String $me,
 ) {
 
+  $owner = $::operatingsystem ? {
+    /(?i:suse)/  => 'nullmailer',
+    /(?i:ubuntu|debian)/ => 'mail',
+    default => fail("Not supported OS - ${::operatingsystem}"),
+  }
+
   package { ['nullmailer']:
     ensure => present
   }
@@ -26,8 +32,8 @@ class sensi::nullmailer (
   file { '/etc/nullmailer/remotes':
     ensure  => present,
     content => $remote,
-    owner   => 'mail',
-    group   => 'mail',
+    owner   => $owner,
+    group   => $owner,
     mode    => '0600',
     notify  => Service['nullmailer'],
   }

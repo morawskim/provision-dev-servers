@@ -59,6 +59,11 @@ node default {
   )
 
   class {'firewalld': }
+  class {'sensi::nullmailer':
+    remote     => lookup('workstation::nullmailer::remote'),
+    admin_addr => lookup('workstation::nullmailer::admin_addr'),
+    me         => lookup('workstation::nullmailer::me'),
+  }
 
   Rpmkey<||> -> Zypprepo<||>
   Zypprepo<||> -> Package<||>

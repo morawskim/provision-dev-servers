@@ -1,3 +1,7 @@
+workstation::nullmailer::admin_addr: "%{hiera('workstation::mailgun::admin_addr')}"
+workstation::nullmailer::me: 'mailgun.morawskim.pl'
+workstation::nullmailer::remote: "smtp.mailgun.org smtp --port=587 --starttls --user=%{hiera('workstation::mailgun::username')} --pass=%{hiera('workstation::mailgun::password')}"
+
 workstation::packages:
     - apache2
     - bash-completion
@@ -41,7 +45,7 @@ workstation::packages:
     - nmap
     - nodejs
     - nodejs-devel
-    - nullmailer
+    #- nullmailer
     - offlineimap
     - openvpn
     - osc
