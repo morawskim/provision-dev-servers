@@ -20,6 +20,7 @@ workstation::packages:
     - docker
     - docker-bash-completion
     - docker-compose
+    - docker-credential-helpers
     - exa
     - fzf
     - gettext-tools
