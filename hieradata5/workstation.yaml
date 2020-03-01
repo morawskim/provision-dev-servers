@@ -158,6 +158,8 @@ workstation::packages-gui:
     - plasma-nm5-openvpn
     - poedit
     - redshift
+    - remmina
+    - remmina-plugin-rdp
     - retext
     - scrot
     - shutter
