@@ -149,6 +149,7 @@ workstation::packages-gui:
     - krunner-skypeforlinux
     - krusader
     - libnotify-tools
+    - libreoffice-l10n-pl
     - lshw-gui
     - MozillaThunderbird
     - mozilla-nss-tools
