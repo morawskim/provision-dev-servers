@@ -974,3 +974,25 @@ firewalld::ports:
     zone: internal
     port: 9000
     protocol: 'tcp'
+
+marcin::vcsrepo:
+  '/home/marcin/.config/vim':
+      path       : '/home/marcin/.config/vim'
+      ensure     : latest
+      provider   : git
+      source     : 'git@github.com:morawskim/vimdot.git'
+      submodules : true
+
+marcin::files:
+  vimrc:
+      path    : '/home/marcin/.vimrc'
+      ensure  : link
+      target  : "/home/marcin/.config/vim/vimrc"
+  gvim:
+      path    : '/home/marcin/.gvimrc'
+      ensure  : link
+      target  : "/home/marcin/.config/vim/vimrc"
+  vim:
+      path    : '/home/marcin/.vim'
+      ensure  : link
+      target  : "/home/marcin/.config/vim/"
