@@ -19,3 +19,5 @@
 !/sensi/templates/collectd/*
 !/sensi/templates/docker-swarm/
 !/sensi/templates/docker-swarm/*
+!/sensi/templates/prometheus/
+!/sensi/templates/prometheus/*
