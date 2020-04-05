@@ -29,9 +29,6 @@ scrape_configs:
     - targets: ['localhost:9090']
 
   - job_name: 'ssorder'
-
-    # metrics_path defaults to '/metrics'
-    # scheme defaults to 'http'.
     scheme: https
     static_configs:
     - targets: ['ssorder.snlb.pl:443']
@@ -41,3 +38,8 @@ scrape_configs:
     scheme: https
     static_configs:
     - targets: ['cdn.ssorder.snlb.pl']
+  - job_name: gitlab
+    metrics_path: /metrics
+    scheme: http
+    static_configs:
+    - targets: ['192.168.15.28:9252']
