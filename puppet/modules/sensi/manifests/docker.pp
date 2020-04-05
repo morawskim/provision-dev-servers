@@ -1,4 +1,6 @@
-class sensi::docker {
+class sensi::docker (
+    Array $users_to_manage_docker = []
+){
   package { ['docker.io']:
     ensure => present
   }
@@ -7,5 +9,9 @@ class sensi::docker {
     ensure  => running,
     enable  => true,
     require => Package['docker.io']
+  }
+
+  $users_to_manage_docker.each |String $user| {
+    User<| title == $user |> { groups +> "docker", require => Package['docker.io'] }
   }
 }
