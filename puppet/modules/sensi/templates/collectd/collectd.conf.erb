@@ -12,6 +12,7 @@ LoadPlugin processes
 LoadPlugin disk
 LoadPlugin cpufreq
 LoadPlugin fhcount
+LoadPlugin write_prometheus
 
 <Plugin "disk">
   #Disk "/^sda/"
@@ -51,6 +52,7 @@ LoadPlugin fhcount
     Interface "/^docker.*/"
     Interface "/^t(un|ap)\d*$/"
     Interface "/^veth.*$/"
+    Interface "/^br-.*$/"
     IgnoreSelected "true"
 </Plugin>
 
@@ -73,6 +75,10 @@ LoadPlugin fhcount
 #	RRARows 1200
 #	RRATimespan 158112000
 #	XFF 0.1
+</Plugin>
+
+<Plugin "write_prometheus">
+  Port "9103"
 </Plugin>
 
 <% if @logstash_ip && @logstash_port %>
