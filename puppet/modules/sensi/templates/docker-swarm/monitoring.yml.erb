@@ -5,7 +5,7 @@ services:
     image: prom/prometheus
     restart: always
     volumes:
-      - /tmp/prometheus.yml:/etc/prometheus/prometheus.yml
+      - /etc/prometheus.yml:/etc/prometheus/prometheus.yml
       - prometheus-tsdb:/prometheus
     labels:
         traefik.port: "9090"
