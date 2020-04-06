@@ -10,7 +10,7 @@ class sensi::docker_stack::monitoring(
     mode    => '0640',
     content => template('sensi/docker-swarm/monitoring.yml.erb'),
   }
-  file {'/tmp/prometheus.yml':
+  file {'/etc/prometheus.yml':
     ensure  => present,
     owner   => 'root',
     group   => 'root',
@@ -22,6 +22,11 @@ class sensi::docker_stack::monitoring(
   docker_compose { 'monitoring':
     ensure        => present,
     compose_files => [$docker_swarm_file],
-    require       => [Class['sensi::docker'], File[$docker_swarm_file], Package['docker-compose']],
+    require       => [
+      Class['sensi::docker'],
+      File[$docker_swarm_file],
+      Package['docker-compose'],
+      File['/etc/prometheus.yml'],  
+    ],
   }
 }
