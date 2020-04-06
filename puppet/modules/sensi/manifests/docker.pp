@@ -12,6 +12,6 @@ class sensi::docker (
   }
 
   $users_to_manage_docker.each |String $user| {
-    User<| title == $user |> { groups +> "docker", require => Package['docker.io'] }
+    User<| title == $user |> { groups +> "docker", require +> Package['docker.io'] }
   }
 }
