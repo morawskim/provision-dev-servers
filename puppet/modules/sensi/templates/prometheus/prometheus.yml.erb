@@ -48,3 +48,8 @@ scrape_configs:
     scheme: http
     static_configs:
     - targets: ['192.168.15.28:9103', '192.168.15.32:9103', '192.168.15.28:9104']
+  - job_name: cadvisor
+    metrics_path: /metrics
+    scheme: http
+    static_configs:
+    - targets: ['192.168.15.28:9338', '192.168.15.32:9338']
