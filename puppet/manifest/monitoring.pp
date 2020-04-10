@@ -13,6 +13,10 @@ node default {
     ensure => present
   }
   class { 'sensi::docker_stack::monitoring': }
+  class { 'sensi::docker_stack::cadvisor':
+    provider => 'compose',
+    require  => Package['docker-compose'],
+  }
 
   realize Sensi::User['marcin']
   realize Sensi::User['tomasz']

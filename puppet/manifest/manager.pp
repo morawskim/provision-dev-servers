@@ -3,10 +3,14 @@ node default {
   class { 'sensi::collectd': }
   class { 'sensi::traefik': }
   class { 'sensi::docker_stack::nexus': }
+  class { 'sensi::docker_stack::cadvisor':
+    provider => 'stack'
+  }
   class { 'sensi::timezone':
     timezone => lookup('timezone'),
   }
   class {'sensi::provision_repo': }
+
   @sensi::user {'deployer':
     ssh_authorized_keys => lookup('ssh_keys')['deployer'],
     groups              => [docker],
