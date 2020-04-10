@@ -8,6 +8,7 @@ domainName=${1?Pass a domain name as first argument}
 sudo tee /etc/nginx/sites-available/${domainName} << EOF
 server {
     server_name $domainName;
+    server_tokens off;
 
     location / {
         proxy_pass ${2?Pass destination address as second argument with scheme};
