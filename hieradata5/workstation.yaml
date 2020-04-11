@@ -101,6 +101,7 @@ workstation::packages:
     - rpmdevtools
     - rpmlint
     - rpmorphan
+    - ruby-devel
     - sensors
     - sshfs
     - susepaste
