@@ -103,6 +103,7 @@ workstation::packages:
     - rpmorphan
     - ruby-devel
     - sensors
+    - skopeo
     - sshfs
     - susepaste
     - sysstat
