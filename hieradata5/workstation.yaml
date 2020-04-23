@@ -133,6 +133,7 @@ workstation::packages-gui:
     - calligra-plan
     - chromium
     - chromium-ffmpeg-extra
+    - code
     - d-feet
     - fbcat
     - ghex
@@ -248,6 +249,10 @@ workstation::rpmkeys:
     libdvdcss:
         source: "http://opensuse-guide.org/repo/openSUSE_Leap_%{::operatingsystemrelease}/repodata/repomd.xml.key"
         name: '6867F5BE'
+        ensure: 'present'
+    microsoft:
+        source: "https://packages.microsoft.com/keys/microsoft.asc"
+        name: 'BE1229CF'
         ensure: 'present'
     multimedia_apps:
         source: "http://download.opensuse.org/repositories/multimedia:/apps/openSUSE_Leap_%{::operatingsystemrelease}/repodata/repomd.xml.key"
@@ -785,6 +790,15 @@ workstation::zypprepos:
         gpgkey      : 'https://gist.githubusercontent.com/morawskim/dcee4dd70958c4e9ede389c45f7f8d5f/raw/c47323f1cd395b5c79d0fc23cd2bdb19b6b302df/vivaldi_gpg.pub'
         keeppackages: '0'
         type        : 'rpm-md'
+
+    vscode:
+        autorefresh: '1'
+        baseurl    : 'https://packages.microsoft.com/yumrepos/vscode'
+        descr      : 'Visual Studio Code'
+        enabled    : '1'
+        gpgcheck   : '1'
+        gpgkey     : 'https://packages.microsoft.com/keys/microsoft.asc'
+        type       : 'rpm-md'
 
     yarn:
         autorefresh : '1'

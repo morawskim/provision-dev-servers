@@ -17,6 +17,7 @@ node default {
   rpmkey {'devel_tools': * => $rpmkeys['devel_tools']}
   rpmkey {'google_chrome': * =>  $rpmkeys['google_chrome']}
   rpmkey {'kde_extra': * => $rpmkeys['kde_extra']}
+  rpmkey {'microsoft': * =>  $rpmkeys['microsoft']}
   rpmkey {'morawskim': * =>  $rpmkeys['morawskim']}
   rpmkey {'packman': * => $rpmkeys['packman']}
   rpmkey {'security_privacy': * => $rpmkeys['security_privacy']}
@@ -35,6 +36,7 @@ node default {
   zypprepo { 'system_snappy': * => $zypprepos['system_snappy']}
   zypprepo { 'utilities': * => $zypprepos['utilities']}
   zypprepo { 'vivaldi': * => $zypprepos['vivaldi']}
+  zypprepo { 'vscode': * => $zypprepos['vscode']}
   zypprepo { 'yarn': * => $zypprepos['yarn']}
 
   ensure_resource(
