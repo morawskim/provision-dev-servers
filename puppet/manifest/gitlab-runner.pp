@@ -3,6 +3,9 @@ node default {
   class { 'sensi::packer': }
   class { 'sensi::trivy': }
   class { 'sensi::collectd': }
+  class {'sensi::docker':
+    users_to_manage_docker => ['gitlab-runner']
+  }
   class { 'sensi::timezone':
     timezone => lookup('timezone'),
   }
