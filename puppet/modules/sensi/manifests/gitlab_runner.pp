@@ -25,10 +25,6 @@ class sensi::gitlab_runner {
     require => Package['gitlab-runner']
   }
 
-  user {'gitlab-runner':
-    ensure  => present,
-    gid     => 'gitlab-runner',
-    groups  => ['docker'],
-    require => [Package['gitlab-runner'], Class['sensi::docker']]
-  }
+  User<| title == 'gitlab-runner' |> { groups +> "docker", require +> Package['gitlab-runner'] }
+  realize User['gitlab-runner']
 }

@@ -6,6 +6,11 @@ node default {
   class { 'sensi::timezone':
     timezone => lookup('timezone'),
   }
+  class { 'sensi::virtualbox':
+    users_to_manage_vbox => ['gitlab-runner']
+  }
+  class { 'sensi::user::gitlab_runner':
+  }
   class {'sensi::provision_repo': }
   sensi::gitlab_runner_config {'mmo-docker':
     *       => lookup('gitlab_runners')['mmo'],

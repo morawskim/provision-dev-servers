@@ -5,6 +5,8 @@
 !/sensi/manifests/*
 !/sensi/manifests/docker_stack/
 !/sensi/manifests/docker_stack/*
+!/sensi/manifests/user/
+!/sensi/manifests/user/*
 !/sensi/templates/
 !/sensi/templates/*
 !/sensi/templates/nginx/
