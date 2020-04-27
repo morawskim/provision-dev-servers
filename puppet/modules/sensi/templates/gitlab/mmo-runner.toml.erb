@@ -39,3 +39,13 @@ listen_address = ":9252"
     [runners.cache.gcs]
   [runners.custom]
     run_exec = ""
+
+[[runners]]
+  name = "Ubuntu18.04 sensi"
+  url = "https://gitlab.com/"
+  token = "<%= @tokens['gitlab'] %>"
+  executor = "shell"
+  [runners.custom_build_dir]
+  [runners.cache]
+    [runners.cache.s3]
+    [runners.cache.gcs]
