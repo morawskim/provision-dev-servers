@@ -38,6 +38,6 @@ sensi::nullmailer::admin_addr: 'marcin.morawski@sensilabs.pl'
 sensi::nullmailer::me: 'mailgun.morawskim.pl'
 sensi::nullmailer::remote: "smtp.mailgun.org smtp --port=587 --starttls --user=%{hiera('mailgun::username')} --pass=%{hiera('mailgun::password')}"
 
-sensi::docker_stack::nexus::traefik_frontend_rule: 'nexus.192.168.15.28.xip.io,nexus2.lvh.me'
+sensi::docker_stack::nexus::traefik_frontend_rule: 'nexus.192.168.15.28.xip.io,nexus.lvh.me'
 sensi::docker_stack::monitoring::prometheus_frontend_rule: 'prometheus.192.168.15.28.xip.io,prometheus.lvh.me'
 sensi::docker_stack::monitoring::grafana_frontend_rule: 'grafana.192.168.15.28.xip.io,grafana.lvh.me'
