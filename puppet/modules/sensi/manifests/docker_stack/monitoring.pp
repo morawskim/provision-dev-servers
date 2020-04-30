@@ -16,16 +16,15 @@ class sensi::docker_stack::monitoring(
     group   => 'root',
     mode    => '0644',
     content => template('sensi/prometheus/prometheus.yml.erb'),
-    notify  => Docker_compose['monitoring'],
+    notify  => Docker_stack['monitoring'],
   }
 
-  docker_compose { 'monitoring':
+  docker_stack { 'monitoring':
     ensure        => present,
     compose_files => [$docker_swarm_file],
     require       => [
-      Class['sensi::docker'],
+      Class['sensi::docker_swarm_manager'],
       File[$docker_swarm_file],
-      Package['docker-compose'],
       File['/etc/prometheus.yml'],  
     ],
   }

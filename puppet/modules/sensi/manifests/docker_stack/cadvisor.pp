@@ -15,7 +15,7 @@ class sensi::docker_stack::cadvisor(
       ensure        => present,
       compose_files => [$docker_swarm_file],
       require       => [
-        Class['sensi::docker'],
+        Class['sensi::docker_swarm_manager'],
         File[$docker_swarm_file],
       ],
     }
