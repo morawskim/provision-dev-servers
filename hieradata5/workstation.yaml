@@ -2,6 +2,19 @@ workstation::nullmailer::admin_addr: "%{hiera('workstation::mailgun::admin_addr'
 workstation::nullmailer::me: 'mailgun.morawskim.pl'
 workstation::nullmailer::remote: "smtp.mailgun.org smtp --port=587 --starttls --user=%{hiera('workstation::mailgun::username')} --pass=%{hiera('workstation::mailgun::password')}"
 
+workstation::x11vnc::vnc_password: 'secretpassword'
+workstation::x11vnc::files:
+    '/etc/systemd/system/x11vnc.service':
+        source: 'puppet:///configuration/x11vnc/x11vnc.service'
+        owner: 'root'
+        group: 'root'
+        mode: '0644'
+    '/usr/local/bin/x11vnc-wrapper':
+        source: 'puppet:///configuration/x11vnc/x11vnc-wrapper.sh'
+        owner: 'root'
+        group: 'root'
+        mode: '0750'
+
 workstation::packages:
     - apache2
     - atool
