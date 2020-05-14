@@ -998,6 +998,12 @@ marcin::vcsrepo:
       provider   : git
       source     : 'git@github.com:morawskim/vimdot.git'
       submodules : true
+  '/home/marcin/.local/share/bash-it':
+      ensure     : latest
+      provider   : git
+      source     : 'https://github.com/Bash-it/bash-it.git'
+      submodules : false
+      revision   : 'fe78da73cc04f68420b5aed9faf431c9740db72f'
 
 marcin::files:
   vimrc:
