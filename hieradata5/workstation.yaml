@@ -107,6 +107,8 @@ workstation::packages:
     - pwgen
     - python-devel
     - python3-devel
+    - python3-pipx
+    - python3-psutil
     - python3-virtualenv
     - quilt
     - rar
