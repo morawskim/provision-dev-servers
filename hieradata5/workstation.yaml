@@ -152,6 +152,7 @@ workstation::packages-gui:
     - d-feet
     - fbcat
     - ghex
+    - gimp
     - gitg
     - gitk
     - glogg
