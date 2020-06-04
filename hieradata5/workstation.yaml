@@ -828,8 +828,8 @@ workstation::zypprepos:
 
 workstation::services:
     'apache2':
-        ensure     : running
-        enable     : true
+        ensure     : stopped
+        enable     : false
         hasrestart : true
         hasstatus  : true
     'collectd':
