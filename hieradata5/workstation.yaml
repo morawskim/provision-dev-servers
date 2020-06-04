@@ -1006,6 +1006,11 @@ firewalld::ports:
     zone: internal
     port: 9000
     protocol: 'tcp'
+  'Open port 9001/tcp in the internal zone':
+    ensure: present
+    zone: internal
+    port: 9001
+    protocol: 'tcp'
 
 marcin::vcsrepo:
   '/home/marcin/.config/vim':
