@@ -39,6 +39,7 @@ workstation::packages:
     - gettext-tools
     - gettext-runtime
     - git
+    - git-delta
     - git-extras
     - git-review
     - graphviz
