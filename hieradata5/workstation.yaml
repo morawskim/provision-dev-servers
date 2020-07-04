@@ -16,6 +16,7 @@ workstation::x11vnc::files:
         mode: '0750'
 
 workstation::packages:
+    - ansible
     - apache2
     - atool
     - bash-completion
