@@ -32,7 +32,7 @@ node default {
   zypprepo { 'morawskim': * => $zypprepos['morawskim']}
   zypprepo { 'packman': * => $zypprepos['packman']}
   zypprepo { 'security_privacy': * => $zypprepos['security_privacy']}
-  zypprepo { 'skype_stable': * => $zypprepos['skype_stable']}
+  zypprepo { 'skype-stable': * => $zypprepos['skype-stable']}
   zypprepo { 'system_snappy': * => $zypprepos['system_snappy']}
   zypprepo { 'utilities': * => $zypprepos['utilities']}
   zypprepo { 'vivaldi': * => $zypprepos['vivaldi']}

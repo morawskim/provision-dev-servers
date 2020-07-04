@@ -745,10 +745,10 @@ workstation::zypprepos:
         gpgkey     : 'http://download.opensuse.org/repositories/server:/php:/extensions/openSUSE_Leap_%{::operatingsystemrelease}/repodata/repomd.xml.key'
         type       : 'rpm-md'
 
-    skype_stable:
+    skype-stable:
         autorefresh : '1'
         baseurl     : 'https://repo.skype.com/rpm/stable/'
-        descr       : 'Skypeforlinux - stable'
+        descr       : 'skype (stable)'
         enabled     : '1'
         keeppackages: '0'
         type        : 'rpm-md'
