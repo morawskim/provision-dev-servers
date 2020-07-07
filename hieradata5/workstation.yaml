@@ -35,6 +35,7 @@ workstation::packages:
     - docker-bash-completion
     - docker-compose
     - docker-credential-helpers
+    - docker-ls
     - exa
     - fzf
     - gettext-tools
