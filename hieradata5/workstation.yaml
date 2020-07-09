@@ -127,6 +127,7 @@ workstation::packages:
     - sysstat
     - systemd-logger
     - tcpdump
+    - telnet
     - texlive-latex-bin-bin
     - the_silver_searcher
     - tig
