@@ -1,0 +1,164 @@
+---
+- hosts: all
+  become: true
+  #roles:
+  vars:
+    user_account: portal
+    user_home: /srv/www/{{ user_account }}
+    db_name: "{{ user_account }}"
+    db_user: "{{ user_account }}"
+    db_password: "veryhardtoguesspassword"
+    server_name: portal.lvh.me
+    server_root: "{{ user_home }}/project/web"
+    ssl_certificate: /etc/pki/tls/certs/{{ server_name }}.crt
+    ssl_certificate_key: /etc/pki/tls/private/{{ server_name }}.key
+    ssl_csr: /etc/pki/tls/certs/{{ server_name }}.csr
+
+  pre_tasks:
+    # {{{ Repositories and core packages
+    - name: Put SELinux in permissive mode, logging actions that would be blocked.
+      selinux:
+        policy: targeted
+        state: permissive
+
+    - name: Enable epel repository
+      package: name=epel-release state=present
+
+    - name: Add webtatic repository
+      yum_repository:
+        name: webtatic
+        description: Webtatic Repository EL7 - $basearch
+        baseurl: https://repo.webtatic.com/yum/el7/$basearch/
+        mirrorlist: https://mirror.webtatic.com/yum/el7/$basearch/mirrorlist
+        failovermethod: priority
+        enabled: 1
+        gpgcheck: 1
+        gpgkey: https://mirror.webtatic.com/yum/RPM-GPG-KEY-webtatic-el7
+
+    # Handler showing how to clean yum metadata cache
+    - name: yum-clean-metadata
+      command: yum clean metadata
+      args:
+        warn: no
+
+    - name: Install required packages
+      package:
+        name:
+          - bash-completion
+          - vim
+          - tmux
+          - openssl
+        state: present
+    # }}}
+    # For secure mysql install
+    - name: Install MySQL
+      package:
+        name:
+          - mariadb
+          - mariadb-server
+          - MySQL-python
+        state: present
+    - name: Start mysql
+      service: name=mariadb state=started enabled=yes
+
+  tasks:
+    - name: Install project packages
+      package:
+        name:
+          - git
+          - unzip
+          - composer
+          - nginx
+          - python-cryptography
+          - php56w
+          - php56w-bcmath
+          - php56w-cli
+          - php56w-common
+          - php56w-fpm
+          - php56w-gd
+          - php56w-intl
+          - php56w-mbstring
+          - php56w-mysql
+          - php56w-pdo
+          - php56w-process
+          - php56w-tidy
+          - php56w-xml
+        state: present
+
+    # {{{ Create use account, configure PHP-FPM, nginx, mysql db
+    - name: Ensure user primary group exists
+      group: name={{ user_account }} state=present
+    - name: Create Linux account
+      user:
+        name: "{{ user_account }}"
+        create_home: true
+        group: "{{ user_account }}"
+        generate_ssh_key: true
+        state: present
+        home: "{{ user_home }}"
+
+    - name: Create a directory for PHP sessions
+      file:
+        path: "{{ user_home }}/php/session"
+        state: directory
+        mode: '0750'
+        owner: "{{ user_account }}"
+        group: nginx
+    - name: Create a directory for PHP WSDL cache
+      file:
+        path: "{{ user_home }}/php/wsdlcache"
+        state: directory
+        mode: '0750'
+        owner: "{{ user_account }}"
+        group: nginx
+    - name: Configure PHP-FPM
+      template: src=templates/php/php-fpm.conf dest=/etc/php-fpm.d/{{ user_account }}.conf
+      notify: restart php
+    - name: Remove default PHP-FPM configuration
+      file: path=/etc/php-fpm.d/www.conf state=absent
+    - name: Start php-fpm
+      service: name=php-fpm state=started enabled=yes
+
+    # require pyOpenSSL or python-cryptography
+    - name: Generate Private key
+      openssl_privatekey: path={{ ssl_certificate_key }}
+    - name: Generate an OpenSSL Certificate Signing Request with Subject information
+      openssl_csr:
+        path: "{{ ssl_csr }}"
+        privatekey_path: "{{ ssl_certificate_key }}"
+        country_name: PL
+        organization_name: Development
+        email_address: marcin@morawskim.pl
+        common_name: "{{ server_name }}"
+    - name: Generate a Self Signed OpenSSL certificate
+      openssl_certificate:
+        path: "{{ ssl_certificate }}"
+        privatekey_path: "{{ ssl_certificate_key }}"
+        csr_path: "{{ ssl_csr }}"
+        provider: selfsigned
+
+    - name: Configure nginx
+      template: src=templates/nginx/nginx.conf dest=/etc/nginx/nginx.conf
+      notify: restart nginx
+    - name: Configure nginx vhost
+      template: src=templates/nginx/symfony3-vhost.conf dest=/etc/nginx/conf.d/{{ user_account }}.conf
+      notify: restart nginx
+    - name: Nginx gzip
+      template: src=templates/nginx/gzip.conf dest=/etc/nginx/conf.d/gzip.conf
+      notify: restart nginx
+    - name: Start nginx
+      service: name=nginx state=started enabled=yes
+
+    - name: Crete MySQL database
+      mysql_db: name={{ db_name }} state=present
+    - name: Create MySQL user
+      mysql_user: name={{ db_user }} host=localhost password={{ db_password }} priv={{ db_name }}.*:ALL
+    # }}}
+
+    # {{{ Project
+    # }}}
+  handlers:
+    - name: restart php
+      service: name=php-fpm state=reloaded #if not supported use restarted
+    - name: restart nginx
+      service: name=nginx state=reloaded #if not supported use restarted
