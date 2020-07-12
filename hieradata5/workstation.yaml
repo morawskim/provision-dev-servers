@@ -29,6 +29,7 @@ workstation::packages:
     - cpupower
     - createrepo
     - ctags
+    - ctop
     - cups
     - dateutils
     - docker
