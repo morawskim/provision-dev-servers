@@ -1,0 +1,53 @@
+---
+driver:
+  name: vagrant
+
+provisioner:
+  name: ansible_playbook
+  # Use the latest version on ansible for the test
+  # (please specify the one you wish to test against)
+  ansible_version: latest
+  # It is a good practive to keep logging verbose for
+  # while testing your playbooks, it provide valuable
+  # info
+  ansible_verbose: true
+  # define verbosity level
+  ansible_verbosity: 2
+  require_ansible_repo: true
+  # install ruby on the testing platform
+  require_ruby_for_busser: true
+  playbook: centos7-playbook.yml
+  hosts: all
+  require_chef_for_busser: false
+  additional_copy_path:
+    - templates
+
+busser:
+  # define the ruby execiutable location
+  ruby_bindir: /opt/rh/rh-ruby25/root/usr/bin/
+
+platforms:
+  - name: centos
+    driver_plugin: vagrant
+    driver_config:
+      box: "bento/centos-7.4"
+
+suites:
+    - name: default
+
+verifer:
+    name: serverspec
+    ruby_bindir: '/opt/rh/rh-ruby25/root/usr/bin/'
+
+lifecycle:
+  pre_create: echo before
+  post_create:
+  - echo after
+  - local: echo also after
+  - remote: |
+      sudo yum install centos-release-scl-rh centos-release-scl -y && \
+      sudo yum install rh-ruby25-ruby -y && \
+      echo -e '#!/bin/bash\nsource scl_source enable rh-ruby25' | sudo tee /etc/profile.d/ruby25.sh
+      echo 'LD_LIBRARY_PATH=/opt/rh/rh-ruby25/root/usr/local/lib64:/opt/rh/rh-ruby25/root/usr/lib64' | sudo tee -a /etc/environment
+
+

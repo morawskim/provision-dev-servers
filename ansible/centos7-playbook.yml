@@ -5,6 +5,7 @@
   vars:
     user_account: portal
     user_home: /srv/www/{{ user_account }}
+    php_fpm_pool: "{{ user_account }}"
     db_name: "{{ user_account }}"
     db_user: "{{ user_account }}"
     db_password: "veryhardtoguesspassword"

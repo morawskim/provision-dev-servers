@@ -1,0 +1,4 @@
+/.vagrant/
+/bin/
+/vendor/
+/.kitchen/
