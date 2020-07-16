@@ -35,6 +35,15 @@ describe 'nginx' do
     it { should be_mode 600 }
     it { should be_owned_by 'nginx' }
   end
+
+  context command('curl -k -I -s https://portal.lvh.me/') do
+    its(:exit_status) { should eq 0 }
+    its(:stdout) { should contain('HTTP/1.1 401 Unauthorized') }
+  end
+
+  context command('curl --cacert /etc/pki/tls/certs/portal.lvh.me.crt -s https://portal.lvh.me/') do
+    its(:exit_status) { should eq 0 }
+  end
 end
 
 describe 'php' do
