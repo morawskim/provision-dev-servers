@@ -6,6 +6,8 @@
     user_account: portal
     user_home: /srv/www/{{ user_account }}
     php_fpm_pool: "{{ user_account }}"
+    http_auth_username: user1
+    http_auth_password: changeme
     db_name: "{{ user_account }}"
     db_user: "{{ user_account }}"
     db_password: "veryhardtoguesspassword"
@@ -138,6 +140,14 @@
         csr_path: "{{ ssl_csr }}"
         provider: selfsigned
 
+    - name: Create file for basic authentication
+      htpasswd:
+        path: /etc/nginx/pass
+        name: "{{ http_auth_username }}"
+        password: "{{ http_auth_password }}"
+        owner: nginx
+        group: root
+        mode: 0600
     - name: Configure nginx
       template: src=templates/nginx/nginx.conf dest=/etc/nginx/nginx.conf
       notify: restart nginx

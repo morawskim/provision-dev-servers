@@ -29,6 +29,12 @@ describe 'nginx' do
   context port(443) do
     it { should be_listening }
   end
+
+  context file('/etc/nginx/pass') do
+    it { should be_file }
+    it { should be_mode 600 }
+    it { should be_owned_by 'nginx' }
+  end
 end
 
 describe 'php' do

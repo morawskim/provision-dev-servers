@@ -46,7 +46,7 @@ lifecycle:
   - local: echo also after
   - remote: |
       sudo yum install centos-release-scl-rh centos-release-scl -y && \
-      sudo yum install rh-ruby25-ruby -y && \
+      sudo yum install rh-ruby25-ruby python-passlib -y && \
       echo -e '#!/bin/bash\nsource scl_source enable rh-ruby25' | sudo tee /etc/profile.d/ruby25.sh
       echo 'LD_LIBRARY_PATH=/opt/rh/rh-ruby25/root/usr/local/lib64:/opt/rh/rh-ruby25/root/usr/lib64' | sudo tee -a /etc/environment
 
