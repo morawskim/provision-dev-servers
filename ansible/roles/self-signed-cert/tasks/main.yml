@@ -1,0 +1,19 @@
+---
+# tasks file for self-signed-cert
+# require pyOpenSSL or python-cryptography
+- name: Generate Private key
+  openssl_privatekey: path={{ ssl_certificate_key }}
+- name: Generate an OpenSSL Certificate Signing Request with Subject information
+  openssl_csr:
+    path: "{{ ssl_csr }}"
+    privatekey_path: "{{ ssl_certificate_key }}"
+    country_name: PL
+    organization_name: Development
+    email_address: marcin@morawskim.pl
+    common_name: "{{ server_name }}"
+- name: Generate a Self Signed OpenSSL certificate
+  openssl_certificate:
+    path: "{{ ssl_certificate }}"
+    privatekey_path: "{{ ssl_certificate_key }}"
+    csr_path: "{{ ssl_csr }}"
+    provider: selfsigned

@@ -91,3 +91,14 @@ describe 'user' do
     it { should be_owned_by 'portal' }
   end
 end
+
+describe 'phpMyAdmin' do
+  context command('curl -k -I -s https://phpmyadmin.portal.lvh.me/') do
+    its(:exit_status) { should eq 0 }
+    its(:stdout) { should contain('HTTP/1.1 401 Unauthorized') }
+  end
+
+  context command('curl --cacert /etc/pki/tls/certs/phpmyadmin.portal.lvh.me.crt -s https://phpmyadmin.portal.lvh.me/') do
+    its(:exit_status) { should eq 0 }
+  end
+end

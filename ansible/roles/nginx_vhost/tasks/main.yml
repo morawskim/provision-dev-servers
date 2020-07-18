@@ -1,0 +1,7 @@
+---
+- name: Configure nginx vhost
+  vars:
+    ssl_certificate: /etc/pki/tls/certs/{{ server_name }}.crt
+    ssl_certificate_key: /etc/pki/tls/private/{{ server_name }}.key
+  template: src=templates/{{ template }} dest=/etc/nginx/conf.d/{{ server_name }}.conf
+  notify: restart nginx

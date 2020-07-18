@@ -1,7 +1,19 @@
 ---
 - hosts: all
   become: true
-  #roles:
+  roles:
+    - role: self-signed-cert
+      vars:
+        server_name: portal.lvh.me
+        ssl_certificate: /etc/pki/tls/certs/{{ server_name }}.crt
+        ssl_certificate_key: /etc/pki/tls/private/{{ server_name }}.key
+        ssl_csr: /etc/pki/tls/certs/{{ server_name }}.csr
+    - role: self-signed-cert
+      vars:
+        server_name: phpmyadmin.portal.lvh.me
+        ssl_certificate: /etc/pki/tls/certs/{{ server_name }}.crt
+        ssl_certificate_key: /etc/pki/tls/private/{{ server_name }}.key
+        ssl_csr: /etc/pki/tls/certs/{{ server_name }}.csr
   vars:
     user_account: portal
     user_home: /srv/www/{{ user_account }}
@@ -11,11 +23,7 @@
     db_name: "{{ user_account }}"
     db_user: "{{ user_account }}"
     db_password: "veryhardtoguesspassword"
-    server_name: portal.lvh.me
     server_root: "{{ user_home }}/project/web"
-    ssl_certificate: /etc/pki/tls/certs/{{ server_name }}.crt
-    ssl_certificate_key: /etc/pki/tls/private/{{ server_name }}.key
-    ssl_csr: /etc/pki/tls/certs/{{ server_name }}.csr
     user_phpmyadmin: phpmyadmin
     php_my_admin_server_name: phpmyadmin.portal.lvh.me
     ip_whitelist_for_php_my_admin:
@@ -128,24 +136,6 @@
     - name: Start php-fpm
       service: name=php-fpm state=started enabled=yes
 
-    # require pyOpenSSL or python-cryptography
-    - name: Generate Private key
-      openssl_privatekey: path={{ ssl_certificate_key }}
-    - name: Generate an OpenSSL Certificate Signing Request with Subject information
-      openssl_csr:
-        path: "{{ ssl_csr }}"
-        privatekey_path: "{{ ssl_certificate_key }}"
-        country_name: PL
-        organization_name: Development
-        email_address: marcin@morawskim.pl
-        common_name: "{{ server_name }}"
-    - name: Generate a Self Signed OpenSSL certificate
-      openssl_certificate:
-        path: "{{ ssl_certificate }}"
-        privatekey_path: "{{ ssl_certificate_key }}"
-        csr_path: "{{ ssl_csr }}"
-        provider: selfsigned
-
     - name: Create file for basic authentication
       htpasswd:
         path: /etc/nginx/pass
@@ -157,14 +147,18 @@
     - name: Configure nginx
       template: src=templates/nginx/nginx.conf dest=/etc/nginx/nginx.conf
       notify: restart nginx
-    - name: Configure nginx vhost
-      template: src=templates/nginx/symfony3-vhost.conf dest=/etc/nginx/conf.d/{{ user_account }}.conf
-      notify: restart nginx
     - name: Nginx gzip
       template: src=templates/nginx/gzip.conf dest=/etc/nginx/conf.d/gzip.conf
       notify: restart nginx
     - name: Start nginx
       service: name=nginx state=started enabled=yes
+      
+    - name: Nginx vhost
+      import_role:
+        name: nginx_vhost
+      vars:
+        server_name: portal.lvh.me
+        template: "symfony3-vhost.conf"
 
     - name: Crete MySQL database
       mysql_db: name={{ db_name }} state=present
@@ -193,11 +187,13 @@
     - name: PHP-FPM pool for phpMyAdmin
       template: src=templates/php/php-fpm/phpMyAdmin.conf dest=/etc/php-fpm.d/phpMyAdmin.conf
       notify: restart php
-    - name: phpMyAdmin vhost
+
+    - name: Nginx vhost for phpMyAdmin
+      import_role:
+        name: nginx_vhost
       vars:
         server_name: "{{ php_my_admin_server_name }}"
-      template: src=templates/nginx/phpMyAdmin.conf dest=/etc/nginx/conf.d/phpMyAdmin.conf
-      notify: restart nginx
+        template: "phpMyAdmin.conf"
     # }}}
 
     # {{{ Project
