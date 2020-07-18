@@ -16,6 +16,12 @@
     ssl_certificate: /etc/pki/tls/certs/{{ server_name }}.crt
     ssl_certificate_key: /etc/pki/tls/private/{{ server_name }}.key
     ssl_csr: /etc/pki/tls/certs/{{ server_name }}.csr
+    user_phpmyadmin: phpmyadmin
+    php_my_admin_server_name: phpmyadmin.portal.lvh.me
+    ip_whitelist_for_php_my_admin:
+      - 127.0.0.1
+      - '10.0.2.0/24'
+      - '192.168.0.0/24'
 
   pre_tasks:
     # {{{ Repositories and core packages
@@ -164,6 +170,34 @@
       mysql_db: name={{ db_name }} state=present
     - name: Create MySQL user
       mysql_user: name={{ db_user }} host=localhost password={{ db_password }} priv={{ db_name }}.*:ALL
+    # }}}
+
+    # {{{ phpMyAdmin
+    - name: Install phpMyAdmin
+      package: name=phpMyAdmin state=present
+    - name: Ensure phpMyAdmin group exists
+      group: name={{ user_phpmyadmin }} state=present
+    - name: Create phpMyAdmin account
+      user:
+        name: "{{ user_phpmyadmin }}"
+        group: "{{ user_phpmyadmin }}"
+        create_home: false
+        state: present
+    - name: Create a directory for phpMyAdmin sessions
+      file:
+        path: /var/lib/phpMyAdmin/session
+        state: directory
+        mode: '0750'
+        owner: "{{ user_phpmyadmin }}"
+        group: "{{ user_phpmyadmin }}"
+    - name: PHP-FPM pool for phpMyAdmin
+      template: src=templates/php/php-fpm/phpMyAdmin.conf dest=/etc/php-fpm.d/phpMyAdmin.conf
+      notify: restart php
+    - name: phpMyAdmin vhost
+      vars:
+        server_name: "{{ php_my_admin_server_name }}"
+      template: src=templates/nginx/phpMyAdmin.conf dest=/etc/nginx/conf.d/phpMyAdmin.conf
+      notify: restart nginx
     # }}}
 
     # {{{ Project
