@@ -77,6 +77,9 @@
         state: present
     - name: Start mysql
       service: name=mariadb state=started enabled=yes
+    - name: Secure mysql
+      import_role:
+        name: mysql-secure-install
 
   tasks:
     - name: Install project packages
@@ -152,7 +155,7 @@
       notify: restart nginx
     - name: Start nginx
       service: name=nginx state=started enabled=yes
-      
+
     - name: Nginx vhost
       import_role:
         name: nginx_vhost

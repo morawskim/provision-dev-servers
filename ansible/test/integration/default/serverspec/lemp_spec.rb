@@ -102,3 +102,42 @@ describe 'phpMyAdmin' do
     its(:exit_status) { should eq 0 }
   end
 end
+
+describe 'mysql' do
+  context service('mariadb') do
+    it { should be_enabled }
+    it { should be_running }
+  end
+
+  context port(3306) do
+    it { should be_listening }
+  end
+
+  context file('/root/.my.cnf') do
+    it { should be_file }
+    it { should be_mode 600 }
+    it { should be_owned_by 'root' }
+    it { should contain('password=').after('[client]') }
+    its(:content) { should match /^password=/ }
+  end
+
+  context command(%q{mysql -uroot -NB  -e "SHOW DATABASES"}) do
+    its(:exit_status) { should eq 0 }
+    its(:stdout) { should_not contain(/^test$/) }
+  end
+
+  context command(%q{mysql -uroot -NB  -e "SELECT user,host FROM mysql.user WHERE user = '';"}) do
+    its(:exit_status) { should eq 0 }
+    its(:stdout) { should be_empty }
+  end
+
+  context command(%q{mysql -uroot -NB  -e "SELECT user,host FROM mysql.user WHERE host NOT IN ('localhost', '127.0.0.1', '::1');"}) do
+    its(:exit_status) { should eq 0 }
+    its(:stdout) { should be_empty }
+  end
+
+  context command(%q{mysql -uroot -NB  -e "SELECT user,host, password FROM mysql.user WHERE password IS NULL OR password ='';"}) do
+    its(:exit_status) { should eq 0 }
+    its(:stdout) { should be_empty }
+  end
+end
