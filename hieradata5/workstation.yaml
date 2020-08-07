@@ -50,6 +50,7 @@ workstation::packages:
     - graphviz
     - guestfs-tools
     - hub
+    - hyperfine
     - iotop
     - ipcalc
     - jq
