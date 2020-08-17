@@ -53,6 +53,7 @@ workstation::packages:
     - hyperfine
     - iotop
     - ipcalc
+    - journalcheck
     - jq
     - lftp
     - libxml2-tools
