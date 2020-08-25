@@ -46,6 +46,7 @@ workstation::packages:
     - git
     - git-delta
     - git-extras
+    - git-quick-stats
     - git-review
     - graphviz
     - guestfs-tools
