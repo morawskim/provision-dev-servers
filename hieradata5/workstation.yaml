@@ -136,6 +136,7 @@ workstation::packages:
     - tcpdump
     - telnet
     - texlive-latex-bin-bin
+    - textql
     - the_silver_searcher
     - tig
     - tmux
