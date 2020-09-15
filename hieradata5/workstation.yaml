@@ -139,6 +139,7 @@ workstation::packages:
     - textql
     - the_silver_searcher
     - tig
+    - tmpmail
     - tmux
     - tmux-powerline
     - tree
