@@ -182,6 +182,7 @@ workstation::packages-gui:
     - krdc
     - krunner-skypeforlinux
     - krusader
+    - ksnip
     - libnotify-tools
     - libreoffice-l10n-pl
     - lshw-gui
@@ -206,6 +207,7 @@ workstation::packages-gui:
     - telegram-desktop
     - virtualbox-qt
     - vivaldi-stable
+    - vokoscreen
     - wireshark-ui-qt
     - x11vnc
     - xbindkeys
