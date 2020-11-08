@@ -51,6 +51,7 @@ workstation::packages:
     - git-quick-stats
     - git-review
     - graphviz
+    - gron
     - guestfs-tools
     - hub
     - hyperfine
