@@ -5,6 +5,7 @@ node default {
   class { 'sensi::timezone':
     timezone => lookup('timezone'),
   }
+  class { 'sensi::cockpit': }
   class {'sensi::provision_repo': }
   class {'sensi::duplicity': }
   class {'sensi::nullmailer': }

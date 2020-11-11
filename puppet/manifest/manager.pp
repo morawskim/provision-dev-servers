@@ -6,6 +6,7 @@ node default {
   class { 'sensi::admins': }
   class { 'sensi::docker_swarm_manager': }
   class { 'sensi::collectd': }
+  class { 'sensi::cockpit': }
   class { 'sensi::docker_stack::traefik': }
   class { 'sensi::docker_stack::monitoring': }
   class { 'sensi::docker_stack::nexus': }
