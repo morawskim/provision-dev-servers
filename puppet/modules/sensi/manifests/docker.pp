@@ -1,5 +1,6 @@
 class sensi::docker (
-    Array $users_to_manage_docker = []
+    Array $users_to_manage_docker = [],
+    $docker_registries = {},
 ){
   package { ['docker.io']:
     ensure => present
@@ -14,4 +15,10 @@ class sensi::docker (
   $users_to_manage_docker.each |String $user| {
     User<| title == $user |> { groups +> "docker", require +> Package['docker.io'] }
   }
+
+  create_resources(
+    'docker::registry',
+    $docker_registries,
+    { require => Service['docker'] }
+  )
 }

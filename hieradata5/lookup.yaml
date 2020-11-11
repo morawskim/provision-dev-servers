@@ -3,6 +3,10 @@ lookup_options:
     merge:
       strategy: deep
       merge_hash_arrays: true
+  docker_registries:
+    merge:
+      strategy: deep
+      merge_hash_arrays: true
   backup:
     merge:
       strategy: deep

@@ -4,7 +4,8 @@ node default {
   class { 'sensi::trivy': }
   class { 'sensi::collectd': }
   class {'sensi::docker':
-    users_to_manage_docker => ['gitlab-runner']
+    users_to_manage_docker => ['gitlab-runner'],
+    docker_registries      => lookup('docker_registries'),
   }
   class { 'sensi::timezone':
     timezone => lookup('timezone'),
