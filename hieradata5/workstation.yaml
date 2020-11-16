@@ -40,6 +40,7 @@ workstation::packages:
     - docker-compose
     - docker-credential-helpers
     - docker-ls
+    - dog-dns
     - duf
     - exa
     - fzf
