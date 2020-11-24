@@ -73,6 +73,7 @@ workstation::packages:
     - ngrep
     - ngrok-client
     - nmap
+    - nnn
     - nodejs
     - nodejs-devel
     #- nullmailer
