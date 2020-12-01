@@ -200,6 +200,7 @@ workstation::packages-gui:
     - remmina
     - remmina-plugin-rdp
     - retext
+    - ruqola
     - scrot
     - shutter
     - skrooge
