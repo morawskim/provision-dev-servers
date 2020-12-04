@@ -155,6 +155,7 @@ workstation::packages:
     - virtualbox
     - whois
     - wireshark
+    - xsv
     - yadm
     - yarn
     - yum-scripts
