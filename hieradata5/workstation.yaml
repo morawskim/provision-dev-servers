@@ -34,6 +34,7 @@ workstation::packages:
     - ctop
     - cups
     - dateutils
+    - diffoscope
     - dive
     - docker
     - docker-bash-completion
@@ -129,7 +130,6 @@ workstation::packages:
     - rar
     - rpm-build
     - rpmdevtools
-    - rpmlint
     - rpmorphan
     - ruby-devel
     - sensors
