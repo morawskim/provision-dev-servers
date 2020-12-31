@@ -26,7 +26,7 @@ containers.each do |containerId|
         databases.each do |db_name|
             puts "#{containerId} dump db #{db_name}"
             file_name = time.strftime("%Y-%m-%d_%H_%M_%S")
-            output = `docker exec -e MYSQL_PWD=#{root_password} #{containerId} /usr/bin/mysqldump --single-transaction --skip-lock-tables --routines --databases #{db_name} -uroot | gzip > #{dump_dir}/#{db_name}-#{file_name}.sql.gz`
+            output = `docker exec -e MYSQL_PWD=#{root_password} #{containerId} /usr/bin/mysqldump --single-transaction --quick --skip-lock-tables --routines --databases #{db_name} -uroot | gzip > #{dump_dir}/#{db_name}-#{file_name}.sql.gz`
         end
     end
 end

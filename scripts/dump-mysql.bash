@@ -16,5 +16,5 @@ TIMESTAMP=$(date '+%F-%H_%M_%S')
 for database in $DATABASES; do
     output_file="$BACKUP_DIR/$database-$TIMESTAMP.sql.gz"
     echo "Dumping database $database to $output_file using mysql account: ${MYSQL_USERNAME}."
-    MYSQL_PWD=$MYSQL_PWD /usr/bin/mysqldump --single-transaction --skip-lock-tables --routines --databases $database -u$MYSQL_USERNAME | gzip > $output_file
+    MYSQL_PWD=$MYSQL_PWD /usr/bin/mysqldump --single-transaction --quick --skip-lock-tables --routines --databases $database -u$MYSQL_USERNAME | gzip > $output_file
 done
