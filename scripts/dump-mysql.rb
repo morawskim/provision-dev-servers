@@ -2,6 +2,14 @@
 
 require 'json'
 
+def listDatabasesInContainer(containerId, root_password)
+    `docker exec -e MYSQL_PWD=#{root_password} #{containerId} /usr/bin/mysql -uroot -s  -e 'SHOW DATABASES WHERE \`Database\` NOT REGEXP "(^mysql|_schema$)"' | tail -n +1`.split
+end
+
+def dump_database(containerId, root_password, db_name, file_name)
+    `docker exec -e MYSQL_PWD=#{root_password} #{containerId} /usr/bin/mysqldump --single-transaction --quick --skip-lock-tables --routines --databases #{db_name} -uroot | gzip > #{file_name}.sql.gz`
+end
+
 if ARGV.length < 1
   puts "Dump to argument is required"
   exit 1
@@ -14,19 +22,35 @@ containers.each do |containerId|
     containerId =  containerId.strip    
     inspect = `docker inspect #{containerId}`
     json = JSON.parse(inspect)
-    
+    time = Time.now
     env = json[0]['Config']['Env']
+
     mysql = env.select { |v| v.start_with? 'MYSQL_ROOT_PASSWORD=' }
     if mysql.length == 1
-        puts "#{containerId} have MYSQL_ROOT_PASSWORD env"
+        puts "#{containerId} has MYSQL_ROOT_PASSWORD env"
         length = mysql[0].length
         root_password = mysql[0][20..length]
-        time = Time.now
-        databases = `docker exec -e MYSQL_PWD=#{root_password} #{containerId} /usr/bin/mysql -uroot -s  -e 'SHOW DATABASES WHERE \`Database\` NOT REGEXP "(^mysql|_schema$)"' | tail -n +1`.split
+        databases = listDatabasesInContainer(containerId, root_password)
+
         databases.each do |db_name|
             puts "#{containerId} dump db #{db_name}"
-            file_name = time.strftime("%Y-%m-%d_%H_%M_%S")
-            output = `docker exec -e MYSQL_PWD=#{root_password} #{containerId} /usr/bin/mysqldump --single-transaction --quick --skip-lock-tables --routines --databases #{db_name} -uroot | gzip > #{dump_dir}/#{db_name}-#{file_name}.sql.gz`
+            file_name = "#{dump_dir}/#{db_name}-#{time.strftime("%Y-%m-%d_%H_%M_%S")}"
+            dump_database(containerId, root_password, db_name, file_name)
+        end
+    end
+
+    mysql = env.select { |v| v.start_with? 'MYSQL_ROOT_PASSWORD_FILE=' }
+    if mysql.length == 1
+        puts "#{containerId} has MYSQL_ROOT_PASSWORD_FILE"
+        length = mysql[0].length
+        root_password_file = mysql[0][25..length]
+        root_password = `docker exec #{containerId} cat #{root_password_file}`
+        databases = listDatabasesInContainer(containerId, root_password)
+
+        databases.each do |db_name|
+            puts "#{containerId} dump db #{db_name}"
+            file_name = "#{dump_dir}/#{db_name}-#{time.strftime("%Y-%m-%d_%H_%M_%S")}"
+            dump_database(containerId, root_password, db_name, file_name)
         end
     end
 end
