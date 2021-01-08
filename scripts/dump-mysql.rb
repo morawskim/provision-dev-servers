@@ -18,12 +18,14 @@ dump_dir = ARGV[0]
 
 containers = `docker ps -q -f name=mysql`.split
 containers.each do |containerId|
+    sleep 2
     puts "#{containerId} looks like mysql container"
     containerId =  containerId.strip    
     inspect = `docker inspect #{containerId}`
     json = JSON.parse(inspect)
     time = Time.now
     env = json[0]['Config']['Env']
+    service_name = (json[0]['Config']['Labels']['com.docker.swarm.service.name'] || json[0]['Name']).gsub(/[^\w]/, '')
 
     mysql = env.select { |v| v.start_with? 'MYSQL_ROOT_PASSWORD=' }
     if mysql.length == 1
@@ -34,7 +36,7 @@ containers.each do |containerId|
 
         databases.each do |db_name|
             puts "#{containerId} dump db #{db_name}"
-            file_name = "#{dump_dir}/#{db_name}-#{time.strftime("%Y-%m-%d_%H_%M_%S")}"
+            file_name = "#{dump_dir}/#{db_name}-#{time.strftime("%Y-%m-%d_%H_%M_%S")}-#{service_name}"
             dump_database(containerId, root_password, db_name, file_name)
         end
     end
@@ -49,7 +51,7 @@ containers.each do |containerId|
 
         databases.each do |db_name|
             puts "#{containerId} dump db #{db_name}"
-            file_name = "#{dump_dir}/#{db_name}-#{time.strftime("%Y-%m-%d_%H_%M_%S")}"
+            file_name = "#{dump_dir}/#{db_name}-#{time.strftime("%Y-%m-%d_%H_%M_%S")}-#{service_name}"
             dump_database(containerId, root_password, db_name, file_name)
         end
     end
