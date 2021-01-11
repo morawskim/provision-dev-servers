@@ -21,7 +21,7 @@ node default {
     require => Package['gitlab-runner'],
     notify  => Service['gitlab-runner']
   }
-  package {['curl', 'jq', 'vagrant']:
+  package {['curl', 'jq', 'vagrant', 'ansible']:
       ensure => 'present'
   }
 }
