@@ -212,6 +212,7 @@ workstation::packages-gui:
     - telegram-desktop
     - virtualbox-qt
     - vivaldi-stable
+    - vnote
     - vokoscreen
     - wireshark-ui-qt
     - x11vnc
