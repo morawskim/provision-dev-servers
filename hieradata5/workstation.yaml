@@ -192,6 +192,7 @@ workstation::packages-gui:
     - lshw-gui
     - MozillaThunderbird
     - mozilla-nss-tools
+    - MPlayer
     - mysql-workbench
     - peek
     - plasma-browser-integration
