@@ -158,6 +158,7 @@ workstation::packages:
     - xsv
     - yadm
     - yarn
+    - yq
     - yum-scripts
 
 workstation::packages-gui:
