@@ -133,6 +133,7 @@ workstation::packages:
     - rpmorphan
     - ruby-devel
     - sensors
+    - sipcalc
     - skopeo
     - sshfs
     - susepaste
