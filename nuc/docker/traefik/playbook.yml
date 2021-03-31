@@ -41,6 +41,7 @@
                   - traefik
                 volumes:
                   - /var/run/docker.sock:/var/run/docker.sock
+                  - acme:/acme
                 command: 
                   - --configfile=/dev/null
                   - --api
@@ -56,7 +57,7 @@
                   - --entryPoints=Name:https Address::443 TLS
                   - --retry
                   - --acme.email=marcin@morawskim.pl
-                  - --acme.storage=acme.json
+                  - --acme.storage=/acme/acme.json
                   - --acme.entryPoint=https
                   - --acme.onHostRule=true
                   - --acme.httpchallenge.entrypoint=http
@@ -64,3 +65,5 @@
           networks:
             traefik:
                 external: true
+          volumes:
+            acme:
