@@ -204,6 +204,7 @@ workstation::packages-gui:
     - redshift
     - remmina
     - remmina-plugin-rdp
+    - Responsively-App
     - retext
     - ruqola
     - scrot
