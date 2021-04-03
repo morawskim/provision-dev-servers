@@ -56,8 +56,8 @@ resource "libvirt_cloudinit_disk" "commoninit" {
 
 resource "libvirt_domain" "vm-docker" {
   name   = "vm-docker"
-  memory = "1024"
-  vcpu   = 1
+  memory = "3072"
+  vcpu   = 2
   autostart = true
   cloudinit = libvirt_cloudinit_disk.commoninit.id
 

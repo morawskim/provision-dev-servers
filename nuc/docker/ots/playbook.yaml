@@ -12,6 +12,7 @@
           services:
             app:
               image: luzifer/ots:v0.18.1
+              restart: unless-stopped
               labels:
                 traefik.enable: "true"
                 traefik.port: "3000"
