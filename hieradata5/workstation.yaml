@@ -55,6 +55,7 @@ workstation::packages:
     - graphviz
     - gron
     - guestfs-tools
+    - htmlq
     - hub
     - hyperfine
     - iotop
