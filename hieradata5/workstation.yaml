@@ -198,6 +198,7 @@ workstation::packages-gui:
     - mozilla-nss-tools
     - MPlayer
     - mysql-workbench
+    - nextcloud-client
     - peek
     - plasma-browser-integration
     - plasma-nm5-openvpn
