@@ -158,6 +158,7 @@ workstation::packages:
     - virtualbox
     - whois
     - wireshark
+    - wrk
     - xsv
     - yadm
     - yarn
