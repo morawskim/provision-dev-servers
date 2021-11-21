@@ -1,5 +1,5 @@
 ---
-- hosts: all
+- hosts: docker
   become: true
   gather_facts: no
   vars:

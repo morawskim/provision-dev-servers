@@ -1,5 +1,5 @@
 ---
-- hosts: all
+- hosts: docker
   become: false
   gather_facts: no
   vars_files:
@@ -21,6 +21,7 @@
                 - MYSQL_USER={{NEXTCLOUD_DB_USER}}
                 - MYSQL_PASSWORD={{NEXTCLOUD_DB_PASS}}
                 - MYSQL_DATABASE={{NEXTCLOUD_DB_NAME}}
+              command: --sort_buffer_size=2M
               volumes:
                 - db:/var/lib/mysql
             app:
