@@ -39,7 +39,7 @@ resource "libvirt_network" "internal" {
 ### docker-vm: increase ubuntu images
 ### docker-vm: Use CloudInit
 resource "libvirt_volume" "vm-docker" {
-  name           = "disk"
+  name           = "disk-docker"
   base_volume_id = libvirt_volume.ubuntu-lts-20.id
   pool           = "default"
   size           = 1024*1024*1024*20 # 20 GB
@@ -56,7 +56,7 @@ resource "libvirt_cloudinit_disk" "commoninit" {
 
 resource "libvirt_domain" "vm-docker" {
   name   = "vm-docker"
-  memory = "3072"
+  memory = "1500"
   vcpu   = 2
   autostart = true
   cloudinit = libvirt_cloudinit_disk.commoninit.id
