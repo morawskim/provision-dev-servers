@@ -1,0 +1,91 @@
+---
+- hosts: gitlab-runner
+  become: true
+  gather_facts: yes
+  vars_files:
+    - parameters/secrets.yml
+
+  tasks:
+     - name: Update apt-get repo and cache
+       apt: update_cache=yes force_apt_get=yes cache_valid_time=3600
+
+     - name: Upgrade all apt packages
+       apt: upgrade=dist force_apt_get=yes
+
+     - name: Install required system packages
+       apt: name={{ item }} state=latest update_cache=yes
+       loop: [ 'apt-transport-https', 'ca-certificates', 'gnupg']
+
+     - name: Add Gitlab GPG apt Key
+       apt_key:
+        url: https://packages.gitlab.com/gpg.key
+        state: present
+
+     - name: Add Gitlab Repository
+       apt_repository:
+        repo: deb https://packages.gitlab.com/runner/gitlab-runner/ubuntu {{ ansible_facts['distribution_release'] }} main
+        state: present
+
+     - name: Apt-pin for gitlab-runner
+       template: src=templates/pin-gitlab-runner.pref dest=/etc/apt/preferences.d/pin-gitlab-runner.pref
+
+     - name: Install required packages
+       package:
+        name:
+          - bash-completion
+          - vim
+          - tmux
+          - gitlab-runner
+          - curl
+          - jq
+          - vagrant
+          - ansible
+          - python3-gitlab
+          - docker.io
+        state: present
+     - name: Ensure user primary group exists
+       group: name=gitlab-runner state=present
+     - name: Create account
+       user:
+        name: "gitlab-runner"
+        group: "gitlab-runner"
+        groups: docker
+        state: present
+     - name: Start docker
+       service: name=docker state=started enabled=yes
+     - name: Start gitlab-runner
+       service: name=gitlab-runner state=started enabled=yes
+     - name: "Register runner docker"
+       community.general.gitlab_runner:
+        api_url: https://gitlab.com/
+        api_token: "{{ GITLAB_API_TOKEN }}"
+        access_level: not_protected
+        registration_token: "{{ GITLAB_RUNNER_REGISTRATION_TOKEN }}"
+        description: NUC-docker2
+        owned: True
+        state: present
+        active: True
+        run_untagged: True
+        locked: False
+       register: gitlab_runner_docker
+     - name: "Register runner shell"
+       community.general.gitlab_runner:
+        api_url: https://gitlab.com/
+        api_token: "{{ GITLAB_API_TOKEN }}"
+        access_level: not_protected
+        registration_token: "{{ GITLAB_RUNNER_REGISTRATION_TOKEN }}"
+        description: NUC-shell2
+        owned: True
+        state: present
+        active: True
+        tag_list: ['packer']
+        run_untagged: False
+        locked: False
+       register: gitlab_runner_shell
+     - name: Configure runners
+       template: src=templates/mmo-runner.toml dest=/etc/gitlab-runner/config.toml
+       notify: restart gitlab-runner
+       when: gitlab_runner_docker.changed and gitlab_runner_shell.changed
+  handlers:
+    - name: restart gitlab-runner
+      service: name=gitlab-runner state=restarted
