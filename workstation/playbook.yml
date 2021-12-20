@@ -1,0 +1,281 @@
+---
+- hosts: localhost
+  become: true
+  connection: local
+  vars:
+    ansible_python_interpreter: /usr/bin/python3.8
+  tasks:
+    - name: 'Add GPG keys'
+      rpm_key:
+        state: present
+        key: "{{ item }}"
+      with_items:
+        - https://dl.google.com/linux/linux_signing_key.pub
+        - https://download.opensuse.org/repositories/hardware/openSUSE_Tumbleweed/repodata/repomd.xml.key
+        - https://gist.githubusercontent.com/morawskim/dcee4dd70958c4e9ede389c45f7f8d5f/raw/c47323f1cd395b5c79d0fc23cd2bdb19b6b302df/vivaldi_gpg.pub
+        - https://gist.githubusercontent.com/morawskim/34a411a7e10c73ae79d89c00b2b644bb/raw/c198f2b4b130cb574665d3eae16cf1cde4d6e6b9/vivaldi_future_gpg.pub
+        - https://repo.vivaldi.com/archive/linux_signing_key.pub
+        - https://repo.skype.com/data/SKYPE-GPG-KEY
+        - https://packages.microsoft.com/keys/microsoft.asc
+
+    - name: Add repositories
+      community.general.zypper_repository:
+        name: "{{ item.name }}"
+        autorefresh: 1
+        enabled: 1
+        description: "{{ item.description }}"
+        runrefresh: 1
+        repo: "{{ item.repo }}"
+        disable_gpg_check: "{{ item.disable_gpg_check | default(0) }}"
+      with_items:
+        - { name: code, description: 'Visual Studio Code', repo: 'https://packages.microsoft.com/yumrepos/vscode' }
+        - { name: google-chrome, description: 'google-chrome', repo: 'http://dl.google.com/linux/chrome/rpm/stable/x86_64'}
+        - { name: skype-stable, description: 'Skype (stable)', repo: 'https://repo.skype.com/rpm/stable/' }
+        - { name: morawskim, description: 'morawskim', repo: 'http://rpm.morawskim.pl/openSUSE_Factory/', disable_gpg_check: 1 }
+        - { name: ~, description: 'Vivaldi repository', repo: 'https://repo.vivaldi.com/archive/vivaldi-suse.repo' }
+        - { name: ~, description: ~, repo: 'https://download.opensuse.org/repositories/hardware/openSUSE_Tumbleweed/hardware.repo' }
+
+    - name: Install required packages CLI
+      package:
+        name:
+          - ansible
+          - bash-completion
+          - bat
+          - bc
+          - bcal
+          - bind-utils
+          - bvi
+          - colordiff
+          - cpupower
+          - createrepo_c
+          - ctags
+          - cups
+          - dateutils
+          - diffoscope
+          - docker
+          - docker-bash-completion
+          - docker-compose
+          - exa
+          - fzf
+          - gettext-tools
+          - gettext-runtime
+          - git
+          - git-delta
+          - git-review
+          - graphviz
+          - guestfs-tools
+          - hub
+          - hyperfine
+          - iotop
+          - ipcalc
+          - jq
+          - lftp
+          - libxml2-tools
+          - mariadb-client
+          - make
+          - msmtp
+          - mutt
+          - ncdu
+          - nethogs
+          - ngrep
+          - nmap
+          - nnn
+          - nodejs
+          - nodejs-devel
+          - openvpn
+          - osc
+          - pandoc
+          - password-store
+          - patchutils
+          - patterns-server-kvm_server
+          - patterns-server-kvm_tools
+          - php-composer2
+          - php8
+          - php8-fpm
+          - php8-mysql
+          - php8-ldap
+          - php8-soap
+          - php8-pgsql
+          - php8-phar
+          - php8-devel
+          - php8-readline
+          - php8-curl
+          - php8-intl
+          - php8-gettext
+          - php8-xsl
+          - php8-zlib
+          - php8-xmlwriter
+          - php8-bcmath
+          - php8-sockets
+          - php8-pcntl
+          - php8-ctype
+          - php8-gd
+          - php8-xmlreader
+          - php8-zip
+          - php8-iconv
+          - php8-fileinfo
+          - php8-tokenizer
+          - php8-redis
+          - php8-xdebug
+          - php8-mbstring
+          - powerline
+          - pwgen
+          - python3-firewall
+          - quilt
+          - rpmorphan
+          - rtw89-firmware
+          - rtw89-kmp-default
+          - ruby2.7-rubygem-tmuxinator
+          - sensors
+          - sipcalc
+          - skopeo
+          - susepaste
+          - sysstat
+          - systemd-logger
+          - tcpdump
+          - telnet
+          - texlive-latex-bin-bin
+          - the_silver_searcher
+          - tmux
+          - tmux-powerline
+          - tree
+          - vagrant
+          - vim
+          - vim-fzf
+          - virtualbox
+          - whois
+          - wireshark
+          - wrk
+          - xsv
+          - yarn
+
+          # FROM morawskim
+          - captain
+          - ctop
+          - dive
+          - docker-credential-helpers
+          - docker-ls
+          - dog-dns
+          - duf
+          - gdu
+          - git-extras
+          - git-quick-stats
+          - gron
+          - htmlq
+          - journalcheck
+          - license
+          - lsd
+          - mkcert
+          - netsed
+          - ngrok-client
+          - php-docs
+          - python38-pipx
+          - textql
+          - tmpmail
+          - ventoy
+          - yadm
+          - yq
+          - yum-scripts
+        state: present
+    - stat: path=/usr/bin/dolphin
+      register: kde_dolphin
+    - name: Install required packages GUI
+      package:
+        name:
+          - 4pane
+          - byzanz
+          - calibre
+          - chromium
+          - code
+          - ghex
+          - gimp
+          - google-chrome-stable
+          - gvim
+          - kcachegrind
+          - kdeconnect-kde
+          - kdiff3
+          - krdc
+          - ksnip
+          - libreoffice-l10n-pl
+          - lshw-gui
+          - mozilla-nss-tools
+          - mysql-workbench
+          - nextcloud-client
+          - peek
+          - plasma-browser-integration
+          - plasma-nm5-openvpn
+          - poedit
+          - remmina
+          - remmina-plugin-rdp
+          - retext
+          - ruqola
+          - skrooge
+          - skypeforlinux
+          #- snapd
+          - spotifyd
+          - spotify-qt
+          - sqlitebrowser
+          - telegram-desktop
+          - virtualbox-qt
+          - vivaldi-stable
+          - vnote
+          - wireshark-ui-qt
+          - xbindkeys
+          - xclip
+          - xsel
+          - xvfb-run
+          - yakuake
+          # FROM morawskim
+          - jetbrains-toolbox
+          - susepaste-qt
+          - upwork
+          - xrectsel
+          - zoom
+        state: present
+      when: kde_dolphin.stat.exists
+    - name: firewalld add source to internal zone
+      firewalld:
+        source: 172.16.0.0/12
+        zone: internal
+        state: enabled
+        permanent: true
+    - name: firewalld add interface to internal zone
+      firewalld:
+        zone: internal
+        interface: wlo1
+        permanent: true
+        state: enabled
+    - name: firewalld enable services
+      firewalld:
+        service: "{{ item }}"
+        permanent: true
+        state: enabled
+        zone: internal
+      with_items:
+       - http
+       - https
+       - kdeconnect-kde
+    - name: firewalld enable ports
+      firewalld:
+        port: "{{ item }}"
+        permanent: true
+        state: enabled
+        zone: internal
+      with_items:
+       - 3000/tcp
+       - 9000/tcp
+       - 9003/tcp
+    - name: Kernel modules blacklist
+      copy:
+        dest: "/etc/modprobe.d/blacklist.conf"
+        mode: 0644
+        owner: root
+        content: |
+          blacklist pcspkr
+    - name: Start docker
+      service: name=docker state=started enabled=yes
+    - name: Update account
+      user:
+        name: "marcin"
+        groups: [docker, users, vboxusers, systemd-journal]
+        state: present
