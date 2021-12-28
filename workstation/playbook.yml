@@ -57,6 +57,7 @@
           - docker-compose
           - exa
           - fzf
+          - fzf-tmux
           - gettext-tools
           - gettext-runtime
           - git
@@ -134,6 +135,7 @@
           - systemd-logger
           - tcpdump
           - telnet
+          - terraform
           - texlive-latex-bin-bin
           - the_silver_searcher
           - tmux
