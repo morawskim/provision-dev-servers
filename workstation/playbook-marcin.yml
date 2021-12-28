@@ -10,13 +10,16 @@
         version: "{{ item.version }}"
       with_items:
         - { repo: 'git@github.com:morawskim/vimdot.git', dest: '/home/marcin/.config/vim', version: 'master' }
-        - { repo: 'https://github.com/Bash-it/bash-it.git', dest: '/home/marcin/.local/share/bash-it', version: 'fe78da73cc04f68420b5aed9faf431c9740db72f' }
+        - { repo: 'https://github.com/Bash-it/bash-it.git', dest: '/home/marcin/.local/share/bash-it', version: 'master' }
         - { repo: 'https://github.com/tmux-plugins/tpm.git', dest: '/home/marcin/.tmux/plugins/tpm', version: 'master' }
         - { repo: 'https://github.com/facebook/PathPicker.git', dest: '/home/marcin/.local/share/PathPicker', version: '0.9.2' }
         - { repo: 'git@github.com:morawskim/provision-dev-servers.git', dest: '/home/marcin/projekty/provision-dev-servers', version: 'master' }
         - { repo: 'git@github.com:morawskim/morawskim.github.io.git', dest: '/home/marcin/projekty/morawskim.github.io', version: 'master' }
         - { repo: 'git@github.com:morawskim/rpm-pipeline.git', dest: '/home/marcin/projekty/rpm-pipeline', version: 'master' }
         - { repo: 'git@github.com:stasiu20/ssorder.git', dest: '/home/marcin/projekty/ssorder', version: 'develop' }
+        - { repo: 'git@github.com:morawskim/homepage.git', dest: '/home/marcin/projekty/homepage', version: 'master' }
+        - { repo: 'git@github.com:morawskim/ssorder-deploy.git', dest: '/home/marcin/projekty/ssorder-deploy', version: 'master' }
+        - { repo: 'git@github.com:morawskim/php-examples.git', dest: '/home/marcin/projekty/php-examples', version: 'master' }
 
     - name: "Add additional remote repositories to ssorder"
       git_config:
@@ -28,6 +31,16 @@
       with_items:
         - { name: 'remote.private.url', value: 'git@gitlab.com:morawskim/private-ssorder.git' }
         - { name: 'remote.gitlab.url', value: 'git@gitlab.com:morawskim/ssorder.git' }
+
+    - name: "Add additional remote repositories to ssorder-deploy"
+      git_config:
+        scope: local
+        state: present
+        repo: "/home/marcin/projekty/ssorder-deploy"
+        name: "{{ item.name }}"
+        value: "{{ item.value }}"
+      with_items:
+        - { name: 'remote.gitlab.url', value: 'git@gitlab.com:morawskim/ssorder-deploy.git' }
 
     - name: PathPicker symlink
       file:
