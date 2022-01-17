@@ -1,18 +1,12 @@
-.PHONY: deploy-traefik deploy-ttrss deploy-ots deploy-nextcloud gitlab-runner
+.PHONY: deploy-nuc deploy-docker deploy-gitlab-runner
 
-deploy-traefik:
-	ansible-playbook --inventory ./inventory.ini docker/traefik/playbook.yml
+deploy-docker:
+	ansible-playbook --inventory ./inventory.ini --ask-vault-pass docker/playbook.yml
 
-deploy-ttrss:
-	ansible-playbook --inventory ./inventory.ini --ask-vault-pass docker/ttrss/playbook.yaml
+deploy-nuc:
+	ansible-playbook --inventory ./inventory.ini nuc/playbook.yml
 
-deploy-ots:
-	ansible-playbook --inventory ./inventory.ini docker/ots/playbook.yaml
-
-deploy-nextcloud:
-	ansible-playbook --inventory ./inventory.ini --ask-vault-pass docker/nextcloud/playbook.yaml
-
-gitlab-runner:
+deploy-gitlab-runner:
 	# ansible-galaxy collection install community.general
 	ansible-playbook --inventory ./inventory.ini gitlab-runner/playbook.yml
 

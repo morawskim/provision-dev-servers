@@ -1,0 +1,30 @@
+---
+- hosts: docker
+  become: true
+  gather_facts: no
+  vars:
+    username: ubuntu
+  vars_files:
+    - parameters/vars.yml
+    - parameters/secrets.yml
+  tasks:
+    - name: Only run "update_cache=yes" if the last one is more than 3600 seconds ago
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
+    - name: Install docker
+      package:
+        name:
+          - docker.io
+          - docker-compose
+    - name: Start docker
+      service: name=docker enabled=true state=started
+    - name: Add docker to the user's groups
+      user:
+        name: "{{ username }}"
+        groups: docker
+        append: yes
+    - include_tasks: tasks/traefik.yml
+    - include_tasks: tasks/ots.yml
+    - include_tasks: tasks/nextcloud.yml
+    - include_tasks: tasks/ttrss/ttrss.yml

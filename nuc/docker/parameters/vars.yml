@@ -1,0 +1,16 @@
+---
+# NEXTCLOUD
+NEXTCLOUD_DB_USER: nextcloud
+NEXTCLOUD_DB_NAME: nextcloud
+# END NEXTCLOUD
+
+# TTRSS
+TTRSS_DB_USER: ttrss
+TTRSS_DB_NAME: ttrss
+TTRSS_DB_TYPE: mysql
+TTRSS_DB_PORT: 3306
+TTRSS_DB_HOST: db
+
+TTRSS_PHP_EXECUTABLE: /usr/local/bin/php
+TTRSS_SELF_URL_PATH: https://ttrss.morawskim.pl
+# END TTRSS

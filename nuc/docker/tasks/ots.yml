@@ -1,0 +1,26 @@
+- name: Deploy ots via docker-compose
+  docker_compose:
+    project_name: ots
+    definition:
+      version: '3.3'
+      services:
+        app:
+          image: luzifer/ots:v0.18.1
+          restart: unless-stopped
+          labels:
+            traefik.enable: "true"
+            traefik.port: "3000"
+            traefik.backend: "ots"
+            traefik.docker.network: traefik
+            traefik.frontend.rule: "Host: ots.morawskim.pl"
+          networks:
+            - default
+            - traefik
+          logging:
+            driver: "json-file"
+            options:
+              max-size: "20m"
+              max-file: "2"
+      networks:
+        traefik:
+            external: true

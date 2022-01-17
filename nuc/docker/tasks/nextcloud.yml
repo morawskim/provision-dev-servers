@@ -1,0 +1,45 @@
+- name: Deploy nextcloud via docker-compose
+  docker_compose:
+    project_name: nextcloud
+    definition:
+      version: '3.3'
+      services:
+        db:
+          image: mysql:5.7
+          restart: unless-stopped
+          environment:
+            - MYSQL_ROOT_PASSWORD={{MYSQL_ROOT_PASSWORD}}
+            - MYSQL_USER={{NEXTCLOUD_DB_USER}}
+            - MYSQL_PASSWORD={{NEXTCLOUD_DB_PASS}}
+            - MYSQL_DATABASE={{NEXTCLOUD_DB_NAME}}
+          command: --sort_buffer_size=2M
+          volumes:
+            - db:/var/lib/mysql
+        app:
+          image: nextcloud
+          restart: unless-stopped
+          links:
+            - db
+          volumes:
+            - nextcloud:/var/www/html
+          environment:
+            - MYSQL_PASSWORD={{NEXTCLOUD_DB_PASS}}
+            - MYSQL_DATABASE={{NEXTCLOUD_DB_NAME}}
+            - MYSQL_USER={{NEXTCLOUD_DB_USER}}
+            - MYSQL_HOST=db
+            - OVERWRITEPROTOCOL=https
+          labels:
+            traefik.enable: "true"
+            traefik.port: "80"
+            traefik.backend: "nextcloud"
+            traefik.docker.network: traefik
+            traefik.frontend.rule: "Host: nextcloud.morawskim.pl"
+          networks:
+            - default
+            - traefik
+      volumes:
+        db:
+        nextcloud:
+      networks:
+        traefik:
+            external: true
