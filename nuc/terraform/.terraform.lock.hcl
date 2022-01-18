@@ -1,11 +1,11 @@
 # This file is maintained automatically by "terraform init".
 # Manual edits may be lost in future updates.
 
-provider "registry.terraform.io/dmacvicar/libvirt" {
+provider "github.com/dmacvicar/libvirt" {
   version     = "0.6.3"
   constraints = "0.6.3"
   hashes = [
-    "h1:eVfIMyRiSYzqodMDtmGrUt19glMganFaDXwJSclZ9mE=",
+    "h1:dgbR8oHnk7UoXpZQF5ucenC+PS64LuSaH8hLPcHWRXw=",
   ]
 }
 
