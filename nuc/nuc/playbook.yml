@@ -1,0 +1,33 @@
+---
+- hosts: nuc
+  become: true
+  vars:
+    #ansible_python_interpreter: /usr/bin/python3.8
+  tasks:
+    - name: Install required packages CLI
+      package:
+        name:
+          - patterns-server-kvm_server
+          - patterns-server-kvm_tools
+          #- python3-firewall
+        state: present
+    - name: Start libvirtd
+      service: name=libvirtd state=started enabled=yes
+    - name: Update account
+      user:
+        name: "marcin"
+        groups: [libvirt, systemd-journal]
+        state: present
+    - name: libvirt hook to publish ports
+      template:
+        src: publish-vm-docker-ports.j2
+        dest: /etc/libvirt/hooks/publish-vm-docker-ports
+        owner: root
+        group: root
+        mode: '0755'
+        notify: Restart libvirtd
+  handlers:
+    - name: Restart libvirtd
+      service:
+        name: libvirtd
+        state: restarted
