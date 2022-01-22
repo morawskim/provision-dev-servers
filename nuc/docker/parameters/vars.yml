@@ -1,4 +1,5 @@
 ---
+APP_DOMAIN_SUFFIX: .morawskim.pl
 # NEXTCLOUD
 NEXTCLOUD_DB_USER: nextcloud
 NEXTCLOUD_DB_NAME: nextcloud
@@ -12,5 +13,5 @@ TTRSS_DB_PORT: 3306
 TTRSS_DB_HOST: db
 
 TTRSS_PHP_EXECUTABLE: /usr/local/bin/php
-TTRSS_SELF_URL_PATH: https://ttrss.morawskim.pl
+TTRSS_SELF_URL_PATH: https://ttrss{{ APP_DOMAIN_SUFFIX }}
 # END TTRSS

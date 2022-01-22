@@ -33,7 +33,7 @@
             traefik.port: "80"
             traefik.backend: "nextcloud"
             traefik.docker.network: traefik
-            traefik.frontend.rule: "Host: nextcloud.morawskim.pl"
+            traefik.frontend.rule: "Host: nextcloud{{ APP_DOMAIN_SUFFIX }}"
           networks:
             - default
             - traefik

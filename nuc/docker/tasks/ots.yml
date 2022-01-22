@@ -12,7 +12,7 @@
             traefik.port: "3000"
             traefik.backend: "ots"
             traefik.docker.network: traefik
-            traefik.frontend.rule: "Host: ots.morawskim.pl"
+            traefik.frontend.rule: "Host: ots{{ APP_DOMAIN_SUFFIX }}"
           networks:
             - default
             - traefik

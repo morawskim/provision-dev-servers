@@ -32,7 +32,7 @@
             traefik.port: "80"
             traefik.backend: "ttrss"
             traefik.docker.network: traefik
-            traefik.frontend.rule: "Host: ttrss.morawskim.pl"
+            traefik.frontend.rule: "Host: ttrss{{ APP_DOMAIN_SUFFIX }}"
           networks:
             - default
             - traefik
