@@ -1,5 +1,7 @@
 ---
 APP_DOMAIN_SUFFIX: .morawskim.pl
+BACKUP_DIR: /root/backups
+
 # NEXTCLOUD
 NEXTCLOUD_DB_USER: nextcloud
 NEXTCLOUD_DB_NAME: nextcloud

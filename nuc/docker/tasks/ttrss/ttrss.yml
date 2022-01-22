@@ -9,7 +9,7 @@
     definition:
       version: '3.3'
       services:
-        db:
+        mysql:
           image: mysql:5.7
           restart: unless-stopped
           environment:
@@ -26,7 +26,7 @@
           env_file:
             - "~/ttrss.env"
           depends_on:
-            - db
+            - mysql
           labels:
             traefik.enable: "true"
             traefik.port: "80"
@@ -42,7 +42,7 @@
           env_file:
             - "~/ttrss.env"
           depends_on:
-            - db
+            - mysql
           user: "www-data"
           entrypoint: ["/usr/local/bin/php",  "/var/www/html/update_daemon2.php"]
           logging:

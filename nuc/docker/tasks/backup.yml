@@ -1,0 +1,26 @@
+- name: Install backup software
+  package:
+    name:
+      - ruby
+      - cron
+- name: Creates backups directory
+  file:
+    path: "{{ BACKUP_DIR }}"
+    state: directory
+    owner: root
+    group: root
+    mode: '0750'
+- name: Copy script to dump mysql databases
+  copy:
+    src: backup/dump-mysql.rb
+    dest: /usr/local/bin/dump-mysql.rb
+    owner: root
+    group: root
+    mode: '0755'
+- name: Creates a cron job for backup
+  ansible.builtin.cron:
+    name: "daily backup"
+    special_time: daily
+    user: root
+    job: "/usr/local/bin/dump-mysql.rb {{ BACKUP_DIR }}"
+    cron_file: backup
