@@ -3,6 +3,8 @@
     name:
       - ruby
       - cron
+      - duplicity
+      - lftp
 - name: Creates backups directory
   file:
     path: "{{ BACKUP_DIR }}"
@@ -18,9 +20,40 @@
     group: root
     mode: '0755'
 - name: Creates a cron job for backup
-  ansible.builtin.cron:
+  cron:
     name: "daily backup"
     special_time: daily
     user: root
     job: "/usr/local/bin/dump-mysql.rb {{ BACKUP_DIR }}"
     cron_file: backup
+# {{{ Duplicity
+- name: Create env file for duplicity
+  no_log: true
+  template:
+    src: backup/duplicity.env.j2
+    dest: "/etc/default/duplicity.env"
+    owner: root
+    group: root
+    mode: '0640'
+- name: Create service's systemd unit
+  template:
+    src: backup/duplicity.service.j2
+    dest: "/etc/systemd/system/duplicity.service"
+- name: Create timer's systemd unit
+  template:
+    src: backup/duplicity.timer.j2
+    dest: "/etc/systemd/system/duplicity.timer"
+- name: Reload systemd
+  systemd:
+    daemon_reload: yes
+- name: Enable a service unit for duplicity
+  systemd:
+    name: duplicity.service
+    enabled: yes
+    state: stopped
+- name: Enable a timer unit for duplicity
+  systemd:
+    name: duplicity.timer
+    state: started
+    enabled: yes
+# }}}

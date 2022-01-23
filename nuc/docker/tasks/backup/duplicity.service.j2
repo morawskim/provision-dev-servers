@@ -1,0 +1,7 @@
+[Unit]
+Description=Run duplicity backup
+
+[Service]
+Type=oneshot
+EnvironmentFile=/etc/default/duplicity.env
+ExecStart=/usr/bin/duplicity --verbosity info --no-encryption --full-if-older-than 7D {{ BACKUP_DIR }} {{ DUPLICITY_DESTINATION_URL }}
