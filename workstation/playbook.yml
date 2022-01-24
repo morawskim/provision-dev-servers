@@ -55,6 +55,7 @@
           - docker
           - docker-bash-completion
           - docker-compose
+          - duplicity
           - exa
           - fzf
           - fzf-tmux
