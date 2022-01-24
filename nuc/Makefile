@@ -1,7 +1,10 @@
-.PHONY: deploy-nuc deploy-docker deploy-gitlab-runner
+.PHONY: deploy-nuc deploy-docker deploy-gitlab-runner setup-ansible-modules
 
-deploy-docker:
-	ansible-playbook --inventory ./inventory.ini --ask-vault-pass docker/playbook.yml
+setup-ansible-modules:
+	test -d ansible-modules/ansible-gpg-key || git clone https://github.com/netson/ansible-gpg-key.git ansible-modules/ansible-gpg-key
+
+deploy-docker: setup-ansible-modules
+	ANSIBLE_LIBRARY=$(PWD)/ansible-modules:/usr/share/ansible/plugins/modules ansible-playbook --inventory ./inventory.ini --ask-vault-pass docker/playbook.yml
 
 deploy-nuc:
 	ansible-playbook --inventory ./inventory.ini nuc/playbook.yml
@@ -9,4 +12,3 @@ deploy-nuc:
 deploy-gitlab-runner:
 	# ansible-galaxy collection install community.general
 	ansible-playbook --inventory ./inventory.ini gitlab-runner/playbook.yml
-

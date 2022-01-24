@@ -5,6 +5,7 @@
       - cron
       - duplicity
       - lftp
+      - python3-packaging
 - name: Creates backups directory
   file:
     path: "{{ BACKUP_DIR }}"
@@ -56,4 +57,8 @@
     name: duplicity.timer
     state: started
     enabled: yes
+- name: Add backup gpg key
+  gpg_key:
+    content: "{{ lookup('file', 'backup/0x66AE3CFE.asc') }}"
+    trust: '5'
 # }}}
