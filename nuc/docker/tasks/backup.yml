@@ -20,6 +20,13 @@
     owner: root
     group: root
     mode: '0755'
+- name: Copy script to dump nextcloud
+  copy:
+    src: backup/nextcloud-backup.sh.j2
+    dest: /usr/local/bin/nextcloud-backup.sh
+    owner: root
+    group: root
+    mode: '0755'
 - name: Creates a cron job for backup
   cron:
     name: "daily backup"
