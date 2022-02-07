@@ -1,5 +1,5 @@
 resource "libvirt_cloudinit_disk" "commoninit-gitlab" {
-  name = "commoninit-gitlab.iso"
+  name = "commoninit-ubuntu-gitlab.iso"
   user_data      = data.template_file.user_data.rendered
 }
 
@@ -19,7 +19,7 @@ resource "libvirt_volume" "vm-gitlab-runner" {
 
 resource "libvirt_domain" "vm-ubuntu-gitlab-runner" {
   name   = "vm-ubuntu-gitlab-runner"
-  memory = "6000"
+  memory = "5500"
   vcpu   = 3
   autostart = true
   cloudinit = libvirt_cloudinit_disk.commoninit-gitlab.id
