@@ -232,7 +232,6 @@
           # FROM morawskim
           - jetbrains-toolbox
           - susepaste-qt
-          - upwork
           - xrectsel
           - zoom
         state: present
