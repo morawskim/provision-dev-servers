@@ -71,10 +71,12 @@
           - iotop
           - ipcalc
           - jq
+          - kubernetes1.23-client
           - lftp
           - libxml2-tools
           - mariadb-client
           - make
+          - minikube
           - msmtp
           - mutt
           - ncdu
