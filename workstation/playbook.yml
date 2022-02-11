@@ -165,6 +165,7 @@
           - gdu
           - git-extras
           - git-quick-stats
+          - git-trim
           - gron
           - htmlq
           - journalcheck
