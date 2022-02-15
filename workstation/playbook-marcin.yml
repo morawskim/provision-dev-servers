@@ -21,6 +21,7 @@
         - { repo: 'git@github.com:morawskim/ssorder-deploy.git', dest: '/home/marcin/projekty/ssorder-deploy', version: 'master' }
         - { repo: 'git@github.com:morawskim/php-examples.git', dest: '/home/marcin/projekty/php-examples', version: 'master' }
         - { repo: 'https://github.com/lucmos/UltrawideWindows.git', dest: '/home/marcin/.local/share/UltrawideWindows', version: '4.1' }
+        - { repo: 'git@github.com:morawskim/packtpub-free-learning.git', dest: '/home/marcin/projekty/packtpub-free-learning', version: 'master' }
 
     - name: "Add additional remote repositories to ssorder"
       git_config:
