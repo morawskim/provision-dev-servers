@@ -1,0 +1,26 @@
+---
+- hosts: all
+  become: true
+  vars:
+    ansible_python_interpreter: /usr/bin/python3.8
+  tasks:
+    - name: Install required packages CLI
+      package:
+        name:
+          - patterns-server-kvm_server
+          - patterns-server-kvm_tools
+          - terraform
+          - qemu-ui-spice-core
+          - git
+          - make
+          - wget
+          - python38-lxml
+          #- qemu-kvm
+        state: present
+    - name: Start libvirtd
+      service: name=libvirtd state=started enabled=yes
+    - name: Update account
+      user:
+        name: "vagrant"
+        groups: [libvirt, systemd-journal]
+        state: present
