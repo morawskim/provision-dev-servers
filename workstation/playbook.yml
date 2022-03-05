@@ -86,6 +86,7 @@
           - nnn
           - nodejs
           - nodejs-devel
+          - okteto
           - openvpn
           - osc
           - pandoc
