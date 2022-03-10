@@ -87,6 +87,7 @@
           - nodejs
           - nodejs-devel
           - okteto
+          - opensc
           - openvpn
           - osc
           - pandoc
@@ -154,6 +155,7 @@
           - wrk
           - xsv
           - yarn
+          - yubikey-manager
 
           # FROM morawskim
           - captain
@@ -233,6 +235,7 @@
           - xsel
           - xvfb-run
           - yakuake
+          - yubikey-manager-qt
           # FROM morawskim
           - jetbrains-toolbox
           - susepaste-qt
