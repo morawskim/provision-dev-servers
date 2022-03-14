@@ -1,0 +1,34 @@
+---
+- hosts: localhost
+  become: true
+  connection: local
+  tasks:
+    - name: Install required packages CLI
+      package:
+        name:
+          - jq
+          - tmux
+          - fzf
+          - nodejs
+          - npm
+          - pipx
+          - vim
+          - whois
+          - ipcalc
+          - bcal
+          - colordiff
+        state: present
+    - name: Install required packages GUI
+      package:
+        name:
+          - ghex
+          - peek
+          - libreoffice-l10n-pl
+          - xclip
+        state: present
+    - name: Install snap packages
+      snap:
+        name:
+          - ksnip
+          - lsd
+        state: present
