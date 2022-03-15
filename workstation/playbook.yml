@@ -66,6 +66,8 @@
           - git-review
           - graphviz
           - guestfs-tools
+          - helm
+          - helm-bash-completion
           - hub
           - hyperfine
           - iotop
