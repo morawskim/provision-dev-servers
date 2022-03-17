@@ -17,7 +17,11 @@
           - ipcalc
           - bcal
           - colordiff
+          - silversearcher-ag
         state: present
+    - name: Install delta
+      apt:
+        deb: https://github.com/dandavison/delta/releases/download/0.12.1/git-delta_0.12.1_amd64.deb
     - name: Install required packages GUI
       package:
         name:
@@ -31,4 +35,12 @@
         name:
           - ksnip
           - lsd
+          - spotify
         state: present
+    - name: Install snap classic packages
+      snap:
+        name:
+          - helm
+          - code
+        classic: yes 
+        state: present  
