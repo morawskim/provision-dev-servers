@@ -8,7 +8,6 @@
         name:
           - jq
           - tmux
-          - fzf
           - nodejs
           - npm
           - pipx
@@ -43,4 +42,9 @@
           - helm
           - code
         classic: yes 
-        state: present  
+        state: present
+    - name: Install fzf 0.29
+      unarchive:
+        src: https://github.com/junegunn/fzf/releases/download/0.29.0/fzf-0.29.0-linux_amd64.tar.gz
+        dest: /usr/local/bin/
+        remote_src: yes
