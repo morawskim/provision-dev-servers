@@ -48,3 +48,8 @@
         src: https://github.com/junegunn/fzf/releases/download/0.29.0/fzf-0.29.0-linux_amd64.tar.gz
         dest: /usr/local/bin/
         remote_src: yes
+    - name: Fetch fzf key-bindings for bash
+      get_url:
+        url: https://raw.githubusercontent.com/junegunn/fzf/master/shell/key-bindings.bash
+        dest: /etc/bash_completion.d/fzf-key-bindings.bash
+        mode: '0444'
