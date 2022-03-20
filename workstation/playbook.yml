@@ -240,6 +240,7 @@
           - yubikey-manager-qt
           # FROM morawskim
           - jetbrains-toolbox
+          - lens
           - susepaste-qt
           - xrectsel
           - zoom
