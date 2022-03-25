@@ -17,6 +17,8 @@
           - bcal
           - colordiff
           - silversearcher-ag
+          - powerline
+          - tmuxinator
         state: present
     - name: Install delta
       apt:
