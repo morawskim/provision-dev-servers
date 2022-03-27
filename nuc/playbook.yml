@@ -15,6 +15,7 @@
           - make
           - wget
           - python38-lxml
+          - ansible
           #- qemu-kvm
         state: present
     - name: Start libvirtd

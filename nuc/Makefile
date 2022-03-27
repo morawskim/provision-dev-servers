@@ -7,7 +7,7 @@ setup-ansible-modules:
 deploy-docker: setup-ansible-modules
 	ANSIBLE_LIBRARY=$(PWD)/ansible-modules:/usr/share/ansible/plugins/modules ansible-playbook --inventory ./inventory.ini --ask-vault-pass docker/playbook.yml
 
-deploy-nuc:
+deploy-nuc: setup-ansible-modules
 	ansible-playbook --inventory ./inventory.ini nuc/playbook.yml
 
 deploy-gitlab-runner:

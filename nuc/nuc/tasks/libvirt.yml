@@ -1,0 +1,36 @@
+- name: Install python module to manage libvirt pools
+  package:
+    name:
+      - python3-lxml
+- name: libvirt hook to publish ports
+  template:
+    src: libvirt/publish-vm-docker-ports.j2
+    dest: /etc/libvirt/hooks/publish-vm-docker-ports
+    owner: root
+    group: root
+    mode: '0755'
+  notify: Restart libvirtd
+- name: Create default virt_pool
+  community.libvirt.virt_pool:
+    command: define
+    name: '{{ libvirt_default_pool_name }}'
+    xml: '{{ lookup("template", "libvirt/pool.xml.j2") }}'
+- name: List libvirt pools
+  virt_pool:
+    command: list_pools
+  register: libvirt_pools
+- name: Build default pool
+  community.libvirt.virt_pool:
+    command: build
+    name: '{{ libvirt_default_pool_name }}'
+  when: "'default' not in libvirt_pools.list_pools"
+- name: Create default pool
+  community.libvirt.virt_pool:
+    command: create
+    name: '{{ libvirt_default_pool_name }}'
+  when: "'default' not in libvirt_pools.list_pools"
+- name: Enabled default pool
+  community.libvirt.virt_pool:
+    state: active
+    autostart: yes
+    name: '{{ libvirt_default_pool_name }}'

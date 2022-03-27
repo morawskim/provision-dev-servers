@@ -1,0 +1,42 @@
+- name: cups packages
+  package:
+    name:
+      - cups
+      - cups-client
+- name: copy ppd
+  copy:
+    src: ../samsung-ml-2010-gdi.ppd
+    dest: /etc/cups/ppd/samsung-ml-2010-gdi.ppd
+    owner: root
+    group: root
+    mode: 0644
+- name: lpadmin
+  shell:
+    cmd: /usr/sbin/lpadmin -p samsung2010ml -E -v usb://Samsung/ML-2010?serial=4621BKDPA24185W. -P /etc/cups/ppd/samsung-ml-2010-gdi.ppd
+- name: cupsaccept
+  shell:
+    cmd: /usr/sbin/cupsaccept samsung2010ml
+- name: cupsenable
+  shell:
+    cmd: /usr/sbin/cupsenable samsung2010ml
+- name: lpoptions
+  shell:
+    cmd: /usr/bin/lpoptions -d samsung2010ml
+- name: share printers
+  shell:
+    cmd: /usr/sbin/cupsctl --share-printers
+- name: Add ServerAlias to cupsd
+  lineinfile:
+    path: /etc/cups/cupsd.conf
+    regexp: '^ServerAlias '
+    insertafter: '^WebInterface '
+    line: ServerAlias print.morawskim.pl
+  notify: Restart cups
+- name: Enable and start cups service
+  service: name=cups state=started enabled=yes
+- name: firewalld enable ports
+  firewalld:
+    port: 631/tcp
+    permanent: true
+    state: enabled
+    zone: internal
