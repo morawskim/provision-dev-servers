@@ -2,7 +2,7 @@
 - hosts: all
   become: true
   vars:
-    ansible_python_interpreter: /usr/bin/python3.8
+    ansible_python_interpreter: /usr/bin/python3.6
   tasks:
     - name: Install required packages CLI
       package:
@@ -14,12 +14,15 @@
           - git
           - make
           - wget
-          - python38-lxml
+          - python3-lxml
           - ansible
+          - firewalld
           #- qemu-kvm
         state: present
     - name: Start libvirtd
       service: name=libvirtd state=started enabled=yes
+    - name: Start firewalld
+      service: name=firewalld state=started enabled=yes
     - name: Update account
       user:
         name: "vagrant"

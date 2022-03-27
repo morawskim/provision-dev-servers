@@ -27,7 +27,9 @@
         permanent: true
         state: enabled
     - include_tasks: tasks/libvirt.yml
-    - include_tasks: tasks/cups.yml
+    - name: "Include cups"
+      include_tasks: tasks/cups.yml
+      when: "'guest' != ansible_facts.virtualization_role"
     - include_tasks: tasks/cockpit.yml
   handlers:
     - name: Restart libvirtd
