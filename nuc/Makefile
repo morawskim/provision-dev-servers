@@ -2,6 +2,7 @@
 
 setup-ansible-modules:
 	test -d ansible-modules/ansible-gpg-key || git clone https://github.com/netson/ansible-gpg-key.git ansible-modules/ansible-gpg-key
+	ansible-galaxy collection install community.libvirt
 
 deploy-docker: setup-ansible-modules
 	ANSIBLE_LIBRARY=$(PWD)/ansible-modules:/usr/share/ansible/plugins/modules ansible-playbook --inventory ./inventory.ini --ask-vault-pass docker/playbook.yml

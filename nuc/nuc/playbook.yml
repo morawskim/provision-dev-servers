@@ -2,6 +2,7 @@
 - hosts: nuc
   become: true
   vars:
+    libvirt_default_pool_name: default
     #ansible_python_interpreter: /usr/bin/python3.8
   tasks:
     - name: Install required packages CLI
@@ -9,6 +10,8 @@
         name:
           - patterns-server-kvm_server
           - patterns-server-kvm_tools
+          - qemu-ui-spice-core
+          - python3-lxml
           #- python3-firewall
         state: present
     - name: Start libvirtd
@@ -18,6 +21,7 @@
         name: "marcin"
         groups: [libvirt, systemd-journal]
         state: present
+
     - name: libvirt hook to publish ports
       template:
         src: publish-vm-docker-ports.j2
@@ -25,7 +29,73 @@
         owner: root
         group: root
         mode: '0755'
-        notify: Restart libvirtd
+      notify: Restart libvirtd
+    - name: Create default virt_pool
+      community.libvirt.virt_pool:
+        command: define
+        name: '{{ libvirt_default_pool_name }}'
+        xml: '{{ lookup("template", "libvirt/pool.xml.j2") }}'
+    - name: List libvirt pools
+      virt_pool:
+        command: list_pools
+      register: libvirt_pools
+    - name: Build default pool
+      community.libvirt.virt_pool:
+        command: build
+        name: '{{ libvirt_default_pool_name }}'
+      when: "'default' not in libvirt_pools.list_pools"
+    - name: Create default pool
+      community.libvirt.virt_pool:
+        command: create
+        name: '{{ libvirt_default_pool_name }}'
+      when: "'default' not in libvirt_pools.list_pools"
+    - name: Enabled default pool
+      community.libvirt.virt_pool:
+        state: active
+        autostart: yes
+        name: '{{ libvirt_default_pool_name }}'
+
+    - name: cups packages
+      package:
+        name:
+          - cups
+          - cups-client
+    - name: copy ppd
+      copy:
+        src: samsung-ml-2010-gdi.ppd
+        dest: /etc/cups/ppd/samsung-ml-2010-gdi.ppd
+        owner: root
+        group: root
+        mode: 0644
+    - name: lpadmin
+      shell:
+        cmd: /usr/sbin/lpadmin -p samsung2010ml -E -v usb://Samsung/ML-2010?serial=4621BKDPA24185W. -P /etc/cups/ppd/samsung-ml-2010-gdi.ppd
+    - name: cupsaccept
+      shell:
+        cmd: /usr/sbin/cupsaccept samsung2010ml
+    - name: cupsenable
+      shell:
+        cmd: /usr/sbin/cupsenable samsung2010ml
+    - name: lpoptions
+      shell:
+        cmd: /usr/bin/lpoptions -d samsung2010ml
+    - name: share printers
+      shell:
+        cmd: /usr/sbin/cupsctl --share-printers
+    - name: firewalld add interface to internal zone
+      firewalld:
+        zone: internal
+        interface: wlan0
+        permanent: true
+        state: enabled
+    - name: firewalld enable ports
+      firewalld:
+        port: "{{ item }}"
+        permanent: true
+        state: enabled
+        zone: internal
+      with_items:
+       - 631/tcp
   handlers:
     - name: Restart libvirtd
       service:
