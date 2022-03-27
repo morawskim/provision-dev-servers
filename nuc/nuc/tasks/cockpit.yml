@@ -1,0 +1,27 @@
+- name: 'Add cockpit GPG key'
+  rpm_key:
+    state: present
+    key: https://download.opensuse.org/repositories/home:/ecsos:/server/{{ ansible_facts.distribution_version }}/repodata/repomd.xml.key
+- name: Add cockpit repository
+  community.general.zypper_repository:
+    name: ~
+    autorefresh: 1
+    enabled: 1
+    description: ~
+    runrefresh: 1
+    repo: https://download.opensuse.org/repositories/home:/ecsos:/server/{{ ansible_facts.distribution_version }}/home:ecsos:server.repo
+    disable_gpg_check: 0
+- name: Install cockpit
+  package:
+    name:
+      - cockpit
+      - cockpit-machines
+      - cockpit-packagekit
+- name: Enable and start cockpit service
+  service: name=cockpit state=started enabled=yes
+- name: firewalld enable cockpit
+  firewalld:
+    port: 9090/tcp
+    permanent: true
+    state: enabled
+    zone: internal
