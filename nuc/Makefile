@@ -12,4 +12,4 @@ deploy-nuc: setup-ansible-modules
 	ansible-playbook --inventory ./inventory.ini nuc/playbook.yml
 
 deploy-gitlab-runner: setup-ansible-modules
-	ansible-playbook --inventory ./inventory.ini gitlab-runner/playbook.yml
+	ansible-playbook --inventory ./inventory.ini --ask-vault-pass gitlab-runner/playbook.yml
