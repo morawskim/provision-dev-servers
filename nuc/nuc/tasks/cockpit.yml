@@ -17,8 +17,11 @@
       - cockpit
       - cockpit-machines
       - cockpit-packagekit
+      - cockpit-pcp
 - name: Enable and start cockpit service
   service: name=cockpit state=started enabled=yes
+- name: Enable and start pmlogger service
+  service: name=pmlogger state=started enabled=yes
 - name: firewalld enable cockpit
   firewalld:
     port: 9090/tcp
