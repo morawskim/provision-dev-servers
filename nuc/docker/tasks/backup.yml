@@ -27,12 +27,19 @@
     owner: root
     group: root
     mode: '0755'
+- name: Copy script to backup
+  copy:
+    src: backup/backup.sh.j2
+    dest: /usr/local/bin/backup.sh
+    owner: root
+    group: root
+    mode: '0755'
 - name: Creates a cron job for backup
   cron:
     name: "daily backup"
     special_time: daily
     user: root
-    job: "/usr/local/bin/dump-mysql.rb {{ BACKUP_DIR }}"
+    job: "/usr/local/bin/backup.sh {{ BACKUP_DIR }}"
     cron_file: backup
 # {{{ Duplicity
 - name: Create env file for duplicity
