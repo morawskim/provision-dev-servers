@@ -21,7 +21,6 @@ module "vm-docker" {
   source    = "../modules/vm"
   name = "docker"
   network_id = module.network.id
-  ips = ["192.168.120.10"]
 }
 
 module "vm-gitlab" {
@@ -29,5 +28,4 @@ module "vm-gitlab" {
   name = "gitlab"
   disk = 1024*1024*1024*10 # 10 GB
   network_id = module.network.id
-  ips = ["192.168.120.20"]
 }

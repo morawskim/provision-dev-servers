@@ -34,3 +34,14 @@
     state: active
     autostart: yes
     name: '{{ libvirt_default_pool_name }}'
+- name: Set NETCONFIG_DNS_* for netconfig
+  lineinfile:
+    path: /etc/sysconfig/network/config
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+  loop:
+    - { regexp: '^NETCONFIG_DNS_STATIC_SERVERS=', line: 'NETCONFIG_DNS_STATIC_SERVERS="{{ libvirt_dns }}"' }
+    - { regexp: '^NETCONFIG_DNS_STATIC_SEARCHLIST=', line: 'NETCONFIG_DNS_STATIC_SEARCHLIST="pck.internal"' }
+- name: Regenerate /etc/resolv.conf
+  shell:
+    cmd: netconfig update -f

@@ -4,6 +4,7 @@
   vars:
     libvirt_default_pool_name: default
     #ansible_python_interpreter: /usr/bin/python3.8
+    libvirt_dns: "{{ '192.168.111.1' if 'guest' != ansible_facts.virtualization_role else '192.168.120.1' }}"
   tasks:
     - name: Install required packages CLI
       package:

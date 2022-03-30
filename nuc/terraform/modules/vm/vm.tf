@@ -28,8 +28,9 @@ resource "libvirt_domain" "vm-ubuntu" {
 
   network_interface {
     network_id = var.network_id
-    addresses  = var.ips
     hostname = var.name
+    wait_for_lease = true
+    addresses = []
   }
 
   disk {

@@ -6,10 +6,6 @@ variable "network_id" {
   type = string
 }
 
-variable "ips" {
-  type = list(string)
-}
-
 variable "vcpu" {
   type = number
   default = 1
