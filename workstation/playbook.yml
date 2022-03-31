@@ -56,7 +56,6 @@
           - diffoscope
           - docker
           - docker-bash-completion
-          - docker-compose
           - duplicity
           - exa
           - fzf
@@ -131,6 +130,7 @@
           - powerline
           - pwgen
           - python3-firewall
+          - python38-docker-compose
           - quilt
           - rpmorphan
           - rtw89-firmware
