@@ -26,14 +26,14 @@ resource "newrelic_infra_alert_condition" "cpu_alert" {
   comparison = "above"
 
   critical {
-    duration      = "10"
-    value         = 90
+    duration      = "5"
+    value         = 85
     time_function = "all"
   }
 
   warning {
     duration      = "5"
-    value         = 80
+    value         = 75
     time_function = "all"
   }
 }
@@ -69,7 +69,7 @@ resource "newrelic_infra_alert_condition" "disk_alert" {
 
   critical {
     duration      = 5
-    value         = 5
+    value         = 10
     time_function = "all"
   }
 
@@ -86,6 +86,6 @@ resource "newrelic_infra_alert_condition" "host_not_reporting" {
   type      = "infra_host_not_reporting"
 
   critical {
-    duration = 15
+    duration = 5
   }
 }
