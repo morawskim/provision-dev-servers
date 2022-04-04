@@ -3,6 +3,17 @@
   become: true
   connection: local
   tasks:
+    - name: Add nodejs GPG apt Key
+      apt_key:
+        url: https://deb.nodesource.com/gpgkey/nodesource.gpg.key
+        state: present
+    - name: Add nodejs Repository
+      apt_repository:
+        repo: deb https://deb.nodesource.com/node_14.x {{ ansible_facts['distribution_release'] }} main
+        state: present
+    - name: Update apt
+      apt: update_cache=yes
+
     - name: Install required packages CLI
       package:
         name:
@@ -30,6 +41,7 @@
           - peek
           - libreoffice-l10n-pl
           - xclip
+          - vim-gtk3
         state: present
     - name: Install snap packages
       snap:
