@@ -3,8 +3,15 @@
   become: true
   vars:
     libvirt_default_pool_name: default
-    #ansible_python_interpreter: /usr/bin/python3.8
     libvirt_dns: "{{ '192.168.111.1' if 'guest' != ansible_facts.virtualization_role else '192.168.120.1' }}"
+  vars_files:
+    - parameters/secrets.yml
+  roles:
+    - name: newrelic.newrelic-infra
+      vars:
+        nrinfragent_config:
+          license_key: "{{ NEWRELIC_LICENSE_KEY }}"
+      when: "'guest' != ansible_facts.virtualization_role"
   tasks:
     - name: Install required packages CLI
       package:
@@ -12,10 +19,13 @@
           - patterns-server-kvm_server
           - patterns-server-kvm_tools
           - qemu-ui-spice-core
+          - firewalld
           #- python3-firewall
         state: present
     - name: Start libvirtd
       service: name=libvirtd state=started enabled=yes
+    - name: Start firewalld
+      service: name=firewalld state=started enabled=yes
     - name: Update account
       user:
         name: "marcin"
