@@ -9,7 +9,7 @@ terraform {
 }
 
 provider "libvirt" {
-  uri   = "qemu:///system"
+  uri   = "qemu+ssh://vagrant@leap.local/system"
 }
 
 module "network" {
