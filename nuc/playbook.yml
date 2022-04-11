@@ -15,6 +15,7 @@
           - libvirt-client
           - avahi
           - nss-mdns
+          - mkisofs
         state: present
     - name: Start avahi-dnsconfd.service
       service: name=avahi-dnsconfd state=started enabled=yes
@@ -23,3 +24,30 @@
         name: "vagrant"
         groups: [systemd-journal]
         state: present
+        append: yes
+    - name: Install firewalld
+      package:
+        name:
+          - firewalld
+          - patterns-server-kvm_tools
+      when: "ansible_facts.nodename == 'leap'"
+    - name: Start firewalld
+      service: name=firewalld state=started enabled=yes
+      when: "ansible_facts.nodename == 'leap'"
+    - name: firewalld enable ports
+      firewalld:
+        port: "{{ item }}"
+        permanent: true
+        state: enabled
+        immediate: true
+      with_items:
+       - 5353/udp
+       - 53791/udp
+      when: "ansible_facts.nodename == 'leap'"
+    - name: Add vagrant user to group libvirt
+      user:
+        name: "vagrant"
+        groups: [libvirt]
+        state: present
+        append: yes
+      when: "ansible_facts.nodename == 'leap'"
