@@ -1,12 +1,18 @@
 ---
 - hosts: docker
   become: true
-  gather_facts: no
+  gather_facts: yes
   vars:
     username: ubuntu
   vars_files:
     - parameters/vars.yml
     - parameters/secrets.yml
+  roles:
+    - name: newrelic.newrelic-infra
+      vars:
+        nrinfragent_config:
+          license_key: "{{ NEWRELIC_LICENSE_KEY }}"
+      when: "'virtualbox' != ansible_facts.virtualization_type"
   tasks:
     - name: Only run "update_cache=yes" if the last one is more than 3600 seconds ago
       apt:

@@ -4,7 +4,12 @@
   gather_facts: yes
   vars_files:
     - parameters/secrets.yml
-
+  roles:
+    - name: newrelic.newrelic-infra
+      vars:
+        nrinfragent_config:
+          license_key: "{{ NEWRELIC_LICENSE_KEY }}"
+      when: "'virtualbox' != ansible_facts.virtualization_type"
   tasks:
      - name: Update apt-get repo and cache
        apt: update_cache=yes force_apt_get=yes cache_valid_time=3600

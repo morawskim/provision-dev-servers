@@ -7,6 +7,11 @@
     ansible_python_interpreter: /usr/bin/python3
   vars_files:
     - parameters/secrets.yml
+  pre_tasks:
+    - name: Install the fake-python3-yaml rpm from a remote repo
+      zypper:
+        name: 'http://rpm.morawskim.pl/openSUSE_Factory/noarch/fake-python3-yaml-0.1.0-1.noarch.rpm'
+        state: present
   roles:
     - name: newrelic.newrelic-infra
       vars:
