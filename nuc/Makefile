@@ -9,7 +9,7 @@ setup-ansible-modules:
 	ansible-galaxy role install -p ansible/roles  newrelic.newrelic-infra
 
 deploy-docker: setup-ansible-modules
-	ANSIBLE_ROLES_PATH=$(PWD)/ansible/roles ANSIBLE_LIBRARY=$(PWD)/ansible-modules:/usr/share/ansible/plugins/modules ansible-playbook --inventory ./inventory.ini --ask-vault-pass docker/playbook.yml
+	ANSIBLE_ROLES_PATH=$(PWD)/ansible/roles ANSIBLE_LIBRARY=$(PWD)/ansible/modules:/usr/share/ansible/plugins/modules ansible-playbook --inventory ./inventory.ini --ask-vault-pass docker/playbook.yml
 
 deploy-nuc: setup-ansible-modules
 	 ANSIBLE_ROLES_PATH=$(PWD)/ansible/roles ansible-playbook --ask-vault-pass --inventory ./inventory.ini nuc/playbook.yml
