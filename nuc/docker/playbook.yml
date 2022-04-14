@@ -7,6 +7,10 @@
   vars_files:
     - parameters/vars.yml
     - parameters/secrets.yml
+  pre_tasks:
+    - name: Set a hostname
+      hostname:
+        name: vm-docker
   roles:
     - name: newrelic.newrelic-infra
       vars:

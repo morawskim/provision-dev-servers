@@ -4,6 +4,10 @@
   gather_facts: yes
   vars_files:
     - parameters/secrets.yml
+  pre_tasks:
+    - name: Set a hostname
+      hostname:
+        name: vm-gitlab-runner
   roles:
     - name: newrelic.newrelic-infra
       vars:
