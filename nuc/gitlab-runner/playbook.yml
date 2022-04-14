@@ -51,6 +51,7 @@
           - ansible
           - python3-gitlab
           - docker.io
+          - packer
         state: present
      - name: Ensure user primary group exists
        group: name=gitlab-runner state=present
