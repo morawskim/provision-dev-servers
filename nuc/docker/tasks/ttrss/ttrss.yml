@@ -19,6 +19,11 @@
             - MYSQL_DATABASE={{TTRSS_DB_NAME}}
           volumes:
             - db:/var/lib/mysql
+          logging:
+            driver: "json-file"
+            options:
+              max-file: "2"
+              max-size: "20m"
 
         app:
           image: morawskim/ttrss-mysql:2021-03-31
@@ -36,6 +41,11 @@
           networks:
             - default
             - traefik
+          logging:
+            driver: "json-file"
+            options:
+              max-file: "2"
+              max-size: "20m"
         updater:
           image: morawskim/ttrss-mysql:2021-03-31
           restart: unless-stopped
