@@ -38,4 +38,5 @@
     - include_tasks: tasks/ots.yml
     - include_tasks: tasks/nextcloud.yml
     - include_tasks: tasks/ttrss/ttrss.yml
+    - include_tasks: tasks/fluentbit/playbook.yml
     - include_tasks: tasks/backup.yml
