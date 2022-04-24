@@ -1,0 +1,30 @@
+[SERVICE]
+    Flush        5
+    Log_Level    info
+    Daemon off
+    plugins_file plugins.conf
+
+[INPUT]
+    Name tail
+    Tag nuc.*
+    Path /var/log/libvirt/qemu/*.log
+
+[INPUT]
+    Name tail
+    Tag nuc.*
+    Path /var/log/NetworkManager
+
+[INPUT]
+    Name tail
+    Tag nuc.*
+    Path /var/log/wpa_supplicant.log
+
+[INPUT]
+    Name systemd
+    Tag nuc.*
+
+[OUTPUT]
+    Name newrelic
+    Match *
+    licenseKey {{ NEWRELIC_LICENSE_KEY }}
+    endpoint https://log-api.eu.newrelic.com/log/v1

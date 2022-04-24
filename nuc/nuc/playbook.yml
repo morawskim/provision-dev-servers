@@ -48,6 +48,7 @@
       include_tasks: tasks/cups.yml
       when: "'guest' != ansible_facts.virtualization_role"
     - include_tasks: tasks/cockpit.yml
+    - include_tasks: tasks/fluent-bit.yml
   handlers:
     - name: Restart libvirtd
       service:
@@ -56,4 +57,8 @@
     - name: Restart cups
       service:
         name: cups
+        state: restarted
+    - name: Restart fluent-bit
+      service:
+        name: fluent-bit
         state: restarted

@@ -1,0 +1,28 @@
+- name: Install fluent-bit
+  zypper:
+    name: 'http://rpm.morawskim.pl/openSUSE_Leap_15.3/fluent-bit-1.9.2-1.x86_64.rpm'
+    state: present
+    disable_gpg_check: true
+- name: Download newrelic fluent-bit plugin
+  get_url:
+    url: https://github.com/newrelic/newrelic-fluent-bit-output/releases/download/v1.12.3/out_newrelic-linux-amd64-1.12.3.so
+    dest: /usr/local/lib64/out_newrelic-linux.so
+    mode: '0440'
+- name: Fluent-bit plugins
+  template:
+    src: fluent-bit/plugins.conf.j2
+    dest: /etc/fluent-bit/plugins.conf
+    owner: root
+    group: root
+    mode: '0600'
+  notify: Restart fluent-bit
+- name: Fluent-bit configuration
+  template:
+    src: fluent-bit/fluent-bit.conf.j2
+    dest: /etc/fluent-bit/fluent-bit.conf
+    owner: root
+    group: root
+    mode: '0600'
+  notify: Restart fluent-bit
+- name: Start fluent-bit
+  service: name=fluent-bit state=started enabled=yes
