@@ -182,6 +182,7 @@
           - mkcert
           - netsed
           - ngrok-client
+          - packer
           - php-docs
           - python38-pipx
           - textql
