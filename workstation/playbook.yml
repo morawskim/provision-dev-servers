@@ -135,7 +135,7 @@
           - rpmorphan
           - rtw89-firmware
           - rtw89-kmp-default
-          - ruby2.7-rubygem-tmuxinator
+          - ruby3.1-rubygem-tmuxinator
           - sensors
           - sipcalc
           - skopeo
