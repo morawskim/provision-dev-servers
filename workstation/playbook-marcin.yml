@@ -22,6 +22,7 @@
         - { repo: 'git@github.com:morawskim/php-examples.git', dest: '/home/marcin/projekty/php-examples', version: 'master' }
         - { repo: 'https://github.com/lucmos/UltrawideWindows.git', dest: '/home/marcin/.local/share/UltrawideWindows', version: '4.1' }
         - { repo: 'git@github.com:morawskim/packtpub-free-learning.git', dest: '/home/marcin/projekty/packtpub-free-learning', version: 'master' }
+        - { repo: 'git@github.com:morawskim/packer-images.git', dest: '/home/marcin/projekty/packer-images', version: 'master' }
 
     - name: "Add additional remote repositories to ssorder"
       git_config:
@@ -43,6 +44,16 @@
         value: "{{ item.value }}"
       with_items:
         - { name: 'remote.gitlab.url', value: 'git@gitlab.com:morawskim/ssorder-deploy.git' }
+
+    - name: "Add additional remote repositories to packer-images"
+      git_config:
+        scope: local
+        state: present
+        repo: "/home/marcin/projekty/packer-images"
+        name: "{{ item.name }}"
+        value: "{{ item.value }}"
+      with_items:
+        - { name: 'remote.gitlab.url', value: 'git@gitlab.com:morawskim/packer-images.git' }
 
     - name: PathPicker symlink
       file:
