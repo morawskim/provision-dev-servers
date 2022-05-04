@@ -11,7 +11,7 @@
       services:
         app:
           image: morawskim/noip-client
-          restart: "no"mo
+          restart: "no"
           command: "noip:update -f /.env"
           logging:
             driver: "json-file"
