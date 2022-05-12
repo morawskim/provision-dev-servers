@@ -27,6 +27,11 @@
     - name: Start docker
       service: name=docker state=started enabled=yes
 
+    - name: Enable the ppa:ondrej/php repo on Ubuntu systems
+      apt_repository:
+        repo: ppa:ondrej/php
+        update_cache: true
+
     - name: Add nodejs GPG apt Key
       apt_key:
         url: https://deb.nodesource.com/gpgkey/nodesource.gpg.key
@@ -54,6 +59,7 @@
           - powerline
           - tmuxinator
           - docker-compose
+          - php8.1-cli
         state: present
     - name: Add docker to the user's groups
       user:
