@@ -43,7 +43,7 @@
     - name: Update apt
       apt: update_cache=yes
 
-    - name: Install required packages CLI
+    - name: Install required packages
       package:
         name:
           - jq
@@ -59,6 +59,7 @@
           - powerline
           - tmuxinator
           - docker-compose
+          - gpaste
           - php8.1-cli
         state: present
     - name: Add docker to the user's groups
@@ -77,6 +78,7 @@
           - libreoffice-l10n-pl
           - xclip
           - vim-gtk3
+          - gnome-shell-extensions-gpaste
         state: present
     - name: Install snap packages
       snap:
