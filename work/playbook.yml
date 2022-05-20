@@ -61,6 +61,7 @@
           - docker-compose
           - gpaste
           - php8.1-cli
+          - php8.1-xml
         state: present
     - name: Add docker to the user's groups
       user:
