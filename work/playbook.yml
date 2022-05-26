@@ -93,6 +93,7 @@
         name:
           - helm
           - code
+          - fluxctl
         classic: yes 
         state: present
     - name: Install fzf 0.29
