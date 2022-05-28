@@ -87,6 +87,7 @@
           - ksnip
           - lsd
           - spotify
+          - kubectx
         state: present
     - name: Install snap classic packages
       snap:
