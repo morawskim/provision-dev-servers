@@ -71,6 +71,12 @@
     - name: Install delta
       apt:
         deb: https://github.com/dandavison/delta/releases/download/0.12.1/git-delta_0.12.1_amd64.deb
+    - name: Install fluxctl
+      get_url:
+        url: https://github.com/fluxcd/flux/releases/download/1.25.2/fluxctl_linux_amd64
+        dest: /usr/local/bin/fluxctl
+        mode: '0755'
+        checksum: sha256:78187b55ef3eac5b18cb26b097fbfb0c6525259867525388de6523c8af841e99
     - name: Install required packages GUI
       package:
         name:
@@ -94,7 +100,6 @@
         name:
           - helm
           - code
-          - fluxctl
         classic: yes 
         state: present
     - name: Install fzf 0.29
