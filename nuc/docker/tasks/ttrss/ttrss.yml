@@ -7,7 +7,7 @@
   docker_compose:
     project_name: ttrss
     definition:
-      version: '3.3'
+      version: '2.4'
       services:
         mysql:
           image: mysql:5.7
@@ -24,7 +24,7 @@
             options:
               max-file: "2"
               max-size: "20m"
-
+          mem_limit: 480M
         app:
           image: morawskim/ttrss-mysql:2021-03-31
           restart: unless-stopped
