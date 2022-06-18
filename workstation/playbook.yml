@@ -3,7 +3,7 @@
   become: true
   connection: local
   vars:
-    ansible_python_interpreter: /usr/bin/python3.8
+    ansible_python_interpreter: /usr/bin/python3.10
   tasks:
     - name: 'Add GPG keys'
       rpm_key:
@@ -131,7 +131,7 @@
           - powerline
           - pwgen
           - python3-firewall
-          - python38-docker-compose
+          - python310-docker-compose
           - quilt
           - rpmorphan
           - rtw89-firmware
