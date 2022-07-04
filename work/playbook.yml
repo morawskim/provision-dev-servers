@@ -113,3 +113,13 @@
         url: https://raw.githubusercontent.com/junegunn/fzf/master/shell/key-bindings.bash
         dest: /etc/bash_completion.d/fzf-key-bindings.bash
         mode: '0444'
+    - name: Install kubeseal 0.18
+      unarchive:
+        src: https://github.com/bitnami-labs/sealed-secrets/releases/download/v0.18.0/kubeseal-0.18.0-linux-amd64.tar.gz
+        dest: /usr/local/bin/
+        remote_src: yes
+        creates: /kubeseal
+        # in this version of module, we don't have include parameter
+        exclude:
+          - LICENSE
+          - README.md
