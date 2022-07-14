@@ -63,6 +63,8 @@
           - gpaste
           - php8.1-cli
           - php8.1-xml
+          - bind9-dnsutils
+          - whois
         state: present
     - name: Add docker to the user's groups
       user:
