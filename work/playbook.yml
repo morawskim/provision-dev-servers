@@ -125,3 +125,8 @@
         exclude:
           - LICENSE
           - README.md
+    - name: Download composer 2.2.12
+      get_url:
+        url: https://getcomposer.org/download/2.2.12/composer.phar
+        dest: /usr/local/bin/composer-2.2.12
+        mode: '0755'
