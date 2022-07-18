@@ -5,7 +5,7 @@ VIRB_NIC=virbr1
 if [ "${1}" = "vm-ubuntu-docker" ]; then
 
    # Update the following variables to fit your setup
-   GUEST_IP=192.168.111.10
+   GUEST_IP=docker.pck.internal
    GUEST_PORT=80
    HOST_PORT=8888
 
@@ -22,7 +22,7 @@ fi
 if [ "${1}" = "vm-ubuntu-docker" ]; then
 
    # Update the following variables to fit your setup
-   GUEST_IP=192.168.111.10
+   GUEST_IP=docker.pck.internal
    GUEST_PORT=443
    HOST_PORT=4433
 
