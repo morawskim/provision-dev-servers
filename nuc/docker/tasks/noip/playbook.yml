@@ -23,6 +23,7 @@
         ofelia:
           image: mcuadros/ofelia:latest
           command: daemon --docker
+          restart: unless-stopped
           labels:
             ofelia.enabled: "true"
             ofelia.job-run.noip.schedule: "@every 5m"
