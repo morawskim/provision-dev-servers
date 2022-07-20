@@ -140,6 +140,7 @@
           - sensors
           - sipcalc
           - skopeo
+          - skopeo-bash-completion
           - snapd
           - susepaste
           - sysstat
