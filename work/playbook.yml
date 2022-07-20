@@ -40,9 +40,19 @@
       apt_repository:
         repo: deb https://deb.nodesource.com/node_14.x {{ ansible_facts['distribution_release'] }} main
         state: present
+
+    - name: Add skopeo GPG apt Key
+      apt_key:
+        url: https://download.opensuse.org/repositories/devel:kubic:libcontainers:stable/xUbuntu_20.04/Release.key
+        state: present
+    - name: Add skopeo Repository
+      apt_repository:
+        repo: deb http://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_{{ ansible_facts['distribution_version'] }}/ /
+        state: present
+        update_cache: true
+
     - name: Update apt
       apt: update_cache=yes
-
     - name: Install required packages
       package:
         name:
@@ -65,6 +75,7 @@
           - php8.1-xml
           - bind9-dnsutils
           - whois
+          - skopeo
         state: present
     - name: Add docker to the user's groups
       user:
