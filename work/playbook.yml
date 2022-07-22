@@ -32,6 +32,11 @@
         repo: ppa:ondrej/php
         update_cache: true
 
+    - name: Enable the ppa:tektoncd/cli repo on Ubuntu systems
+      apt_repository:
+        repo: ppa:tektoncd/cli
+        update_cache: true
+
     - name: Add nodejs GPG apt Key
       apt_key:
         url: https://deb.nodesource.com/gpgkey/nodesource.gpg.key
@@ -76,6 +81,7 @@
           - bind9-dnsutils
           - whois
           - skopeo
+          - tektoncd-cli
         state: present
     - name: Add docker to the user's groups
       user:
