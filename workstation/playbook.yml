@@ -142,6 +142,7 @@
           - skopeo
           - skopeo-bash-completion
           - snapd
+          - starship
           - susepaste
           - sysstat
           - systemd-logger
