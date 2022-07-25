@@ -82,6 +82,7 @@
           - whois
           - skopeo
           - tektoncd-cli
+          - yadm
         state: present
     - name: Add docker to the user's groups
       user:
@@ -114,6 +115,7 @@
           - lsd
           - spotify
           - kubectx
+          - starship
         state: present
     - name: Install snap classic packages
       snap:
