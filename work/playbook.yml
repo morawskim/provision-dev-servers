@@ -116,6 +116,7 @@
           - spotify
           - kubectx
           - starship
+          - httpie
         state: present
     - name: Install snap classic packages
       snap:
