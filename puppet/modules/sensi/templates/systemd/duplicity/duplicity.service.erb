@@ -1,7 +1,0 @@
-[Unit]
-Description=Run duplicity backup
-
-[Service]
-Type=oneshot
-Environment=FTP_PASSWORD=<%= @ftp_password %>
-ExecStart=/usr/bin/duplicity --verbosity info --no-encryption --full-if-older-than 10D <%= @dir %> <%= @url %>
