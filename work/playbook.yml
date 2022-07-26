@@ -114,7 +114,6 @@
           - ksnip
           - lsd
           - spotify
-          - kubectx
           - starship
           - httpie
         state: present
