@@ -83,6 +83,8 @@
           - skopeo
           - tektoncd-cli
           - yadm
+          - fd-find
+          - bat
         state: present
     - name: Add docker to the user's groups
       user:
@@ -116,6 +118,9 @@
           - spotify
           - starship
           - httpie
+          - pastel
+          - peco
+          - fx
         state: present
     - name: Install snap classic packages
       snap:
