@@ -59,6 +59,7 @@
           - docker-bash-completion
           - duplicity
           - exa
+          - fd
           - fzf
           - fzf-tmux
           - gettext-tools
@@ -257,6 +258,8 @@
       snap:
         name:
           - bw
+          - pastel
+          - peco
     - name: firewalld add source to internal zone
       firewalld:
         source: 172.16.0.0/12
