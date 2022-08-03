@@ -94,6 +94,12 @@
     - name: Install delta
       apt:
         deb: https://github.com/dandavison/delta/releases/download/0.12.1/git-delta_0.12.1_amd64.deb
+    - name: Install dive
+      apt:
+        deb: https://github.com/wagoodman/dive/releases/download/v0.9.2/dive_0.9.2_linux_amd64.deb
+    - name: Install MongoDB compass
+      apt:
+        deb: https://downloads.mongodb.com/compass/mongodb-compass_1.32.5_amd64.deb
     - name: Install fluxctl
       get_url:
         url: https://github.com/fluxcd/flux/releases/download/1.25.2/fluxctl_linux_amd64
