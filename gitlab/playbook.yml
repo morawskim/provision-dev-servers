@@ -1,0 +1,20 @@
+---
+- hosts: localhost
+  connection: local
+  vars:
+    ansible_python_interpreter: /usr/bin/python3.10
+  tasks:
+    - name: "Adding a git-mirror ssh key"
+      community.general.source_control.gitlab.gitlab_deploy_key:
+        api_url: https://gitlab.com/
+        api_token: "{{ lookup('env', 'GITLAB_API_TOKEN') }}"
+        project: "{{ item }}"
+        title: "git-mirror"
+        state: present
+        can_push: yes
+        key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFtv+LKtZFiqTnloLfZdLm+O61IIRVzlOo25B6MsmMqG git-mirror"
+      with_items:
+        - morawskim/ssorder
+        - morawskim/packtpub-free-learning
+        - morawskim/packer-images
+        - morawskim/faker-cli
