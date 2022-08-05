@@ -5,7 +5,7 @@
 - name: libvirt hook to publish ports
   template:
     src: libvirt/publish-vm-docker-ports.j2
-    dest: /etc/libvirt/hooks/publish-vm-docker-ports
+    dest: /etc/libvirt/hooks/qemu
     owner: root
     group: root
     mode: '0755'
