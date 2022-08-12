@@ -1,0 +1,28 @@
+- name: OVH DNS playbook
+  hosts: localhost
+  environment:
+    OVH_ENDPOINT: ovh-eu
+    OVH_APPLICATION_KEY: "{{ OVH_APPLICATION_KEY }}"
+    OVH_APPLICATION_SECRET: "{{ OVH_APPLICATION_SECRET }}"
+    OVH_CONSUMER_KEY: "{{ OVH_CONSUMER_KEY }}"
+  vars_files:
+    - vault.yml
+  tasks:
+    - name: Create A record for intel
+      ovh_dns: state=present domain=morawskim.pl name=intel type=A value=192.168.50.50 ttl=60
+
+    - name: Create CNAME for rpm
+      ovh_dns: state=present domain=morawskim.pl name=rpm type=CNAME value=gienek.hostinghouse.pl. ttl=3600
+
+    - name: Create CNAME for noip
+      ovh_dns: state=present domain=morawskim.pl name=noip type=CNAME value=morawskim.ddns.net. ttl=0
+    - name: Create CNAME for kindle
+      ovh_dns: state=present domain=morawskim.pl name=kindle type=CNAME value=noip.morawskim.pl. ttl=0
+    - name: Create CNAME for nextcloud
+      ovh_dns: state=present domain=morawskim.pl name=nextcloud type=CNAME value=noip.morawskim.pl. ttl=0
+    - name: Create CNAME for ots
+      ovh_dns: state=present domain=morawskim.pl name=ots type=CNAME value=noip.morawskim.pl. ttl=0
+    - name: Create CNAME for ttrss
+      ovh_dns: state=present domain=morawskim.pl name=ttrss type=CNAME value=noip.morawskim.pl. ttl=0
+    - name: Create CNAME wildcard for preview services
+      ovh_dns: state=present domain=morawskim.pl name=*.preview type=CNAME value=noip.morawskim.pl. ttl=0
