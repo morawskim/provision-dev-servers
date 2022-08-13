@@ -14,6 +14,8 @@
     - name: Create CNAME for rpm
       ovh_dns: state=present domain=morawskim.pl name=rpm type=CNAME value=gienek.hostinghouse.pl. ttl=3600
 
+    - name: Create CNAME for hosting
+      ovh_dns: state=present domain=morawskim.pl name=hosting type=CNAME value=gienek.hostinghouse.pl. ttl=0
     - name: Create CNAME for noip
       ovh_dns: state=present domain=morawskim.pl name=noip type=CNAME value=morawskim.ddns.net. ttl=0
     - name: Create CNAME for kindle
@@ -22,6 +24,8 @@
       ovh_dns: state=present domain=morawskim.pl name=nextcloud type=CNAME value=noip.morawskim.pl. ttl=0
     - name: Create CNAME for ots
       ovh_dns: state=present domain=morawskim.pl name=ots type=CNAME value=noip.morawskim.pl. ttl=0
+    - name: Create CNAME for print
+      ovh_dns: state=present domain=morawskim.pl name=print type=CNAME value=intel.morawskim.pl. ttl=0
     - name: Create CNAME for ttrss
       ovh_dns: state=present domain=morawskim.pl name=ttrss type=CNAME value=noip.morawskim.pl. ttl=0
     - name: Create CNAME wildcard for preview services
