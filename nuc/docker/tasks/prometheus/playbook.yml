@@ -1,0 +1,23 @@
+- name: Create prometheus config file
+  no_log: true
+  template:
+    src: prometheus.yml.j2
+    dest: "~/prometheus.yml"
+- name: Deploy prometheus via docker-compose
+  docker_compose:
+    project_name: prometheus
+    definition:
+      version: '3.3'
+      services:
+        app:
+          image: prom/prometheus:v2.36.2
+          restart: unless-stopped
+          volumes:
+            - ~/prometheus.yml:/etc/prometheus/prometheus.yml
+          command:
+            - '--config.file=/etc/prometheus/prometheus.yml'
+          logging:
+            driver: "json-file"
+            options:
+              max-size: "20m"
+              max-file: "2"
