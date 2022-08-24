@@ -1,6 +1,7 @@
 - name: Deploy webpage2kindle via docker-compose
   docker_compose:
     project_name: webpage2kindle
+    pull: yes
     definition:
       version: '3.3'
       services:
@@ -16,6 +17,14 @@
           networks:
             - default
             - traefik
+          logging:
+            driver: "json-file"
+            options:
+              max-size: "20m"
+              max-file: "2"
+        node:
+          image: morawskim/webpage2kindle-node
+          restart: unless-stopped
           logging:
             driver: "json-file"
             options:
