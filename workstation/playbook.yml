@@ -41,7 +41,7 @@
       package:
         name:
           - ansible
-          - aws-cli
+          - aws-cli2
           - bash-completion
           - bat
           - bc
