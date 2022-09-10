@@ -1,3 +1,8 @@
+- name: Create env file for webpage2kindle
+  no_log: true
+  copy:
+    content: "{{ WEBPAGE2KINDLE_ENV_LOCAL }}"
+    dest: "~/webpage2kindle.env"
 - name: Deploy webpage2kindle via docker-compose
   docker_compose:
     project_name: webpage2kindle
@@ -14,6 +19,8 @@
             traefik.backend: "webpage2kindle"
             traefik.docker.network: traefik
             traefik.frontend.rule: "Host: kindle{{ APP_DOMAIN_SUFFIX }}"
+          env_file:
+            - "~/webpage2kindle.env"
           networks:
             - default
             - traefik
