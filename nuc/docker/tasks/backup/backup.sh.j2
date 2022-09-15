@@ -6,3 +6,4 @@ TIMESTAMP=$(date '+%F')
 
 /usr/local/bin/dump-mysql.rb $BACKUP_DIR
 /usr/local/bin/nextcloud-backup.sh > $BACKUP_DIR/nextcloud-files.tar.gz
+find $BACKUP_DIR -mtime +7 -exec rm {} \;
