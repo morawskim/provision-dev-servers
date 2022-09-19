@@ -116,6 +116,7 @@
           - xclip
           - vim-gtk3
           - gnome-shell-extensions-gpaste
+          - kcachegrind
         state: present
     - name: Install snap packages
       snap:
