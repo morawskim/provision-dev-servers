@@ -144,7 +144,7 @@
         remote_src: yes
     - name: Fetch fzf key-bindings for bash
       get_url:
-        url: https://raw.githubusercontent.com/junegunn/fzf/master/shell/key-bindings.bash
+        url: https://raw.githubusercontent.com/junegunn/fzf/0.29.0/shell/key-bindings.bash
         dest: /etc/bash_completion.d/fzf-key-bindings.bash
         mode: '0444'
     - name: Install kubeseal 0.18
