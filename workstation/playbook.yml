@@ -182,6 +182,7 @@
           - gron
           - htmlq
           - journalcheck
+          - kube-prompt
           - license
           - lsd
           - mkcert
