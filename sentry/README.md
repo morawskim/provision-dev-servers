@@ -18,3 +18,8 @@ You should set following permissions:
 | Member | No Access |
 
 You can call `SENTRY_AUTH_TOKEN=you_generated_token terraform apply`
+
+### Project platform
+
+When you have already a project you can see project platform from request sent from Sentry panel (https://sentry.io/organizations/<org-slug>/projects/) to endpoint `/api/0/organizations/<org-slug>/projects/?all_projects=1&collapse=latestDeploys`.
+The response will be array of projects and the project will have a key `platform`. You can use this value, when you create a new project in Sentry via terraform.
