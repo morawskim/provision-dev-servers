@@ -3,6 +3,11 @@
   copy:
     content: "{{ WEBPAGE2KINDLE_ENV_LOCAL }}"
     dest: "~/webpage2kindle.env"
+- name: Create env file for webpage2kindle node
+  no_log: true
+  copy:
+    content: "{{ WEBPAGE2KINDLE_ENV_NODE_LOCAL }}"
+    dest: "~/webpage2kindle-node.env"
 - name: Deploy webpage2kindle via docker-compose
   docker_compose:
     project_name: webpage2kindle
@@ -32,6 +37,8 @@
         node:
           image: morawskim/webpage2kindle-node
           restart: unless-stopped
+          volumes:
+            - ~/webpage2kindle-node.env:/app/.env
           logging:
             driver: "json-file"
             options:
