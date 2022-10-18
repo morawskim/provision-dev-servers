@@ -117,6 +117,7 @@
           - vim-gtk3
           - gnome-shell-extensions-gpaste
           - kcachegrind
+          - gnome-sound-recorder
         state: present
     - name: Install snap packages
       snap:
