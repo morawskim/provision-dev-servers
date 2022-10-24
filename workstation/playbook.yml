@@ -68,6 +68,7 @@
           - git
           - git-delta
           - git-review
+          - go1.19
           - graphviz
           - guestfs-tools
           - helm
