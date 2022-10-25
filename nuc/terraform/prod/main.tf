@@ -21,8 +21,8 @@ module "vm-docker" {
   source    = "../modules/vm"
   name = "docker"
   disk = 1024*1024*1024*60 # 60 GB
-  memory = 1800
-  vcpu   = 2
+  memory = 2400
+  vcpu   = 3
   network_id = module.network.id
 }
 
