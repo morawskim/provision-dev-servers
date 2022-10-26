@@ -1,7 +1,7 @@
 #!/bin/bash
 
 VIRB_NIC=virbr1
-GUEST_IP=$(dig @{{ libvirt_dns }} +short docker.pck.internal)
+GUEST_IP=$(dig @{{ libvirt_dns }} +short vm-docker.pck.internal)
 
 if [ "${1}" = "vm-ubuntu-docker" ]; then
 
