@@ -86,6 +86,7 @@
           - yadm
           - fd-find
           - bat
+          - mongodb-clients
         state: present
     - name: Add docker to the user's groups
       user:
