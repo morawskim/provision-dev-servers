@@ -14,25 +14,9 @@ resource "sentry_issue_alert" "webpage2kindle_node" {
   filter_match = "none"
   frequency    = 30
 
-  conditions = [
-    {
-      id   = "sentry.rules.conditions.first_seen_event.FirstSeenEventCondition"
-      name = "A new issue is created"
-    },
-    {
-      id   = "sentry.rules.conditions.regression_event.RegressionEventCondition"
-      name = "The issue changes state from resolved to unresolved"
-    },
-  ]
+  conditions = local.default_alert_conditions
 
   filters = []
 
-  actions = [
-    {
-      id               = "sentry.mail.actions.NotifyEmailAction"
-      name             = "Send a notification to Team"
-      targetType       = "Team"
-      targetIdentifier = sentry_team.main.team_id
-    },
-  ]
+  actions = local.default_alert_actions
 }
