@@ -13,4 +13,11 @@ locals {
     "morawskim/packer-images",
     "morawskim/ssorder-deploy",
   ])
+
+  repos_to_add_mirror_deployment_key = toset([
+    "morawskim/ssorder",
+    "morawskim/packtpub-free-learning",
+    "morawskim/packer-images",
+    "morawskim/faker-cli",
+  ])
 }
