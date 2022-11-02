@@ -1,6 +1,7 @@
 resource "libvirt_cloudinit_disk" "commoninit" {
   name = "commoninit-ubuntu-${var.name}.iso"
   user_data      = data.template_file.user_data.rendered
+  network_config = data.template_file.network_config.rendered
 }
 
 resource "libvirt_volume" "ubuntu-lts-20" {
@@ -47,5 +48,9 @@ resource "libvirt_domain" "vm-ubuntu" {
     type = "spice"
     listen_type = "address"
     autoport = true
+  }
+
+  lifecycle {
+    ignore_changes = [ network_interface["addresses"] ]
   }
 }
