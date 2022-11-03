@@ -16,6 +16,7 @@
           - avahi
           - nss-mdns
           - mkisofs
+          - sshpass
         state: present
     - name: Start avahi-dnsconfd.service
       service: name=avahi-dnsconfd state=started enabled=yes

@@ -12,6 +12,7 @@
       zypper:
         name: 'http://rpm.morawskim.pl/openSUSE_Factory/noarch/fake-python3-yaml-0.1.0-1.noarch.rpm'
         state: present
+        disable_gpg_check: true
   roles:
     - name: newrelic.newrelic-infra
       vars:

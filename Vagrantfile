@@ -21,7 +21,7 @@ Vagrant.configure(2) do |config|
     # If set to a string, the hostname will be set on boot.
     leap.vm.hostname = "leap"
 
-    leap.vm.provision "ansible" do |ansible|    ansible.playbook = "playbook.yml"  end
+    leap.vm.provision "ansible" do |ansible|    ansible.playbook = "server/vagrant/playbook.yml"  end
     leap.vm.provider "virtualbox" do |vb|
       vb.memory = 4096
       vb.cpus = 3
@@ -33,7 +33,7 @@ Vagrant.configure(2) do |config|
     # Enable provisioning with a shell script. Additional provisioners such as
     # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
     # documentation for more information about their specific syntax and use.
-    config.vm.provision "ansible" do |ansible|    ansible.playbook = "playbook.yml"  end
+    config.vm.provision "ansible" do |ansible|    ansible.playbook = "server/vagrant/playbook.yml"  end
     config.vm.network "private_network", type: "dhcp"
     config.vm.hostname = "tumbleweed"
     config.vm.provider "virtualbox" do |vb|
