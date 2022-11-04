@@ -6,6 +6,16 @@ variable "network_id" {
   type = string
 }
 
+variable "distribution" {
+  type    = string
+  default = "ubuntu-20-lts"
+
+  validation {
+    condition     = contains(["ubuntu-20-lts", "ubuntu-22-lts"], var.distribution)
+    error_message = "Allowed values for distribution are \"ubuntu-20-lts\" or \"ubuntu-22-lts\"."
+  }
+}
+
 variable "vcpu" {
   type = number
   default = 1

@@ -7,7 +7,7 @@ resource "libvirt_cloudinit_disk" "commoninit" {
 resource "libvirt_volume" "ubuntu-lts-20" {
   name = "ubuntu-lts-20-${var.name}.qcow2"
   pool = "default"
-  source = "https://cloud-images.ubuntu.com/focal/current/focal-server-cloudimg-amd64.img"
+  source = local.distribution_map[var.distribution].iso
   format = "qcow2"
 }
 
