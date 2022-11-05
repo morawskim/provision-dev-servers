@@ -1,4 +1,4 @@
-.PHONY: deploy-nuc deploy-docker deploy-gitlab-runner deploy-nuc-vagrant setup-ansible-modules
+.PHONY: deploy-nuc deploy-docker deploy-gitlab-runner deploy-nuc-vagrant deploy-gitlab-runner-vagrant setup-ansible-modules
 
 setup-ansible-modules:
 	test -d ansible || mkdir ansible
@@ -16,6 +16,9 @@ deploy-nuc: setup-ansible-modules
 
 deploy-nuc-vagrant: setup-ansible-modules
 	ANSIBLE_ROLES_PATH=$(PWD)/ansible/roles ansible-playbook --ask-vault-pass --inventory ./inventory-vagrant.ini nuc/playbook.yml
+
+deploy-gitlab-runner-vagrant: setup-ansible-modules
+	ANSIBLE_ROLES_PATH=$(PWD)/ansible/roles ansible-playbook --ask-vault-pass  --inventory ./inventory-vagrant.ini vm-gitlab-runner/playbook.yml
 
 deploy-gitlab-runner: setup-ansible-modules
 	ANSIBLE_ROLES_PATH=$(PWD)/ansible/roles ansible-playbook --inventory ./inventory.ini --ask-vault-pass vm-gitlab-runner/playbook.yml

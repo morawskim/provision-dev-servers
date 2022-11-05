@@ -1,6 +1,8 @@
 resource "libvirt_cloudinit_disk" "commoninit" {
   name = "commoninit-ubuntu-${var.name}.iso"
-  user_data      = data.template_file.user_data.rendered
+  user_data  = templatefile("${path.module}/cloud_init.cfg", {
+    ssh_keys = var.ssh_keys
+  })
   network_config = data.template_file.network_config.rendered
 }
 

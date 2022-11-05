@@ -24,6 +24,9 @@ module "vm-docker" {
   memory = 2560
   vcpu   = 3
   network_id = module.network.id
+  ssh_keys = [
+    "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBMLzZA7DQH1lfdA8ZB4HiuD4SMes11rdotJIfR9Pjeq0qMdOVisIlLbV7kr4sOfTWNFcPzKQhtIB4MLFuDp6X+E= PIV AUTH pubkey"
+  ]
 }
 
 module "vm-gitlab" {
@@ -33,4 +36,7 @@ module "vm-gitlab" {
   memory = 5000
   vcpu   = 3
   network_id = module.network.id
+  ssh_keys = [
+    "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBMLzZA7DQH1lfdA8ZB4HiuD4SMes11rdotJIfR9Pjeq0qMdOVisIlLbV7kr4sOfTWNFcPzKQhtIB4MLFuDp6X+E= PIV AUTH pubkey"
+  ]
 }

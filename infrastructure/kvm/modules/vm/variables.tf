@@ -6,6 +6,10 @@ variable "network_id" {
   type = string
 }
 
+variable "ssh_keys" {
+  type    = list(string)
+}
+
 variable "distribution" {
   type    = string
   default = "ubuntu-20-lts"
