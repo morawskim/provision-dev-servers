@@ -10,13 +10,13 @@
   pre_tasks:
     - name: Set a hostname
       hostname:
-        name: vm-docker
+        name: "{{ vagrant_hostname | default('vm-docker') }}"
   roles:
     - name: newrelic.newrelic-infra
       vars:
         nrinfragent_config:
           license_key: "{{ NEWRELIC_LICENSE_KEY }}"
-      when: "'virtualbox' != ansible_facts.virtualization_type"
+      when: "(vagrant_hostname is not defined) or (vagrant_hostname|length == 0)"
   tasks:
     - name: Only run "update_cache=yes" if the last one is more than 3600 seconds ago
       apt:

@@ -27,6 +27,7 @@
           - patterns-server-kvm_tools
           - qemu-ui-spice-core
           - firewalld
+          - bind-utils
           #- python3-firewall
         state: present
     - name: Start libvirtd
