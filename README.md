@@ -12,7 +12,7 @@ The directory `infrastructure` contains terraform files for:
 * setup virtual machines
 * manage DNS zone in OVH
 * manage alerts in New Relic
-* manage resources in AWS (S3, budget)
+* manage resources in AWS (S3, budget, IAM)
 
 ### Server directory
 
