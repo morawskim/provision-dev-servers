@@ -1,5 +1,5 @@
 This repository contains infrastructure as code.
-The goal of this repo is setup and manage configuration of SaaS applications (Sentry, GitLab, New Relic) and raw infrastructure (OVH, KVM/libvirt).
+The goal of this repo is setup and manage configuration of SaaS applications (Sentry, GitLab, New Relic, Mailgun) and raw infrastructure (OVH, KVM/libvirt, AWS).
 
 The structure of this repository is split in three main directories - intrastructure, servers and workstation.
 
@@ -13,6 +13,7 @@ The directory `infrastructure` contains terraform files for:
 * manage DNS zone in OVH
 * manage alerts in New Relic
 * manage resources in AWS (S3, budget, IAM)
+* manage email accounts in Mailgun
 
 ### Server directory
 
