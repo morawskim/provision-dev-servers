@@ -131,6 +131,7 @@
           - pastel
           - peco
           - fx
+          - postman
         state: present
     - name: Install snap classic packages
       snap:
