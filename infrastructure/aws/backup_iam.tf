@@ -1,5 +1,8 @@
 resource "aws_iam_role" "backup" {
   name = "backup_role"
+  tags = {
+    Project = "backup"
+  }
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -51,6 +54,9 @@ resource "aws_iam_role" "backup" {
 resource "aws_iam_user" "backup" {
   name = "backup"
   path = "/"
+  tags = {
+    Project = "backup"
+  }
 }
 
 #resource "aws_iam_access_key" "backup" {
