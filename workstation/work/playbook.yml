@@ -79,6 +79,7 @@
           - php8.1-cli
           - php8.1-curl
           - php8.1-xml
+          - php8.1-xdebug
           - bind9-dnsutils
           - whois
           - skopeo
