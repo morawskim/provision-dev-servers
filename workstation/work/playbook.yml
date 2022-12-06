@@ -37,6 +37,11 @@
         repo: ppa:tektoncd/cli
         update_cache: true
 
+    - name: Enable the ppa:longsleep/golang-backports repo on Ubuntu systems
+      apt_repository:
+        repo: ppa:longsleep/golang-backports
+        update_cache: true
+
     - name: Add nodejs GPG apt Key
       apt_key:
         url: https://deb.nodesource.com/gpgkey/nodesource.gpg.key
@@ -88,6 +93,7 @@
           - fd-find
           - bat
           - mongodb-clients
+          - golang-1.19
         state: present
     - name: Add docker to the user's groups
       user:
