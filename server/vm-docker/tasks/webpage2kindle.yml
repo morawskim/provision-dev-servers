@@ -15,20 +15,28 @@
     definition:
       version: '3.3'
       services:
-        app:
-          image: morawskim/webpage2kindle
+        caddy:
+          image: morawskim/webpage2kindle-caddy
           restart: unless-stopped
           labels:
             traefik.enable: "true"
-            traefik.port: "4200"
+            traefik.port: "80"
             traefik.backend: "webpage2kindle"
             traefik.docker.network: traefik
             traefik.frontend.rule: "Host: kindle{{ APP_DOMAIN_SUFFIX }}"
-          env_file:
-            - "~/webpage2kindle.env"
           networks:
             - default
             - traefik
+          logging:
+            driver: "json-file"
+            options:
+              max-size: "20m"
+              max-file: "2"
+        php:
+          image: morawskim/webpage2kindle
+          restart: unless-stopped
+          env_file:
+            - "~/webpage2kindle.env"
           logging:
             driver: "json-file"
             options:
