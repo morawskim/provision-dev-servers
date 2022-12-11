@@ -8,6 +8,7 @@ locals {
     "morawskim/packtpub-free-learning",
     "morawskim/faker-cli",
     "morawskim/ssorder-deploy",
+    "morawskim/webpage2kindle",
   ])
   projects_for_nuc_shell_ubuntu_20_lts = toset([
     "morawskim/packer-images",
@@ -19,5 +20,6 @@ locals {
     "morawskim/packtpub-free-learning",
     "morawskim/packer-images",
     "morawskim/faker-cli",
+    "morawskim/webpage2kindle",
   ])
 }
