@@ -150,6 +150,7 @@
           - peco
           - fx
           - postman
+          - htmlq
         state: present
     - name: Install snap classic packages
       snap:
