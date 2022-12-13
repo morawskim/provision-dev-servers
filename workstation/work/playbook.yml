@@ -61,6 +61,16 @@
         state: present
         update_cache: true
 
+    - name: Add asbru-cm GPG apt Key
+      apt_key:
+        url: https://dl.cloudsmith.io/public/asbru-cm/release/gpg.7684B0670B1C65E8.key
+        state: present
+    - name: Add asbru-cm Repository
+      apt_repository:
+        repo: deb https://dl.cloudsmith.io/public/asbru-cm/release/deb/ubuntu {{ ansible_facts['distribution_release'] }} main
+        state: present
+        update_cache: true
+
     - name: Update apt
       apt: update_cache=yes
     - name: Install required packages
@@ -126,6 +136,7 @@
           - gnome-shell-extensions-gpaste
           - kcachegrind
           - gnome-sound-recorder
+          - asbru-cm
         state: present
     - name: Install snap packages
       snap:
