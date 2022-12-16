@@ -1,0 +1,51 @@
+---
+- hosts: localhost
+  become: true
+  gather_facts: yes
+  vars:
+    username: "{{ lookup('env', 'USER') }}"
+  pre_tasks:
+    - name: Set a hostname
+      hostname:
+        name: "{{ vagrant_hostname | default('vm-k8s') }}"
+  roles:
+  tasks:
+    - name: Install required packages
+      snap:
+        name:
+          - microk8s
+          - kubectl
+          - terraform
+        classic: yes
+        state: present
+    - name: Add microk8s to the user's groups
+      user:
+        name: "{{ username }}"
+        groups: microk8s
+        append: yes
+    - name: Enable storage microk8s addon
+      command:
+        cmd: microk8s enable storage
+    - name: Enable ingress microk8s addon
+      command:
+        cmd: microk8s enable ingress
+    - name: Reset connection so docker group is picked up.
+      meta: reset_connection
+    - name: Create .kube directory
+      become: no
+      file:
+        path: ~/.kube
+        state: directory
+        mode: '0750'
+    - name: Display kubectl configuration for {{ username }}
+      command:
+        cmd: microk8s config
+        #creates: ~/.kube/config
+      register: kubectl_config
+      become: no
+    - name:
+      copy:
+        content:  "{{  kubectl_config.stdout  }}"
+        dest: ~/.kube/config
+        mode: '0640'
+      become: no
