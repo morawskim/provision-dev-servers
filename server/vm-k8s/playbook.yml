@@ -26,6 +26,9 @@
     - name: Enable storage microk8s addon
       command:
         cmd: microk8s enable storage
+    - name: Enable DNS microk8s addon
+      command:
+        cmd: microk8s enable dns
     - name: Enable ingress microk8s addon
       command:
         cmd: microk8s enable ingress
