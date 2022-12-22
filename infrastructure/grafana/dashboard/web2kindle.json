@@ -21,7 +21,7 @@
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "9.2.5"
+      "version": "9.3.2-45365"
     },
     {
       "type": "panel",
@@ -39,6 +39,12 @@
       "type": "panel",
       "id": "stat",
       "name": "Stat",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "timeseries",
+      "name": "Time series",
       "version": ""
     }
   ],
@@ -74,7 +80,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "grafanacloud-prom"
+        "uid": "${DS_GRAFANACLOUD-MORAWSKIM-PROM}"
       },
       "fieldConfig": {
         "defaults": {
@@ -121,12 +127,12 @@
         },
         "showUnfilled": true
       },
-      "pluginVersion": "9.2.5",
+      "pluginVersion": "9.3.2-45365",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "grafanacloud-prom"
+            "uid": "${DS_GRAFANACLOUD-MORAWSKIM-PROM}"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -143,7 +149,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "grafanacloud-prom"
+        "uid": "${DS_GRAFANACLOUD-MORAWSKIM-PROM}"
       },
       "description": "",
       "fieldConfig": {
@@ -189,12 +195,12 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.2.5",
+      "pluginVersion": "9.3.2-45365",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "grafanacloud-prom"
+            "uid": "${DS_GRAFANACLOUD-MORAWSKIM-PROM}"
           },
           "editorMode": "builder",
           "expr": "app_execution_time_count{route=\"push_to_kindle_synchronous\", method=\"POST\"}",
@@ -210,7 +216,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "grafanacloud-prom"
+        "uid": "${DS_GRAFANACLOUD-MORAWSKIM-PROM}"
       },
       "fieldConfig": {
         "defaults": {
@@ -273,12 +279,12 @@
           "reverse": false
         }
       },
-      "pluginVersion": "9.2.5",
+      "pluginVersion": "9.3.2-45365",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "grafanacloud-prom"
+            "uid": "${DS_GRAFANACLOUD-MORAWSKIM-PROM}"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -297,7 +303,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "grafanacloud-prom"
+        "uid": "${DS_GRAFANACLOUD-MORAWSKIM-PROM}"
       },
       "description": "",
       "fieldConfig": {
@@ -357,12 +363,12 @@
           "unit": "ms"
         }
       },
-      "pluginVersion": "9.2.5",
+      "pluginVersion": "9.3.2-45365",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "grafanacloud-prom"
+            "uid": "${DS_GRAFANACLOUD-MORAWSKIM-PROM}"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -377,6 +383,195 @@
       ],
       "title": "Push to kindle sync 302 / time bucket",
       "type": "heatmap"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_GRAFANACLOUD-MORAWSKIM-PROM}"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "continuous-RdYlGr"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": -1,
+            "drawStyle": "bars",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "normal"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 20
+      },
+      "id": 10,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_GRAFANACLOUD-MORAWSKIM-PROM}"
+          },
+          "editorMode": "builder",
+          "expr": "app_page_content_fetcher_counter",
+          "interval": "",
+          "legendFormat": "{{adapter}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Counter",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_GRAFANACLOUD-MORAWSKIM-PROM}"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": -1,
+            "drawStyle": "bars",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "normal"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "bytes"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 20
+      },
+      "id": 11,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_GRAFANACLOUD-MORAWSKIM-PROM}"
+          },
+          "editorMode": "builder",
+          "expr": "app_page_content_fetcher_total_bytes",
+          "interval": "",
+          "legendFormat": "{{adapter}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Bytes",
+      "type": "timeseries"
     }
   ],
   "refresh": false,
@@ -394,6 +589,6 @@
   "timezone": "",
   "title": "web2kindle",
   "uid": "rCelZXO4k",
-  "version": 14,
+  "version": 6,
   "weekStart": ""
 }
