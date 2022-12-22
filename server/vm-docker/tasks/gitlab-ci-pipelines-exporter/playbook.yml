@@ -1,0 +1,33 @@
+- name: Create env file for gitlab-ci-pipelines-exporter
+  no_log: true
+  copy:
+    content: "{{ GITLAB_CI_EXPORTER_ENV_LOCAL }}"
+    dest: "~/gitlab-ci-pipelines-exporter.env"
+- name: Create configuration file for gitlab-ci-pipelines-exporter
+  template:
+    src: templates/gitlab-ci-pipelines-exporter-config.yml
+    dest: "~/gitlab-ci-pipelines-exporter-config.yml"
+- name: Deploy gitlab-ci-pipelines-exporter via docker-compose
+  docker_compose:
+    project_name: gitlab-ci-pipelines-exporter
+    definition:
+      version: '3.3'
+      services:
+        gitlab-exporter:
+          image: ghcr.io/mvisonneau/gitlab-ci-pipelines-exporter:v0.5.4
+          restart: unless-stopped
+          volumes:
+            - ~/gitlab-ci-pipelines-exporter-config.yml:/etc/gitlab-ci-pipelines-exporter-config.yml
+          command: 'run --config /etc/gitlab-ci-pipelines-exporter-config.yml'
+          env_file:
+            - "~/gitlab-ci-pipelines-exporter.env"
+          networks:
+            - prometheus_default
+          logging:
+            driver: "json-file"
+            options:
+              max-size: "20m"
+              max-file: "2"
+      networks:
+        prometheus_default:
+            external: true

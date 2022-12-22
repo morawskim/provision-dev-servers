@@ -20,14 +20,14 @@ scrape_configs:
     static_configs:
       - targets: ["kindle.morawskim.pl"]
   # The job name assigned to scraped metrics by default.
-  - job_name: ssorder
+  - job_name: gitlab-exporter
     # The HTTP resource path on which to fetch metrics from targets.
     metrics_path: /metrics
     # Configures the protocol scheme used for requests.
-    scheme: https
+    scheme: http
     # List of labeled statically configured targets for this job.
     static_configs:
-      - targets: ["order.snlb.pl"]
+      - targets: ["gitlab-exporter:8080"]
 remote_write:
   - url: https://prometheus-prod-01-eu-west-0.grafana.net/api/prom/push
     basic_auth:
