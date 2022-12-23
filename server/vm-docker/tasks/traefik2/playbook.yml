@@ -1,0 +1,38 @@
+- name: Create configuration file for traefikv2
+  template:
+    src: templates/static-file-configuration.yml
+    dest: "~/traefik2.yml"
+- name: Deploy traefikv2 via docker-compose
+  docker_compose:
+    project_name: traefikv2
+    definition:
+      version: '3.3'
+      services:
+        traefik:
+            image: traefik:v2.8
+            restart: unless-stopped
+            ports:
+              - 8889:8080
+            labels:
+              traefik.enable: "true"
+              traefik.port: "80"
+              traefik.backend: "traefikv2"
+              traefik.docker.network: traefik
+              traefik.frontend.rule: "HostRegexp: {subdomain:[a-z]+}.preview.morawskim.pl"
+            networks:
+              - default
+              - traefik
+            volumes:
+              - ~/traefik2.yml:/etc/traefik/services.yml
+            logging:
+              driver: "json-file"
+              options:
+                max-file: "2"
+                max-size: "20m"
+            command:
+              - --api.insecure=true
+              - --providers.file.filename=/etc/traefik/services.yml
+              - --providers.file.watch=true
+      networks:
+        traefik:
+            external: true

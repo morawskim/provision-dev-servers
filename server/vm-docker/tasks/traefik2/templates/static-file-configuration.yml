@@ -1,0 +1,10 @@
+http:
+  routers:
+    test:
+      rule: Host(`test.preview.morawskim.pl`)
+      service: test
+  services:
+    test:
+      loadBalancer:
+        servers:
+          - url: http://192.168.50.185:4200
