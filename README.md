@@ -8,6 +8,7 @@ The structure of this repository is split in three main directories - intrastruc
 The directory `infrastructure` contains terraform files for:
 * setup project and alerts in Senty
 * assign gitlab-runners to projects in GitLab
+* manage projects in GitLab
 * manage deployment keys in GitLab
 * setup virtual machines
 * manage DNS zone in OVH
