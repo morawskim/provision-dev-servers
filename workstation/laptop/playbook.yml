@@ -190,7 +190,7 @@
           - ngrok-client
           - packer
           - php-docs
-          - python38-pipx
+          - python310-pipx
           - textql
           - tmpmail
           - ventoy
