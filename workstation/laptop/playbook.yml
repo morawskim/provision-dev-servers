@@ -134,6 +134,7 @@
           - powerline
           - pwgen
           - python3-firewall
+          - python310-yamllint
           - quilt
           - rpmorphan
           - ruby3.1-rubygem-tmuxinator
