@@ -36,7 +36,6 @@
         - { name: morawskim, description: 'morawskim', repo: 'http://rpm.morawskim.pl/openSUSE_Factory/' }
         - { name: ~, description: 'Vivaldi repository', repo: 'https://repo.vivaldi.com/archive/vivaldi-suse.repo' }
         - { name: ~, description: ~, repo: 'https://download.opensuse.org/repositories/system:snappy/openSUSE_Tumbleweed/system:snappy.repo' }
-        - { name: ~, description: ~, repo: 'https://download.opensuse.org/repositories/hardware/openSUSE_Tumbleweed/hardware.repo' }
 
     - name: Install required packages CLI
       package:
@@ -137,8 +136,6 @@
           - python3-firewall
           - quilt
           - rpmorphan
-          - rtw89-firmware
-          - rtw89-kmp-default
           - ruby3.1-rubygem-tmuxinator
           - sensors
           - sipcalc
