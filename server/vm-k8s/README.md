@@ -17,4 +17,16 @@ When finished we can return to github repository and ensure that the deployment 
 
 Install flux - `curl -s https://fluxcd.io/install.sh | sudo bash`
 
-See flux logs  - `fluxctl logs`
+See flux logs  - `flux logs`
+
+## kubeseal - simple example
+
+Create kubernetes secret resource or use following command to generate secret template with key "foo" and value "bar" - `echo -n bar | kubectl create secret generic mysecret --dry-run=client --from-file=foo=/dev/stdin -o yaml >mysecret.yaml`.
+
+When you open the file `mysecret.yaml` you should see encoded value for "foo" - `foo: YmFy`.
+
+Next create sealed secret - `kubeseal --format yaml <mysecret.yaml > mysealedsecret.yaml`
+
+And apply resource - `kubectl apply -f mysealedsecret.yaml`
+
+Finally you can check the decoded value of secret from cluster - `kubectl get secret mysecret -o jsonpath='{.data.foo}' | base64 --decode`

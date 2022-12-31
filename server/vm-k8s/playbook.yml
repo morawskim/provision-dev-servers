@@ -4,6 +4,7 @@
   gather_facts: yes
   vars:
     username: "{{ lookup('env', 'USER') }}"
+    kubeseal_version: "0.19.3"
   pre_tasks:
     - name: Set a hostname
       hostname:
@@ -34,6 +35,16 @@
         cmd: microk8s enable ingress
     - name: Reset connection so docker group is picked up.
       meta: reset_connection
+    - name: Install kubeseal {{ kubeseal_version }}
+      unarchive:
+        src: https://github.com/bitnami-labs/sealed-secrets/releases/download/v{{ kubeseal_version }}/kubeseal-{{ kubeseal_version }}-linux-amd64.tar.gz
+        dest: /usr/local/bin/
+        remote_src: yes
+        creates: /kubeseal
+        # in this version of module, we don't have include parameter
+        exclude:
+          - LICENSE
+          - README.md
     - name: Create .kube directory
       become: no
       file:
