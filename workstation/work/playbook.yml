@@ -192,3 +192,15 @@
         url: https://getcomposer.org/download/2.2.12/composer.phar
         dest: /usr/local/bin/composer-2.2.12
         mode: '0755'
+
+    # we have already installed awscli
+    - name: Download the awscli
+      get_url: url=https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip dest=/tmp/awscli-exe-linux-x86_64.zip
+      register: aws_cli_download_bundle
+    - name: Unzip awscli
+      unarchive: src=/tmp/awscli-exe-linux-x86_64.zip dest=/tmp copy=no creates=/tmp/aws
+      when: aws_cli_download_bundle.changed
+      register: aws_cli_unarchive_installer
+    - name: Update awscli package.
+      shell: /tmp/aws/install --install-dir /usr/local/aws-cli --bin-dir /usr/local/bin/aws --update
+      when: aws_cli_unarchive_installer.changed
