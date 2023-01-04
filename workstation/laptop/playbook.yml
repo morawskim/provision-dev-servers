@@ -54,6 +54,7 @@
           - ctags
           - cups
           - dateutils
+          - delve
           - diffoscope
           - docker
           - docker-bash-completion
