@@ -16,6 +16,7 @@ The directory `infrastructure` contains terraform files for:
 * manage resources in AWS (S3, budget, IAM)
 * manage email accounts in Mailgun
 * manage dashboards in Grafana
+* manage repositories in Docker Hub
 
 ### Server directory
 
