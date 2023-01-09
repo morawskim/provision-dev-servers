@@ -35,3 +35,5 @@ terraform.rc
 
 /ci.key
 /RPM-GPG-KEY
+
+/skopeo_auth.json

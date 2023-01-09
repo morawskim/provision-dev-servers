@@ -10,6 +10,7 @@ locals {
     "morawskim/ssorder-deploy",
     "morawskim/webpage2kindle",
     "morawskim/rpm-pipeline",
+    "morawskim/sync-docker-images",
   ])
   projects_for_nuc_shell_ubuntu_20_lts = toset([
     "morawskim/packer-images",
@@ -22,5 +23,7 @@ locals {
     "morawskim/packer-images",
     "morawskim/faker-cli",
     "morawskim/webpage2kindle",
+    "morawskim/sync-docker-images",
+    "morawskim/up-to-date-exporter",
   ])
 }
