@@ -105,6 +105,7 @@
           - mongodb-clients
           - golang-1.19
           - libxml2-utils
+          - dialog
         state: present
     - name: Add docker to the user's groups
       user:
