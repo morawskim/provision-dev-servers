@@ -262,6 +262,10 @@
           - bw
           - pastel
           - peco
+    - name: Install hardware packages
+      package:
+        name:
+          - solaar
     - name: firewalld add source to internal zone
       firewalld:
         source: 172.16.0.0/12
