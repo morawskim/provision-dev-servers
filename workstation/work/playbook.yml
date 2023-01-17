@@ -107,6 +107,11 @@
           - libxml2-utils
           - dialog
         state: present
+    - name: Install hardware packages
+      package:
+        name:
+          - solaar
+        state: present
     - name: Add docker to the user's groups
       user:
         name: mmorawski
