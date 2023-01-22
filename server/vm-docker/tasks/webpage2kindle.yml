@@ -16,7 +16,7 @@
       version: '3.3'
       services:
         caddy:
-          image: morawskim/webpage2kindle-caddy
+          image: registry.gitlab.com/morawskim/webpage2kindle/caddy:main
           restart: unless-stopped
           labels:
             traefik.enable: "true"
@@ -33,7 +33,7 @@
               max-size: "20m"
               max-file: "2"
         php:
-          image: morawskim/webpage2kindle
+          image: registry.gitlab.com/morawskim/webpage2kindle/symfony-app:main
           restart: unless-stopped
           env_file:
             - "~/webpage2kindle.env"
@@ -43,7 +43,7 @@
               max-size: "20m"
               max-file: "2"
         node:
-          image: morawskim/webpage2kindle-node
+          image: registry.gitlab.com/morawskim/webpage2kindle/node-microservice:main
           restart: unless-stopped
           volumes:
             - ~/webpage2kindle-node.env:/app/.env
