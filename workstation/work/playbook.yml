@@ -106,6 +106,7 @@
           - golang-1.19
           - libxml2-utils
           - dialog
+          - sqlite3
         state: present
     - name: Install hardware packages
       package:
@@ -145,6 +146,7 @@
           - gnome-sound-recorder
           - asbru-cm
           - wireshark-qt
+          - sqlitebrowser
         state: present
     - name: Install snap packages
       snap:
