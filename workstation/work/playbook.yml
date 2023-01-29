@@ -196,6 +196,12 @@
         dest: /usr/local/bin/
         remote_src: yes
         creates: /kube-prompt
+    - name: Install kdash
+      unarchive:
+        src: https://github.com/kdash-rs/kdash/releases/download/v0.3.6/kdash-linux-musl.tar.gz
+        dest: /usr/local/bin/
+        remote_src: yes
+        creates: /kdash
     - name: Download composer 2.2.12
       get_url:
         url: https://getcomposer.org/download/2.2.12/composer.phar
