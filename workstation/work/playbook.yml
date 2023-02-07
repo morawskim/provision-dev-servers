@@ -107,6 +107,7 @@
           - libxml2-utils
           - dialog
           - sqlite3
+          - gawk
         state: present
     - name: Install hardware packages
       package:
