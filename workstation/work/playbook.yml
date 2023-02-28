@@ -24,6 +24,8 @@
         name:
           - docker
           - jsondiff
+          # for ansible, to fetch the lates releases of app from github
+          - github3.py
     - name: Start docker
       service: name=docker state=started enabled=yes
 
@@ -119,12 +121,21 @@
         name: mmorawski
         groups: docker
         append: yes
+    # newer version requires libc6 (>= 2.34)
     - name: Install delta
       apt:
         deb: https://github.com/dandavison/delta/releases/download/0.12.1/git-delta_0.12.1_amd64.deb
+
+    - name: Get latest release of dive
+      community.general.github_release:
+        user: wagoodman
+        repo: dive
+        action: latest_release
+      register: dive_release
+      become: false
     - name: Install dive
       apt:
-        deb: https://github.com/wagoodman/dive/releases/download/v0.9.2/dive_0.9.2_linux_amd64.deb
+        deb: https://github.com/wagoodman/dive/releases/download/v{{ dive_release.tag | replace('v', '') }}/dive_{{ dive_release.tag | replace('v', '') }}_linux_amd64.deb
     - name: Install MongoDB compass
       apt:
         deb: https://downloads.mongodb.com/compass/mongodb-compass_1.32.5_amd64.deb
@@ -181,9 +192,17 @@
         url: https://raw.githubusercontent.com/junegunn/fzf/0.29.0/shell/key-bindings.bash
         dest: /etc/bash_completion.d/fzf-key-bindings.bash
         mode: '0444'
-    - name: Install kubeseal 0.18
+
+    - name: Get latest release of kubeseal
+      community.general.github_release:
+        user: bitnami-labs
+        repo: sealed-secrets
+        action: latest_release
+      register: sealed_secrets_release
+      become: false
+    - name: Install kubeseal
       unarchive:
-        src: https://github.com/bitnami-labs/sealed-secrets/releases/download/v0.18.0/kubeseal-0.18.0-linux-amd64.tar.gz
+        src: https://github.com/bitnami-labs/sealed-secrets/releases/download/v{{ sealed_secrets_release.tag | replace('v', '') }}/kubeseal-{{ sealed_secrets_release.tag | replace('v', '') }}-linux-amd64.tar.gz
         dest: /usr/local/bin/
         remote_src: yes
         creates: /kubeseal
@@ -191,15 +210,31 @@
         exclude:
           - LICENSE
           - README.md
-    - name: Install kube-prompt 1.0.11
+
+    - name: Get latest release of kube-prompt
+      community.general.github_release:
+        user: c-bata
+        repo: kube-prompt
+        action: latest_release
+      register: kube_prompt_release
+      become: false
+    - name: Install kube-prompt
       unarchive:
-        src: https://github.com/c-bata/kube-prompt/releases/download/v1.0.11/kube-prompt_v1.0.11_linux_amd64.zip
+        src: https://github.com/c-bata/kube-prompt/releases/download/v{{ kube_prompt_release.tag | replace('v', '') }}/kube-prompt_v{{ kube_prompt_release.tag | replace('v', '') }}_linux_amd64.zip
         dest: /usr/local/bin/
         remote_src: yes
         creates: /kube-prompt
+
+    - name: Get latest release of Kdash
+      community.general.github_release:
+        user: kdash-rs
+        repo: kdash
+        action: latest_release
+      register: kdash_release
+      become: false
     - name: Install kdash
       unarchive:
-        src: https://github.com/kdash-rs/kdash/releases/download/v0.3.6/kdash-linux-musl.tar.gz
+        src: https://github.com/kdash-rs/kdash/releases/download/v{{ kdash_release.tag | replace('v','') }}/kdash-linux-musl.tar.gz
         dest: /usr/local/bin/
         remote_src: yes
         creates: /kdash
