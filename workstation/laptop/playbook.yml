@@ -258,6 +258,12 @@
           - zoom
         state: present
       when: kde_dolphin.stat.exists
+    - name: Install required packages GUI (from GitHub)
+      package:
+        name:
+          - 'https://github.com/rustdesk/rustdesk/releases/download/1.1.9/rustdesk-1.1.9-suse.rpm'
+        disable_gpg_check: true
+      when: kde_dolphin.stat.exists
     - name: Install snap packages
       snap:
         name:
