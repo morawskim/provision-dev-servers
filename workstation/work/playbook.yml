@@ -115,6 +115,7 @@
       package:
         name:
           - solaar
+          - libturbojpeg #for cameractrls
         state: present
     - name: Add docker to the user's groups
       user:
@@ -243,6 +244,11 @@
         url: https://getcomposer.org/download/2.2.12/composer.phar
         dest: /usr/local/bin/composer-2.2.12
         mode: '0755'
+    - name: Install cameractrls
+      git:
+        repo: "https://github.com/soyersoyer/cameractrls.git"
+        dest: "/opt/cameractrls"
+        version: "v0.4.14"
 
     # we have already installed awscli
     - name: Get awscliv2 installer
