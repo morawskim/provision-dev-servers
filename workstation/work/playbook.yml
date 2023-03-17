@@ -161,6 +161,11 @@
           - wireshark-qt
           - sqlitebrowser
         state: present
+    - name: Install latest dbkoda (mongodb client)
+      get_url:
+        url: https://s3-us-west-1.amazonaws.com/uswest-nc.release.dbkoda/dbkoda-latest.AppImage
+        dest: /usr/local/bin/dbkoda
+        mode: '0755'
     - name: Install snap packages
       snap:
         name:
