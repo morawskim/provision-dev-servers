@@ -17,6 +17,7 @@ The directory `infrastructure` contains terraform files for:
 * manage email accounts in Mailgun
 * manage dashboards in Grafana
 * manage repositories in Docker Hub
+* manage Auth0
 
 ### Server directory
 
