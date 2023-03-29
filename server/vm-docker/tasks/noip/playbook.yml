@@ -6,13 +6,14 @@
 - name: Deploy noip via docker-compose
   docker_compose:
     project_name: noip
+    remove_orphans: true
     definition:
       version: '3.3'
       services:
         app:
-          image: morawskim/noip-client
+          image: ghcr.io/morawskim/noip-client-go:latest
           restart: "no"
-          command: "noip:update -f /.env"
+          command: "daemon"
           logging:
             driver: "json-file"
             options:
@@ -20,13 +21,3 @@
               max-file: "2"
           volumes:
             - ~/noip.env:/.env:ro
-        ofelia:
-          image: mcuadros/ofelia:latest
-          command: daemon --docker
-          restart: unless-stopped
-          labels:
-            ofelia.enabled: "true"
-            ofelia.job-run.noip.schedule: "@every 5m"
-            ofelia.job-run.noip.container: "noip_app_1"
-          volumes:
-            - /var/run/docker.sock:/var/run/docker.sock:ro
