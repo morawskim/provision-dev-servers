@@ -267,3 +267,19 @@
     - name: Update awscli package.
       shell: /tmp/aws/install --install-dir /usr/local/aws-cli --bin-dir /usr/local/bin/aws --update
       when: aws_cli_unarchive_installer.changed
+    # SAM
+    - name: Creates directory
+      file:
+        path: /tmp/aws-sam
+        state: directory
+    - name: Get SAM installer
+      unarchive:
+        src: https://github.com/aws/aws-sam-cli/releases/latest/download/aws-sam-cli-linux-x86_64.zip
+        dest: "/tmp/aws-sam"
+        remote_src: yes
+        creates: /tmp/aws-sam/install
+        mode: 0755
+      register: aws_sam_unarchive_installer
+    - name: Update awscli package.
+      shell: /tmp/aws-sam/install --install-dir /usr/local/aws-sam-cli --bin-dir /usr/local/bin --update
+      when: aws_sam_unarchive_installer.changed
