@@ -110,6 +110,9 @@
           - dialog
           - sqlite3
           - gawk
+          # to build go app which works in Lambda Go Runtime (in future use container)
+          - vagrant
+          - virtualbox
         state: present
     - name: Install hardware packages
       package:
