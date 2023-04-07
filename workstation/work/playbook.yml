@@ -163,6 +163,7 @@
           - asbru-cm
           - wireshark-qt
           - sqlitebrowser
+          - gimp
         state: present
     - name: Install latest dbkoda (mongodb client)
       get_url:
