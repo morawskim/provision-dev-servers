@@ -52,6 +52,17 @@
             options:
               max-size: "20m"
               max-file: "2"
+        go-readability-api:
+          image: registry.gitlab.com/morawskim/webpage2kindle/go-microservice:main
+          restart: unless-stopped
+          command:
+            - --http
+            - :8080
+          logging:
+            driver: "json-file"
+            options:
+              max-size: "20m"
+              max-file: "2"
       networks:
         traefik:
             external: true
