@@ -18,6 +18,7 @@ The directory `infrastructure` contains terraform files for:
 * manage dashboards in Grafana
 * manage repositories in Docker Hub
 * manage Auth0
+* manage repositories in GitHub
 
 ### Server directory
 
