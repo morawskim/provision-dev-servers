@@ -302,7 +302,7 @@
       with_items:
        - http
        - https
-       - kdeconnect-kde
+       - kdeconnect
     - name: firewalld enable ports
       firewalld:
         port: "{{ item }}"
