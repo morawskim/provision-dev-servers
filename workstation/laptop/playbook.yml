@@ -19,6 +19,7 @@
         - https://packages.microsoft.com/keys/microsoft.asc
         - https://gist.githubusercontent.com/morawskim/0e5d812efbacc894a179516cd8dbca60/raw/2efa2ae80a2feb03f13952bdc07a47383592f972/RPM-GPG-KEY
         - http://codecs.opensuse.org/openh264/openSUSE_Tumbleweed/repodata/repomd.xml.key
+        - https://download.opensuse.org/repositories/multimedia:/apps/openSUSE_Tumbleweed/repodata/repomd.xml.key
 
     - name: Add repositories
       community.general.zypper_repository:
@@ -244,6 +245,7 @@
           - virtualbox-qt
           - vivaldi-stable
           - vnote
+          - webcamoid
           - wireshark-ui-qt
           - xbindkeys
           - xclip
@@ -270,6 +272,11 @@
         repo: "https://github.com/soyersoyer/cameractrls.git"
         dest: "/opt/cameractrls"
         version: "v0.4.14"
+      when: kde_dolphin.stat.exists
+    - name: Install akvcam, virtual camera for Linux
+      zypper:
+        name: 'https://download.opensuse.org/repositories/multimedia:/apps/openSUSE_Tumbleweed/x86_64/akvcam-1.2.2-1.329.x86_64.rpm'
+        state: present
       when: kde_dolphin.stat.exists
     - name: Install snap packages
       snap:
