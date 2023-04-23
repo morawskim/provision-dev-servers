@@ -1,0 +1,11 @@
+github_releases:
+  morawskim/faker-cli: 2.0.0
+  mvisonneau/gitlab-ci-pipelines-exporter: 0.5.4
+docker_images:
+  library/php: 8.2.0
+  morawskim/htrace.sh: 1.1.7
+github_tags:
+  stasiu20/ssorder: 2.21.0
+  morawskim/faker-images: 0.8.0
+  aws/aws-cli: 2.9.8
+  trimstray/htrace.sh: 1.1.7
