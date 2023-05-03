@@ -140,7 +140,7 @@
           - python310-yamllint
           - quilt
           - rpmorphan
-          - ruby3.1-rubygem-tmuxinator
+          - ruby3.2-rubygem-tmuxinator
           - sensors
           - sipcalc
           - skopeo
@@ -275,7 +275,7 @@
       when: kde_dolphin.stat.exists
     - name: Install akvcam, virtual camera for Linux
       zypper:
-        name: 'https://download.opensuse.org/repositories/multimedia:/apps/openSUSE_Tumbleweed/x86_64/akvcam-1.2.2-1.329.x86_64.rpm'
+        name: 'https://download.opensuse.org/repositories/multimedia:/apps/openSUSE_Tumbleweed/x86_64/akvcam-1.2.2-1.338.x86_64.rpm'
         state: present
       when: kde_dolphin.stat.exists
     - name: Install snap packages
