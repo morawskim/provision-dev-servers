@@ -194,6 +194,7 @@
           - packer
           - php-docs
           - python310-pipx
+          - teller
           - textql
           - tmpmail
           - ventoy
