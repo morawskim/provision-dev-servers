@@ -233,6 +233,20 @@
         remote_src: yes
         creates: /kube-prompt
 
+    - name: Get latest release of teller
+      community.general.github_release:
+        user: tellerops
+        repo: teller
+        action: latest_release
+      register: teller_release
+      become: false
+    - name: Install teller
+      unarchive:
+        src: https://github.com/tellerops/teller/releases/download/v{{ teller_release.tag | replace('v', '') }}/teller_{{ teller_release.tag | replace('v', '') }}_Linux_x86_64.tar.gz
+        dest: /usr/local/bin/
+        remote_src: yes
+        creates: /teller
+
     - name: Get latest release of Kdash
       community.general.github_release:
         user: kdash-rs
