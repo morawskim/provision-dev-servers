@@ -162,6 +162,7 @@
           - wireshark-qt
           - sqlitebrowser
           - gimp
+          - gnome-shell-pomodoro
         state: present
     - name: Install latest dbkoda (mongodb client)
       get_url:
