@@ -163,6 +163,7 @@
           - sqlitebrowser
           - gimp
           - gnome-shell-pomodoro
+          - vlc
         state: present
     - name: Install latest dbkoda (mongodb client)
       get_url:
