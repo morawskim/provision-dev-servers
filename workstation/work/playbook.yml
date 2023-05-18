@@ -249,6 +249,12 @@
         remote_src: yes
         creates: /teller
 
+    - name: Install okteto
+      get_url:
+        url: https://github.com/okteto/okteto/releases/download/2.15.2/okteto-Linux-x86_64
+        dest: /usr/local/bin/okteto
+        mode: '0755'
+
     - name: Get latest release of Kdash
       community.general.github_release:
         user: kdash-rs
