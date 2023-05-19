@@ -12,7 +12,7 @@
       services:
         app:
           image: ghcr.io/morawskim/noip-client-go:latest
-          restart: "no"
+          restart: unless-stopped
           command: "daemon"
           logging:
             driver: "json-file"
