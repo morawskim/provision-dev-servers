@@ -6,6 +6,7 @@
 - name: Deploy noip via docker-compose
   docker_compose:
     project_name: noip
+    pull: yes
     remove_orphans: true
     definition:
       version: '3.3'
