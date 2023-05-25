@@ -104,6 +104,7 @@
           - dialog
           - sqlite3
           - gawk
+          - gdb
           # to build go app which works in Lambda Go Runtime (in future use container)
           - vagrant
           - virtualbox
