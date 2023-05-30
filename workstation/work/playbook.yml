@@ -165,6 +165,8 @@
           - gimp
           - gnome-shell-pomodoro
           - vlc
+          - gnome-shell-extension-draw-on-your-screen
+          - chrome-gnome-shell
         state: present
     - name: Install latest dbkoda (mongodb client)
       get_url:
