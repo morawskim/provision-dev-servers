@@ -159,6 +159,7 @@
           - tmux
           - tmux-powerline
           - tree
+          - uacme
           - vagrant
           - vim
           - vim-fzf
