@@ -15,6 +15,8 @@ $(local_domains) = $(primary_domain)
 
 tls file /data/tls/fullchain.pem /data/tls/privkey.pem
 
+openmetrics tcp://0.0.0.0:9749 { }
+
 # ----------------------------------------------------------------------------
 # Local storage & authentication
 
