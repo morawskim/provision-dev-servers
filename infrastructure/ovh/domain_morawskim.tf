@@ -7,6 +7,7 @@ locals {
     nextcloud: "noip.morawskim.pl.",
     ots: "noip.morawskim.pl.",
     ttrss: "noip.morawskim.pl.",
+    webmail: "noip.morawskim.pl.",
   }
 }
 
