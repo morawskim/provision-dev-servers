@@ -101,6 +101,7 @@
           - opensc
           - openvpn
           - osc
+          - pam_u2f
           - pandoc
           - password-store
           - patchutils
