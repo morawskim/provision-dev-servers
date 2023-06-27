@@ -8,6 +8,7 @@ locals {
     ots: "noip.morawskim.pl.",
     ttrss: "noip.morawskim.pl.",
     webmail: "noip.morawskim.pl.",
+    jsonplaceholder: "noip.morawskim.pl.",
   }
 }
 
