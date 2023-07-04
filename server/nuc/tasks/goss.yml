@@ -1,0 +1,16 @@
+- name: Download goss
+  get_url:
+    url: https://github.com/goss-org/goss/releases/download/v0.3.23/goss-linux-amd64
+    dest: /usr/local/bin/goss
+    mode: '0750'
+- name: Copy goss
+  template:
+    src: goss/goss.yaml
+    dest: /root/goss.yaml
+    owner: root
+    group: root
+    mode: '0600'
+- name: run goss against the gossfile /path/to/file.yml
+  goss:
+    path: "/root/goss.yaml"
+    goss_path: "/usr/local/bin/goss"

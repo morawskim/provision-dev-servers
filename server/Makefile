@@ -2,7 +2,7 @@
 
 
 define macro-deploy-nuc
-	ANSIBLE_ROLES_PATH=$(PWD)/ansible/roles ansible-playbook --ask-vault-pass --inventory $(1) nuc/playbook.yml
+	ANSIBLE_ROLES_PATH=$(PWD)/ansible/roles ANSIBLE_LIBRARY=$(PWD)/ansible/modules:/usr/share/ansible/plugins/modules ansible-playbook --ask-vault-pass --inventory $(1) nuc/playbook.yml
 endef
 
 define macro-deploy-gitlab-runner
