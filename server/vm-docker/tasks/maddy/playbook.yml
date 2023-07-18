@@ -33,7 +33,7 @@
           environment:
             ROUNDCUBEMAIL_DEFAULT_HOST: ssl://mx1.mail.mdemo.ovh
             ROUNDCUBEMAIL_DEFAULT_PORT: 993
-            ROUNDCUBEMAIL_SMTP_SERVER: ssl://mx1.mail.mdemo.ovh
+            ROUNDCUBEMAIL_SMTP_SERVER: tls://mx1.mail.mdemo.ovh
             ROUNDCUBEMAIL_SMTP_PORT: 587
             ROUNDCUBEMAIL_DB_TYPE: sqlite
           logging:

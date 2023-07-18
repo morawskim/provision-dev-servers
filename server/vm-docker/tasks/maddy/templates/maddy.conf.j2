@@ -13,7 +13,16 @@ $(hostname) = {env:MADDY_HOSTNAME}
 $(primary_domain) = {env:MADDY_DOMAIN}
 $(local_domains) = $(primary_domain)
 
-tls file /data/tls/fullchain.pem /data/tls/privkey.pem
+tls {
+  loader acme {
+    email maddy-acme@example.org
+    agreed
+    challenge dns-01
+    dns cloudflare {
+      api_token "{{ MADDY_CLOUDFLARE_TOKEN }}"
+    }
+  }
+}
 
 openmetrics tcp://0.0.0.0:9749 { }
 
