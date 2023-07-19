@@ -11,7 +11,7 @@ The directory `infrastructure` contains terraform files for:
 * manage projects in GitLab
 * manage deployment keys in GitLab
 * setup virtual machines
-* manage DNS zone in OVH
+* manage DNS zone in OVH and Cloudflare
 * manage alerts in New Relic
 * manage resources in AWS (S3, budget, IAM)
 * manage email accounts in Mailgun
@@ -48,3 +48,8 @@ Ansible playbooks in workstation directory are used to setup and maintain config
 Now you can connect to vm. Open a new terminal go to dir to which you cloned this repository and type `make vagrant-ssh-jump VM=<vm-name>` to connect to virtual machine.
 At the moment only docker and gitlab are allowed as `vm-name`.
 Also you might need to wait few seconds to connect to vm (vm machine need be booted).
+
+
+do intel nuc jesli dns sie wysypie - rozlaczy.... - jako pierwszy wpis nameserver
+@192.168.111.1
+
