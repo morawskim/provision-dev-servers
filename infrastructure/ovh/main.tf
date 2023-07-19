@@ -4,7 +4,15 @@ terraform {
       source = "ovh/ovh"
       version = "0.22.0"
     }
+    cloudflare = {
+      source  = "cloudflare/cloudflare"
+      version = "~> 4.0"
+    }
   }
+}
+
+provider "cloudflare" {
+  # set env variable CLOUDFLARE_API_TOKEN
 }
 
 provider "ovh" {

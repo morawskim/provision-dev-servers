@@ -11,8 +11,8 @@ You need to change permission configuration.
 ## ENV variables
 
 The file `vault.yml` is encrypted via ansible-vault.
-Use passphrase to decrypt this file and see values for variables `OVH_APPLICATION_KEY`, `OVH_APPLICATION_SECRET` and `OVH_CONSUMER_KEY`.
+Use passphrase to decrypt this file and see values for variables `OVH_APPLICATION_KEY`, `OVH_APPLICATION_SECRET`, `OVH_CONSUMER_KEY` and `CLOUDFLARE_API_TOKEN` for Cloudflare.
 
 ## Apply changes
 
-`OVH_APPLICATION_KEY=key OVH_APPLICATION_SECRET=secret OVH_CONSUMER_KEY=consumer-key terraform apply`
+`OVH_APPLICATION_KEY=key OVH_APPLICATION_SECRET=secret OVH_CONSUMER_KEY=consumer-key CLOUDFLARE_API_TOKEN=token terraform apply`
