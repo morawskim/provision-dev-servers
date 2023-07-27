@@ -167,6 +167,7 @@
           - vlc
           - gnome-shell-extension-draw-on-your-screen
           - chrome-gnome-shell
+          - filezilla
         state: present
     - name: Install latest dbkoda (mongodb client)
       get_url:
@@ -186,6 +187,7 @@
           - fx
           - postman
           - htmlq
+          - yq
         state: present
     - name: Install snap classic packages
       snap:
