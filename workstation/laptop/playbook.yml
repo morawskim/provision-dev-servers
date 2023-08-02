@@ -3,7 +3,7 @@
   become: true
   connection: local
   vars:
-    ansible_python_interpreter: /usr/bin/python3.10
+    ansible_python_interpreter: /usr/bin/python3.11
   tasks:
     - name: 'Add GPG keys'
       rpm_key:
@@ -137,6 +137,7 @@
           - php8-xdebug
           - php8-mbstring
           - powerline
+          - protobuf-devel
           - pwgen
           - python3-firewall
           - python310-yamllint
@@ -218,7 +219,7 @@
           - ghex
           - gimp
           - google-chrome-stable
-          - gstreamer-1.20-plugin-openh264
+          - gstreamer-1.22-plugin-openh264
           - gvim
           - kcachegrind
           - kdeconnect-kde
@@ -277,10 +278,10 @@
         dest: "/opt/cameractrls"
         version: "v0.4.14"
       when: kde_dolphin.stat.exists
-    - name: Install akvcam, virtual camera for Linux
-      zypper:
-        name: 'https://download.opensuse.org/repositories/multimedia:/apps/openSUSE_Tumbleweed/x86_64/akvcam-1.2.2-1.338.x86_64.rpm'
-        state: present
+    # - name: Install akvcam, virtual camera for Linux
+    #   zypper:
+    #     name: 'https://download.opensuse.org/repositories/multimedia:/apps/openSUSE_Tumbleweed/x86_64/akvcam-1.2.2-1.338.x86_64.rpm'
+    #     state: present
       when: kde_dolphin.stat.exists
     - name: Install snap packages
       snap:
