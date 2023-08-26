@@ -15,9 +15,13 @@
     definition:
       version: '3.3'
       services:
-        caddy:
-          image: registry.gitlab.com/morawskim/webpage2kindle/caddy:main
+        php:
+          image: registry.gitlab.com/morawskim/webpage2kindle/symfony-app:main
           restart: unless-stopped
+          environment:
+            SERVER_NAME: "http://kindle{{ APP_DOMAIN_SUFFIX }}"
+          env_file:
+            - "~/webpage2kindle.env"
           labels:
             traefik.enable: "true"
             traefik.port: "80"
@@ -27,16 +31,6 @@
           networks:
             - default
             - traefik
-          logging:
-            driver: "json-file"
-            options:
-              max-size: "20m"
-              max-file: "2"
-        php:
-          image: registry.gitlab.com/morawskim/webpage2kindle/symfony-app:main
-          restart: unless-stopped
-          env_file:
-            - "~/webpage2kindle.env"
           logging:
             driver: "json-file"
             options:
