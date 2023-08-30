@@ -4,11 +4,19 @@ terraform {
       source = "grafana/grafana"
       version = "1.31.1"
     }
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 3.0"
+    }
   }
 }
 
 provider "grafana" {
   url  = "https://morawskim.grafana.net"
+}
+
+provider "aws" {
+  region = "eu-central-1"
 }
 
 locals {
