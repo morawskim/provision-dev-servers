@@ -24,6 +24,7 @@
         name:
           - docker
           - jsondiff
+          - awslogs
           # for ansible, to fetch the lates releases of app from github
           - github3.py
     - name: Start docker
