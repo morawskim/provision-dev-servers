@@ -36,6 +36,21 @@
             options:
               max-size: "20m"
               max-file: "2"
+          volumes:
+            - "{{ansible_env.HOME}}/webpage2kindle.db:/app/var/data.db"
+        consumer:
+          image: registry.gitlab.com/morawskim/webpage2kindle/symfony-app:main
+          restart: unless-stopped
+          env_file:
+            - "~/webpage2kindle.env"
+          command: [ "/app/bin/console", "rabbitmq:multiple-consumer", "-m", "10", "pipeline" ]
+          logging:
+            driver: "json-file"
+            options:
+              max-size: "20m"
+              max-file: "2"
+          volumes:
+            - "{{ansible_env.HOME}}/webpage2kindle.db:/app/var/data.db"
         node:
           image: registry.gitlab.com/morawskim/webpage2kindle/node-microservice:main
           restart: unless-stopped
