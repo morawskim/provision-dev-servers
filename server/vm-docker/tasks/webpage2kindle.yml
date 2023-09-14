@@ -19,7 +19,7 @@
           image: registry.gitlab.com/morawskim/webpage2kindle/symfony-app:main
           restart: unless-stopped
           environment:
-            SERVER_NAME: "http://kindle{{ APP_DOMAIN_SUFFIX }}"
+            SERVER_NAME: ":80"
           env_file:
             - "~/webpage2kindle.env"
           labels:
