@@ -1,3 +1,11 @@
+- name: Create custom configuration file for nextcloud
+  copy:
+    content: |
+      <?php
+      $CONFIG = [
+        'versions_retention_obligation' => 'auto, 5',
+      ];
+    dest: "~/nextcloud.config.php"
 - name: Deploy nextcloud via docker-compose
   docker_compose:
     project_name: nextcloud
@@ -28,6 +36,7 @@
             - mysql
           volumes:
             - nextcloud:/var/www/html
+            - "{{ansible_env.HOME}}/nextcloud.config.php:/var/www/html/config/overwrite-configuration.config.php"
           environment:
             - MYSQL_PASSWORD={{NEXTCLOUD_DB_PASS}}
             - MYSQL_DATABASE={{NEXTCLOUD_DB_NAME}}
