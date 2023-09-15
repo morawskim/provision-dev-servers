@@ -4,5 +4,5 @@ Description=Run duplicity backup
 [Service]
 Type=oneshot
 EnvironmentFile=/etc/default/duplicity.env
-ExecStart=/usr/local/bin/duplicity-aws-assume-role.sh {{ AWS_ROLE_ARN }} -- /usr/bin/duplicity --verbosity info --encrypt-key {{ DUPLICITY_GPG_KEY }} --full-if-older-than 7D {{ BACKUP_DIR }} {{ DUPLICITY_DESTINATION_URL }}
-ExecStartPost=/usr/local/bin/duplicity-aws-assume-role.sh {{ AWS_ROLE_ARN }} -- /usr/bin/duplicity --verbosity info remove-older-than 15D --force {{ DUPLICITY_DESTINATION_URL }}
+ExecStart=/usr/local/bin/duplicity-aws-assume-role.sh {{ AWS_ROLE_ARN }} -- /usr/bin/duplicity --verbosity info --encrypt-key {{ DUPLICITY_GPG_KEY }} --full-if-older-than 5D {{ BACKUP_DIR }} {{ DUPLICITY_DESTINATION_URL }}
+ExecStartPost=/usr/local/bin/duplicity-aws-assume-role.sh {{ AWS_ROLE_ARN }} -- /usr/bin/duplicity --verbosity info remove-older-than 6D --force {{ DUPLICITY_DESTINATION_URL }}
