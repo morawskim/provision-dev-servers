@@ -189,6 +189,7 @@
           - postman
           - htmlq
           - yq
+          - ngrok
         state: present
     - name: Install snap classic packages
       snap:
