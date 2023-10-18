@@ -15,7 +15,8 @@ $(local_domains) = $(primary_domain)
 
 tls {
   loader acme {
-    email maddy-acme@example.org
+    email marcin@morawskim.pl
+    hostname $(hostname)
     agreed
     challenge dns-01
     dns cloudflare {
