@@ -115,6 +115,7 @@
         name:
           - solaar
           - libturbojpeg #for cameractrls
+          - yubikey-manager
         state: present
     - name: Add docker to the user's groups
       user:
@@ -169,6 +170,7 @@
           - gnome-shell-extension-draw-on-your-screen
           - chrome-gnome-shell
           - filezilla
+          - google-chrome-stable
         state: present
     - name: Install latest dbkoda (mongodb client)
       get_url:
@@ -197,6 +199,7 @@
           - helm
           - code
           - goland
+          - phpstorm
         classic: yes 
         state: present
     - name: Install fzf 0.29
