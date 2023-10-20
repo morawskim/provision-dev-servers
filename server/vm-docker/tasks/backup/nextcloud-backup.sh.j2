@@ -2,5 +2,5 @@
 set -euo pipefail
 
 docker exec -uwww-data nextcloud_app_1 php occ maintenance:mode --on > /dev/null
-docker exec -uwww-data nextcloud_app_1 tar -cpzf /proc/self/fd/1 -C /var/www/html .
+docker exec -uwww-data nextcloud_app_1 tar --sort=name -cpzf /proc/self/fd/1 -C /var/www/html .
 docker exec -uwww-data nextcloud_app_1 php occ maintenance:mode --off > /dev/null
