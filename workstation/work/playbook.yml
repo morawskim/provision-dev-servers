@@ -177,13 +177,18 @@
         url: https://s3-us-west-1.amazonaws.com/uswest-nc.release.dbkoda/dbkoda-latest.AppImage
         dest: /usr/local/bin/dbkoda
         mode: '0755'
+    - name: Install starship
+      unarchive:
+        src: https://github.com/starship/starship/releases/latest/download/starship-x86_64-unknown-linux-gnu.tar.gz
+        dest: /usr/local/bin/
+        remote_src: yes
+        creates: /starship
     - name: Install snap packages
       snap:
         name:
           - ksnip
           - lsd
           - spotify
-          - starship
           - httpie
           - pastel
           - peco
