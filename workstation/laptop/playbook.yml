@@ -63,7 +63,7 @@
           - docker-bash-completion
           - docker-compose-switch
           - duplicity
-          - exa
+          - eza
           - fd
           - fzf
           - fzf-tmux
@@ -341,5 +341,5 @@
     - name: Update account
       user:
         name: "marcin"
-        groups: [docker, users, vboxusers, systemd-journal]
+        groups: [docker, users, vboxusers, systemd-journal, wireshark]
         state: present
