@@ -13,12 +13,12 @@
         name: 'http://rpm.morawskim.pl/openSUSE_Factory/noarch/fake-python3-yaml-0.1.0-1.noarch.rpm'
         state: present
         disable_gpg_check: true
-  roles:
-    - name: newrelic.newrelic-infra
-      vars:
-        nrinfragent_config:
-          license_key: "{{ NEWRELIC_LICENSE_KEY }}"
-      when: "'guest' != ansible_facts.virtualization_role"
+  # roles:
+  #   - name: newrelic.newrelic-infra
+  #     vars:
+  #       nrinfragent_config:
+  #         license_key: "{{ NEWRELIC_LICENSE_KEY }}"
+  #     when: "'guest' != ansible_facts.virtualization_role"
   tasks:
     - name: Install required packages CLI
       package:

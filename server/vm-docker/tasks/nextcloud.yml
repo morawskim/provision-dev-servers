@@ -30,7 +30,7 @@
               max-size: "20m"
           mem_limit: 380M
         app:
-          image: nextcloud
+          image: nextcloud:23.0.4-apache
           restart: unless-stopped
           links:
             - mysql
