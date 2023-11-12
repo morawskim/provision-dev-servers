@@ -25,6 +25,11 @@ variable "vcpu" {
   default = 1
 }
 
+variable "cpu_mode" {
+  type = string
+  default = "qemu64"
+}
+
 variable "memory" {
   type = number
   default = 1024

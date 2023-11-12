@@ -21,8 +21,9 @@ module "vm-docker" {
   source    = "../modules/vm"
   name = "docker"
   disk = 1024*1024*1024*60 # 60 GB
-  memory = 2560
+  memory = 2860
   vcpu   = 3
+  cpu_mode = "host-passthrough"
   network_id = module.network.id
   ssh_keys = [
     "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBMLzZA7DQH1lfdA8ZB4HiuD4SMes11rdotJIfR9Pjeq0qMdOVisIlLbV7kr4sOfTWNFcPzKQhtIB4MLFuDp6X+E= PIV AUTH pubkey"
@@ -33,8 +34,9 @@ module "vm-gitlab" {
   source    = "../modules/vm"
   name = "gitlab"
   disk = 1024*1024*1024*80 # 80 GB
-  memory = 5000
+  memory = 4800
   vcpu   = 3
+  cpu_mode = "host-passthrough"
   network_id = module.network.id
   distribution = "ubuntu-22-lts"
   ssh_keys = [

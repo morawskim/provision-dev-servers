@@ -25,6 +25,9 @@ resource "libvirt_volume" "vm-disk" {
 resource "libvirt_domain" "vm-ubuntu" {
   name   = "vm-ubuntu-${var.name}"
   memory = var.memory
+  cpu = {
+    mode = var.cpu_mode
+  }
   vcpu   = var.vcpu
   autostart = true
   cloudinit = libvirt_cloudinit_disk.commoninit.id
