@@ -1,15 +1,22 @@
 ---
-- hosts: localhost
+- hosts: k8s
   become: true
   gather_facts: yes
   vars:
-    username: "{{ lookup('env', 'USER') }}"
+    username: "ubuntu"
     kubeseal_version: "0.19.3"
+  vars_files:
+    - parameters/secrets.yml
   pre_tasks:
     - name: Set a hostname
       hostname:
         name: "{{ vagrant_hostname | default('vm-k8s') }}"
   roles:
+    - name: newrelic.newrelic-infra
+      vars:
+        nrinfragent_config:
+          license_key: "{{ NEWRELIC_LICENSE_KEY }}"
+      when: "(vagrant_hostname is not defined) or (vagrant_hostname|length == 0)"
   tasks:
     - name: Install required packages
       snap:
@@ -33,8 +40,8 @@
     - name: Enable ingress microk8s addon
       command:
         cmd: microk8s enable ingress
-    - name: Reset connection so docker group is picked up.
-      meta: reset_connection
+    # - name: Reset connection so docker group is picked up.
+    #   meta: reset_connection
     - name: Install kubeseal {{ kubeseal_version }}
       unarchive:
         src: https://github.com/bitnami-labs/sealed-secrets/releases/download/v{{ kubeseal_version }}/kubeseal-{{ kubeseal_version }}-linux-amd64.tar.gz

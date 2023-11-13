@@ -43,3 +43,17 @@ module "vm-gitlab" {
     "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBMLzZA7DQH1lfdA8ZB4HiuD4SMes11rdotJIfR9Pjeq0qMdOVisIlLbV7kr4sOfTWNFcPzKQhtIB4MLFuDp6X+E= PIV AUTH pubkey"
   ]
 }
+
+module "vm-k8s" {
+  source    = "../modules/vm"
+  name = "k8s"
+  disk = 1024*1024*1024*60 # 60 GB
+  memory = 2500
+  vcpu   = 3
+  cpu_mode = "host-passthrough"
+  network_id = module.network.id
+  distribution = "ubuntu-22-lts"
+  ssh_keys = [
+    "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBMLzZA7DQH1lfdA8ZB4HiuD4SMes11rdotJIfR9Pjeq0qMdOVisIlLbV7kr4sOfTWNFcPzKQhtIB4MLFuDp6X+E= PIV AUTH pubkey"
+  ]
+}

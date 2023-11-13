@@ -13,6 +13,10 @@ define macro-deploy-docker
 	ANSIBLE_ROLES_PATH=$(PWD)/ansible/roles ANSIBLE_LIBRARY=$(PWD)/ansible/modules:/usr/share/ansible/plugins/modules ansible-playbook --inventory $(1) --ask-vault-pass vm-docker/playbook.yml
 endef
 
+define macro-deploy-k8s
+	ANSIBLE_ROLES_PATH=$(PWD)/ansible/roles ansible-playbook --inventory $(1) --ask-vault-pass vm-k8s/playbook.yml
+endef
+
 setup-ansible-modules:
 	test -d ansible || mkdir ansible
 	mkdir -p ansible/{modules,roles}
@@ -30,6 +34,8 @@ deploy-nuc: setup-ansible-modules
 deploy-gitlab-runner: setup-ansible-modules
 	$(call macro-deploy-gitlab-runner, "./inventory.ini")
 
+deploy-k8s: setup-ansible-modules
+	$(call macro-deploy-k8s, "./inventory.ini")
 
 deploy-nuc-vagrant: setup-ansible-modules
 	$(call macro-deploy-nuc, "./inventory-vagrant.ini")
