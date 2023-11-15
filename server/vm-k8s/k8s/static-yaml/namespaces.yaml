@@ -2,3 +2,8 @@ kind: Namespace
 apiVersion: v1
 metadata:
   name: vagrant
+---
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: prod

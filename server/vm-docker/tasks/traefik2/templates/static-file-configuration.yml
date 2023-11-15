@@ -6,5 +6,6 @@ http:
   services:
     test:
       loadBalancer:
+        passHostHeader: true
         servers:
-          - url: http://192.168.50.185:4200
+          - url: http://k8s:80

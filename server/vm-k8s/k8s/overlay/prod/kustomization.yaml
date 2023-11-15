@@ -1,0 +1,13 @@
+bases:
+- ../../base/podinfo
+
+namespace: prod
+
+patches:
+  - patch: |-
+      - op: replace
+        path: /spec/rules/0/host
+        value: test.preview.morawskim.pl
+    target:
+      kind: Ingress
+      name: podinfo
