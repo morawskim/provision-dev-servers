@@ -1,5 +1,6 @@
 bases:
 - ../../base/podinfo
+- ../../base/nginx
 
 namespace: prod
 
@@ -11,3 +12,10 @@ patches:
     target:
       kind: Ingress
       name: podinfo
+  - patch: |-
+      - op: replace
+        path: /spec/rules/0/host
+        value: test.docker
+    target:
+      kind: Ingress
+      name: nginx

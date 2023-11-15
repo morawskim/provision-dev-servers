@@ -1,0 +1,4 @@
+resources:
+- pod.yml
+- ingress.yml
+- service.yml

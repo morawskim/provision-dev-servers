@@ -1,0 +1,11 @@
+http:
+  routers:
+    test:
+      rule: Host(`test.docker`)
+      service: test
+  services:
+    test:
+      loadBalancer:
+        passHostHeader: true
+        servers:
+          - url: http://k8s:80
