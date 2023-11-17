@@ -1,8 +1,12 @@
 bases:
 - ../../base/podinfo
 - ../../base/nginx
+- ../../base/tapo-metrics
 
 namespace: prod
+
+resources:
+- tapo/sealed-secret.yml
 
 patches:
   - patch: |-
@@ -19,3 +23,10 @@ patches:
     target:
       kind: Ingress
       name: nginx
+  - patch: |-
+      - op: replace
+        path: /spec/rules/0/host
+        value: tapo.docker
+    target:
+      kind: Ingress
+      name: tapo-metrics

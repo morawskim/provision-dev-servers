@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: tapo-metrics
+spec:
+  rules:
+  - host: "tapo.10.0.2.15.nip.io"
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: tapo-metrics
+            port:
+              number: 80
+  ingressClassName: public

@@ -3,8 +3,16 @@ http:
     test:
       rule: Host(`test.docker`)
       service: test
+    tapo:
+      rule: Host(`tapo.docker`)
+      service: tapo
   services:
     test:
+      loadBalancer:
+        passHostHeader: true
+        servers:
+          - url: http://k8s:80
+    tapo:
       loadBalancer:
         passHostHeader: true
         servers:

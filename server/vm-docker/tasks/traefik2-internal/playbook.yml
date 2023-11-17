@@ -35,6 +35,7 @@
               - --providers.file.watch=true
             extra_hosts:
               - "test.docker:192.168.111.88"
+              - "tapo.docker:192.168.111.88"
       networks:
         traefik:
             external: true

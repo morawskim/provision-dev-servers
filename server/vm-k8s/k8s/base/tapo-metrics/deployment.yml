@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: tapo-metrics
+  name: tapo-metrics
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tapo-metrics
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: tapo-metrics
+    spec:
+      containers:
+      - image: ghcr.io/morawskim/tapo-metrics:latest
+        name: metrics
+        resources: {}
+        envFrom:
+        - secretRef:
+            name: tapo
+status: {}
