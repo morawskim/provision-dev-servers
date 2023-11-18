@@ -1,10 +1,16 @@
-- name: Create configuration file for traefikv2
+- name: Add underscore if sufix is not empty
+  set_fact:
+    sufixWithOptionalUnderscore: "{{ '_' + sufix if sufix | length > 0 else '' }}"
+- name: "debug variable sufixWithOptionalUnderscore"
+  debug:
+    var: sufixWithOptionalUnderscore
+- name: "Create configuration file for traefikv2{{sufix}}"
   template:
-    src: templates/static-file-configuration.yml
-    dest: "~/traefik2.yml"
+    src: "templates/static-file-configuration{{sufixWithOptionalUnderscore}}.yml"
+    dest: "~/traefik2{{sufixWithOptionalUnderscore}}.yml"
 - name: Deploy traefikv2 via docker-compose
   docker_compose:
-    project_name: traefikv2
+    project_name: traefikv2{{sufixWithOptionalUnderscore}}
     definition:
       version: '3.3'
       services:
@@ -12,18 +18,18 @@
             image: traefik:v2.8
             restart: unless-stopped
             ports:
-              - 8889:8080
+              - "{{port}}:8080"
             labels:
               traefik.enable: "true"
               traefik.port: "80"
-              traefik.backend: "traefikv2"
+              traefik.backend: "traefikv2{{sufix}}"
               traefik.docker.network: traefik
-              traefik.frontend.rule: "HostRegexp: {subdomain:[a-z]+}.preview.morawskim.pl"
+              traefik.frontend.rule: "HostRegexp: {{regex}}"
             networks:
               - default
               - traefik
             volumes:
-              - ~/traefik2.yml:/etc/traefik/services.yml
+              - "~/traefik2{{sufixWithOptionalUnderscore}}.yml:/etc/traefik/services.yml"
             logging:
               driver: "json-file"
               options:
@@ -33,6 +39,9 @@
               - --api.insecure=true
               - --providers.file.filename=/etc/traefik/services.yml
               - --providers.file.watch=true
+            extra_hosts:
+              - "test.docker:192.168.111.88"
+              - "tapo.docker:192.168.111.88"
       networks:
         traefik:
             external: true
