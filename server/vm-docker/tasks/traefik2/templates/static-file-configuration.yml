@@ -1,10 +1,49 @@
+# entryPoints:
+#   web:
+#     address: ":80"
+#     http:
+#       redirections:
+#         entrypoint:
+#           to: websecure
+#           scheme: https
+#   websecure:
+#     address: ":443"
+
 http:
   routers:
     test:
       rule: Host(`test.preview.morawskim.pl`)
       service: test
+      # web:
+      #   address: ":80"
+    test2:
+      rule: Host(`test.morawskim.pl`)
+      service: test2
+      # tls:
+      #   certResolver: "myresolver"
+    testInternal:
+      rule: Host(`test.docker`)
+      service: testInternal
+    tapo:
+      rule: Host(`tapo.docker`)
+      service: tapo
   services:
     test:
+      loadBalancer:
+        passHostHeader: true
+        servers:
+          - url: http://k8s:80
+    test2:
+      loadBalancer:
+        passHostHeader: true
+        servers:
+          - url: http://k8s:80
+    testInternal:
+      loadBalancer:
+        passHostHeader: true
+        servers:
+          - url: http://k8s:80
+    tapo:
       loadBalancer:
         passHostHeader: true
         servers:
