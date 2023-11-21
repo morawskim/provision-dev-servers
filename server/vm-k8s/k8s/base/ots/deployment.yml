@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: ots
+  name: ots
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ots
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: ots
+    spec:
+      containers:
+      - image: luzifer/ots:v1.10.0
+        name: ots
+        resources: {}
+status: {}

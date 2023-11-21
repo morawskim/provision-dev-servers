@@ -2,6 +2,7 @@ bases:
 - ../../base/podinfo
 - ../../base/nginx
 - ../../base/tapo-metrics
+- ../../base/ots
 
 namespace: prod
 
@@ -30,3 +31,10 @@ patches:
     target:
       kind: Ingress
       name: tapo-metrics
+  - patch: |-
+      - op: replace
+        path: /spec/rules/0/host
+        value: test.morawskim.pl
+    target:
+      kind: Ingress
+      name: ots
