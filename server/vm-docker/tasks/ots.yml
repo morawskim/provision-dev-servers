@@ -14,6 +14,8 @@
             traefik.docker.network: traefik
             traefik.frontend.rule: "Host: ots{{ APP_DOMAIN_SUFFIX }}"
             traefik.http.routers.ots.rule: "Host(`ots{{ APP_DOMAIN_SUFFIX }}`)"
+            traefik.http.routers.ots.tls.certresolver: myresolver
+            traefik.http.routers.ots.tls: "true"
           networks:
             - default
             - traefik

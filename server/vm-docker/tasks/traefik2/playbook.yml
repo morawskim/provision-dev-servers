@@ -20,6 +20,8 @@
             restart: unless-stopped
             ports:
               - "{{port}}:8080"
+              - "80:80"
+              - "443:443"
             labels:
               traefik.enable: "true"
               traefik.port: "80"
@@ -32,6 +34,7 @@
             volumes:
               - "~/traefik2{{sufixWithOptionalUnderscore}}.yml:/etc/traefik/services.yml"
               - acme:/acme
+              - /var/run/docker.sock:/var/run/docker.sock
             logging:
               driver: "json-file"
               options:
@@ -42,6 +45,15 @@
               - --providers.file.filename=/etc/traefik/services.yml
               - --providers.file.watch=true
               - --accesslog=true
+              - --log.level=INFO
+              - --entrypoints.web.address=:80
+              - --entrypoints.websecure.address=:443
+              - --certificatesresolvers.myresolver.acme.email=marcin@morawskim.pl
+              - --certificatesresolvers.myresolver.acme.storage=/acme/acme.json
+              # used during the challenge
+              - --certificatesresolvers.myresolver.acme.httpchallenge.entrypoint=web
+              - "--providers.docker=true"
+              - "--providers.docker.exposedbydefault=false"
             extra_hosts:
               - "test.docker:192.168.111.88"
               - "tapo.docker:192.168.111.88"

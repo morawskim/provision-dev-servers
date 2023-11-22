@@ -4,6 +4,7 @@
 - name: Deploy traefik via docker-compose
   docker_compose:
     project_name: traefik
+    stopped: true
     definition:
       version: '3.3'
       services:

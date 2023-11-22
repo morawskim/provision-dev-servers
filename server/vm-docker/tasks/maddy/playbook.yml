@@ -48,6 +48,8 @@
             traefik.docker.network: traefik
             traefik.frontend.rule: "Host: webmail{{ APP_DOMAIN_SUFFIX }}"
             traefik.http.routers.webmail.rule: "Host(`webmail{{ APP_DOMAIN_SUFFIX }}`)"
+            traefik.http.routers.webmail.tls.certresolver: myresolver
+            traefik.http.routers.webmail.tls: "true"
           networks:
             - traefik
             - default

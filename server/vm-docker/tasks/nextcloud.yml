@@ -50,6 +50,8 @@
             traefik.docker.network: traefik
             traefik.frontend.rule: "Host: nextcloud{{ APP_DOMAIN_SUFFIX }}"
             traefik.http.routers.nextcloud.rule: "Host(`nextcloud{{ APP_DOMAIN_SUFFIX }}`)"
+            traefik.http.routers.nextcloud.tls.certresolver: myresolver
+            traefik.http.routers.nextcloud.tls: "true"
           networks:
             - default
             - traefik

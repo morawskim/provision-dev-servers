@@ -29,6 +29,9 @@
             traefik.docker.network: traefik
             traefik.frontend.rule: "Host: kindle{{ APP_DOMAIN_SUFFIX }}"
             traefik.http.routers.kindle.rule: "Host(`kindle{{ APP_DOMAIN_SUFFIX }}`)"
+            traefik.http.routers.kindle.tls.certresolver: myresolver
+            traefik.http.routers.kindle.tls: "true"
+            traefik.http.services.php-kindle.loadbalancer.server.port: "80"
           networks:
             - default
             - traefik

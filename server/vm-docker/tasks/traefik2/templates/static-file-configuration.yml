@@ -8,14 +8,27 @@
 #           scheme: https
 #   websecure:
 #     address: ":443"
+#     http:
+#       tls:
+#         certResolver: myresolver
+#
+# certificatesResolvers:
+#   myresolver:
+#     acme:
+#       email: marcin@morawskim.pl
+#       storage: /acme/acme.json
+#       tlsChallenge: {}
+#       httpchallenge:
+#         entrypoint: web
+      #caserver: https://acme-staging-v02.api.letsencrypt.org/directory
 
 http:
   routers:
     test:
       rule: Host(`test.preview.morawskim.pl`)
       service: test
-      # web:
-      #   address: ":80"
+      entryPoints:
+        - web
     test2:
       rule: Host(`test.morawskim.pl`)
       service: test2
