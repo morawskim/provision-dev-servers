@@ -48,6 +48,8 @@
               - --log.level=INFO
               - --entrypoints.web.address=:80
               - --entrypoints.websecure.address=:443
+              - --entrypoints.web.http.redirections.entryPoint.to=websecure
+              - --entrypoints.web.http.redirections.entryPoint.scheme=https
               - --certificatesresolvers.myresolver.acme.email=marcin@morawskim.pl
               - --certificatesresolvers.myresolver.acme.storage=/acme/acme.json
               # used during the challenge
