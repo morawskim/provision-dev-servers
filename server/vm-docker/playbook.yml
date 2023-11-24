@@ -42,7 +42,6 @@
       with_items:
          - "192.168.111.88 test.docker"
          - "192.168.111.88 tapo.docker"
-    - include_tasks: tasks/traefik.yml
     - include_tasks: tasks/ots.yml
     - include_tasks: tasks/nextcloud.yml
     - include_tasks: tasks/ttrss/ttrss.yml
@@ -52,10 +51,6 @@
     - include_tasks: tasks/prometheus/playbook.yml
     - include_tasks: tasks/backup.yml
     - include_tasks: tasks/traefik2/playbook.yml
-      vars:
-        sufix: ""
-        port: 8889
-        regex: "HostRegexp: {subdomain:[a-z]+}.docker,test.morawskim.pl,{subdomain2:[a-z]+}.preview.morawskim.pl"
     - include_tasks: tasks/gitlab-ci-pipelines-exporter/playbook.yml
     - include_tasks: tasks/up-to-date-exporter/playbook.yml
     - include_tasks: tasks/maddy/playbook.yml
