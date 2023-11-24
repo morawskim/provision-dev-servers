@@ -18,6 +18,7 @@
             ports:
               - "8888:8080"
               - "80:80"
+              - "81:81"
               - "443:443"
             labels:
               traefik.enable: "true"
@@ -44,6 +45,7 @@
               - --accesslog=true
               - --log.level=INFO
               - --entrypoints.web.address=:80
+              - --entrypoints.internal.address=:81
               - --entrypoints.websecure.address=:443
               - --entrypoints.web.http.redirections.entryPoint.to=websecure
               - --entrypoints.web.http.redirections.entryPoint.scheme=https
