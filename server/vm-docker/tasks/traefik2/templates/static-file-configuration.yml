@@ -16,6 +16,11 @@ http:
       service: tapo
       entryPoints:
         - internal
+    ots:
+      rule: Host(`ots.morawskim.pl`)
+      service: ots
+      tls:
+        certResolver: myresolver
   services:
     test:
       loadBalancer:
@@ -33,6 +38,11 @@ http:
         servers:
           - url: http://k8s:80
     tapo:
+      loadBalancer:
+        passHostHeader: true
+        servers:
+          - url: http://k8s:80
+    ots:
       loadBalancer:
         passHostHeader: true
         servers:

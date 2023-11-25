@@ -34,7 +34,7 @@ patches:
   - patch: |-
       - op: replace
         path: /spec/rules/0/host
-        value: test.morawskim.pl
+        value: ots.morawskim.pl
     target:
       kind: Ingress
       name: ots

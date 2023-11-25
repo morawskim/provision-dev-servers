@@ -42,7 +42,6 @@
       with_items:
          - "192.168.111.88 test.docker"
          - "192.168.111.88 tapo.docker"
-    - include_tasks: tasks/ots.yml
     - include_tasks: tasks/nextcloud.yml
     - include_tasks: tasks/ttrss/ttrss.yml
     - include_tasks: tasks/noip/playbook.yml

@@ -25,7 +25,7 @@
               traefik.port: "80"
               traefik.backend: "traefikv2"
               traefik.docker.network: traefik
-              traefik.frontend.rule: "HostRegexp: {subdomain:[a-z]+}.docker,test.morawskim.pl,{subdomain2:[a-z]+}.preview.morawskim.pl"
+              traefik.frontend.rule: "HostRegexp: {subdomain:[a-z]+}.docker,test.morawskim.pl,ots.morawskim.pl,{subdomain2:[a-z]+}.preview.morawskim.pl"
             networks:
               - default
               - traefik
