@@ -3,6 +3,7 @@ bases:
 - ../../base/nginx
 - ../../base/tapo-metrics
 - ../../base/ots
+- ../../base/jsonplaceholder
 
 namespace: prod
 
@@ -38,3 +39,10 @@ patches:
     target:
       kind: Ingress
       name: ots
+  - patch: |-
+      - op: replace
+        path: /spec/rules/0/host
+        value: jsonplaceholder.morawskim.pl
+    target:
+      kind: Ingress
+      name: jsonplaceholder

@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: jsonplaceholder
+  name: jsonplaceholder
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jsonplaceholder
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: jsonplaceholder
+    spec:
+      containers:
+      - image: morawskim/jsonplaceholder
+        name: jsonplaceholder
+        resources: {}
+status: {}

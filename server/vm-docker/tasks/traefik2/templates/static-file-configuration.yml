@@ -21,6 +21,11 @@ http:
       service: ots
       tls:
         certResolver: myresolver
+    jsonplaceholder:
+      rule: Host(`jsonplaceholder.morawskim.pl`)
+      service: jsonplaceholder
+      tls:
+        certResolver: myresolver
   services:
     test:
       loadBalancer:
@@ -43,6 +48,11 @@ http:
         servers:
           - url: http://k8s:80
     ots:
+      loadBalancer:
+        passHostHeader: true
+        servers:
+          - url: http://k8s:80
+    jsonplaceholder:
       loadBalancer:
         passHostHeader: true
         servers:
