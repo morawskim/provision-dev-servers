@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: webpage2kindle
+spec:
+  selector:
+    app: webpage2kindle
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: 80
+      protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: go-readability-api
+spec:
+  selector:
+    app: webpage2kindle-go
+  type: ClusterIP
+  ports:
+    - port: 8080
+      targetPort: 8080
+      protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis
+spec:
+  selector:
+    app: webpage2kindle-redis
+  type: ClusterIP
+  ports:
+    - port: 6379
+      targetPort: 6379
+      protocol: TCP

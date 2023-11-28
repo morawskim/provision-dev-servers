@@ -4,11 +4,13 @@ bases:
 - ../../base/tapo-metrics
 - ../../base/ots
 - ../../base/jsonplaceholder
+- ../../base/webpage2kindle
 
 namespace: prod
 
 resources:
 - tapo/sealed-secret.yml
+- webpage2kindle/sealed-secret.yml
 
 patches:
   - patch: |-
@@ -46,3 +48,11 @@ patches:
     target:
       kind: Ingress
       name: jsonplaceholder
+  - patch: |-
+      - op: replace
+        path: /spec/rules/0/host
+        value: kindle.morawskim.pl
+    target:
+      kind: Ingress
+      name: webpage2kindle
+

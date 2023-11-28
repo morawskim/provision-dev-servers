@@ -1,0 +1,132 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: webpage2kindle
+  name: webpage2kindle
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: webpage2kindle
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: webpage2kindle
+    spec:
+      volumes:
+      - name: shared-data
+        emptyDir: {}
+      # initContainers:
+      # - name: create-db
+      #   image: registry.gitlab.com/morawskim/webpage2kindle/symfony-app:main
+      #   command:
+      #     - "/app/bin/console"
+      #     - "broadway:event-store:create"
+      #   env:
+      #   - name: DATABASE_URL
+      #     value: "sqlite:///%kernel.project_dir%/var/data/data.db"
+      #   volumeMounts:
+      #   - name: shared-data
+      #     mountPath: /app/var/data/data.db
+      containers:
+      - image: registry.gitlab.com/morawskim/webpage2kindle/symfony-app:main
+        name: webpage2kindle
+        env:
+        - name: SERVER_NAME
+          value: ":80"
+        - name: DATABASE_URL
+          value: "sqlite:///%kernel.project_dir%/var/data/data.db"
+        envFrom:
+        - secretRef:
+            name: webpage2kindle-php
+        volumeMounts:
+        - name: shared-data
+          mountPath: /app/var/data
+        resources: {}
+      # todo FIX ME! create dedicated deployment for consumer
+      # - image: registry.gitlab.com/morawskim/webpage2kindle/symfony-app:main
+      #   name: consumer
+      #   command: [ "/app/bin/console", "rabbitmq:multiple-consumer", "-m", "10", "pipeline" ]
+      #   env:
+      #   - name: DATABASE_URL
+      #     value: "sqlite:///%kernel.project_dir%/var/data/data.db"
+      #   volumeMounts:
+      #   - name: shared-data
+      #     mountPath: /app/var/data
+      #   resources: {}
+status: {}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: webpage2kindle-node
+  name: webpage2kindle-node
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: webpage2kindle-node
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: webpage2kindle-node
+    spec:
+      containers:
+      - image: registry.gitlab.com/morawskim/webpage2kindle/node-microservice:main
+        name: webpage2kindle
+        envFrom:
+        - secretRef:
+            name: webpage2kindle-node
+        resources: {}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: webpage2kindle-go
+  name: webpage2kindle-go
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: webpage2kindle-go
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: webpage2kindle-go
+    spec:
+      containers:
+      - image: registry.gitlab.com/morawskim/webpage2kindle/go-microservice:main
+        name: webpage2kindle
+        args:
+          - --http
+          - :8080
+        resources: {}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: webpage2kindle-redis
+  name: webpage2kindle-redis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: webpage2kindle-redis
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: webpage2kindle-redis
+    spec:
+      containers:
+      - image: redis:7.0-alpine
+        name: redis
+        args: ["--maxmemory", "50mb", "--maxmemory-policy", "allkeys-lru"]
+        resources: {}
