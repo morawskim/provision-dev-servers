@@ -12,6 +12,14 @@ resources:
 - tapo/sealed-secret.yml
 - webpage2kindle/sealed-secret.yml
 
+configMapGenerator:
+- name: webpage2kindle-php-config
+  literals:
+  - MERCURE_URL=http://127.0.0.1/.well-known/mercure
+  - DATABASE_URL=sqlite:///%kernel.project_dir%/var/data/data.db
+  - NODE_MICROSERVICE_URL=http://webpage2kindle-node-microservice
+  - GO_READABILITY_MICROSERVICE_URL=http://go-readability-api:8080
+
 patches:
   - patch: |-
       - op: replace
@@ -55,4 +63,3 @@ patches:
     target:
       kind: Ingress
       name: webpage2kindle
-

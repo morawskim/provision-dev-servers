@@ -26,6 +26,11 @@ http:
       service: jsonplaceholder
       tls:
         certResolver: myresolver
+    webpage2kindle:
+      rule: Host(`kindle.morawskim.pl`)
+      service: webpage2kindle
+      tls:
+        certResolver: myresolver
   services:
     test:
       loadBalancer:
@@ -53,6 +58,11 @@ http:
         servers:
           - url: http://k8s:80
     jsonplaceholder:
+      loadBalancer:
+        passHostHeader: true
+        servers:
+          - url: http://k8s:80
+    webpage2kindle:
       loadBalancer:
         passHostHeader: true
         servers:

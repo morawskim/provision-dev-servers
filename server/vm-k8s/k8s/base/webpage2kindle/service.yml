@@ -36,3 +36,16 @@ spec:
     - port: 6379
       targetPort: 6379
       protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: webpage2kindle-node-microservice
+spec:
+  selector:
+    app: webpage2kindle-node
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: 3000
+      protocol: TCP

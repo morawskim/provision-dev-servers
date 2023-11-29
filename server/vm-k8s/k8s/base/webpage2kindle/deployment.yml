@@ -18,44 +18,46 @@ spec:
       volumes:
       - name: shared-data
         emptyDir: {}
-      # initContainers:
-      # - name: create-db
-      #   image: registry.gitlab.com/morawskim/webpage2kindle/symfony-app:main
-      #   command:
-      #     - "/app/bin/console"
-      #     - "broadway:event-store:create"
-      #   env:
-      #   - name: DATABASE_URL
-      #     value: "sqlite:///%kernel.project_dir%/var/data/data.db"
-      #   volumeMounts:
-      #   - name: shared-data
-      #     mountPath: /app/var/data/data.db
+      initContainers:
+      - name: create-db
+        image: registry.gitlab.com/morawskim/webpage2kindle/symfony-app:main
+        command:
+          - "/app/bin/console"
+          - "broadway:event-store:create"
+        envFrom:
+        - configMapRef:
+            name: webpage2kindle-php-config
+        volumeMounts:
+        - name: shared-data
+          mountPath: /app/var/data
       containers:
       - image: registry.gitlab.com/morawskim/webpage2kindle/symfony-app:main
         name: webpage2kindle
         env:
         - name: SERVER_NAME
           value: ":80"
-        - name: DATABASE_URL
-          value: "sqlite:///%kernel.project_dir%/var/data/data.db"
         envFrom:
         - secretRef:
             name: webpage2kindle-php
+        - configMapRef:
+            name: webpage2kindle-php-config
         volumeMounts:
         - name: shared-data
           mountPath: /app/var/data
         resources: {}
-      # todo FIX ME! create dedicated deployment for consumer
-      # - image: registry.gitlab.com/morawskim/webpage2kindle/symfony-app:main
-      #   name: consumer
-      #   command: [ "/app/bin/console", "rabbitmq:multiple-consumer", "-m", "10", "pipeline" ]
-      #   env:
-      #   - name: DATABASE_URL
-      #     value: "sqlite:///%kernel.project_dir%/var/data/data.db"
-      #   volumeMounts:
-      #   - name: shared-data
-      #     mountPath: /app/var/data
-      #   resources: {}
+      #todo FIX ME! create dedicated deployment for consumer
+      - image: registry.gitlab.com/morawskim/webpage2kindle/symfony-app:main
+        name: consumer
+        command: [ "/app/bin/console", "rabbitmq:multiple-consumer", "-m", "10", "pipeline" ]
+        envFrom:
+        - secretRef:
+            name: webpage2kindle-php
+        - configMapRef:
+            name: webpage2kindle-php-config
+        volumeMounts:
+        - name: shared-data
+          mountPath: /app/var/data
+        resources: {}
 status: {}
 ---
 apiVersion: apps/v1

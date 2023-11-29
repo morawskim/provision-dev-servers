@@ -46,7 +46,6 @@
     - include_tasks: tasks/ttrss/ttrss.yml
     - include_tasks: tasks/noip/playbook.yml
     - include_tasks: tasks/fluentbit/playbook.yml
-    - include_tasks: tasks/webpage2kindle.yml
     - include_tasks: tasks/prometheus/playbook.yml
     - include_tasks: tasks/backup.yml
     - include_tasks: tasks/traefik2/playbook.yml
