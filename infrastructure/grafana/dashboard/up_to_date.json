@@ -1,0 +1,293 @@
+{
+  "__inputs": [
+    {
+      "name": "DS_GRAFANACLOUD-MORAWSKIM-PROM",
+      "label": "grafanacloud-morawskim-prom",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "prometheus",
+      "pluginName": "Prometheus"
+    }
+  ],
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 48,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_GRAFANACLOUD-MORAWSKIM-PROM}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false
+          },
+          "mappings": [
+            {
+              "options": {
+                "0": {
+                  "color": "light-red",
+                  "index": 1
+                },
+                "1": {
+                  "color": "super-light-green",
+                  "index": 0
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Is latest?"
+            },
+            "properties": [
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "mode": "basic",
+                  "type": "color-background"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 13,
+        "w": 17,
+        "x": 0,
+        "y": 0
+      },
+      "id": 1,
+      "options": {
+        "cellHeight": "md",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "frameIndex": 0,
+        "showHeader": true,
+        "sortBy": [
+          {
+            "desc": false,
+            "displayName": "Is latest?"
+          }
+        ]
+      },
+      "pluginVersion": "10.2.0-62263",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_GRAFANACLOUD-MORAWSKIM-PROM}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "version_up_to_date",
+          "format": "table",
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_GRAFANACLOUD-MORAWSKIM-PROM}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "docker_hub_version_up_to_date",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_GRAFANACLOUD-MORAWSKIM-PROM}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "github_tag_up_to_date",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "C"
+        }
+      ],
+      "title": "Up to date",
+      "transformations": [
+        {
+          "filter": {
+            "id": "byRefId",
+            "options": ""
+          },
+          "id": "merge",
+          "options": {}
+        },
+        {
+          "id": "convertFieldType",
+          "options": {
+            "conversions": [
+              {
+                "destinationType": "number",
+                "targetField": "Value #A"
+              },
+              {
+                "destinationType": "number",
+                "targetField": "Value #B"
+              },
+              {
+                "destinationType": "number",
+                "targetField": "Value #C"
+              }
+            ],
+            "fields": {}
+          }
+        },
+        {
+          "id": "calculateField",
+          "options": {
+            "alias": "Step1",
+            "binary": {
+              "left": "Value #A",
+              "operator": "+",
+              "right": "Value #B"
+            },
+            "mode": "binary",
+            "reduce": {
+              "reducer": "sum"
+            }
+          }
+        },
+        {
+          "id": "calculateField",
+          "options": {
+            "alias": "Is latest?",
+            "binary": {
+              "left": "Step1",
+              "operator": "+",
+              "right": "Value #C"
+            },
+            "mode": "binary",
+            "reduce": {
+              "reducer": "sum"
+            }
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Step1": true,
+              "Time": true,
+              "Value #A": true,
+              "Value #B": true,
+              "Value #C": true,
+              "__name__": true,
+              "constraint": false,
+              "instance": true,
+              "job": true
+            },
+            "indexByName": {
+              "Is latest?": 11,
+              "Step1": 10,
+              "Time": 1,
+              "Value #A": 7,
+              "Value #B": 8,
+              "Value #C": 9,
+              "__name__": 2,
+              "constraint": 3,
+              "instance": 4,
+              "job": 5,
+              "latest": 6,
+              "repository": 0
+            },
+            "renameByName": {
+              "IsLatest": ""
+            }
+          }
+        }
+      ],
+      "type": "table"
+    }
+  ],
+  "refresh": "",
+  "schemaVersion": 38,
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${DS_GRAFANACLOUD-MORAWSKIM-PROM}"
+        },
+        "filters": [],
+        "hide": 0,
+        "name": "Filters",
+        "skipUrlSync": false,
+        "type": "adhoc"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "up-to-date",
+  "uid": "f6357785-bb15-4aac-b6a7-3fdc02f7a6d9",
+  "version": 8,
+  "weekStart": ""
+}
