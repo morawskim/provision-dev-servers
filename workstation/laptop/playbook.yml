@@ -150,6 +150,7 @@
           - skopeo-bash-completion
           - snapd
           - starship
+          - sudo-policy-sudo-auth-self
           - susepaste
           - sysstat
           - systemd-logger
@@ -341,5 +342,5 @@
     - name: Update account
       user:
         name: "marcin"
-        groups: [docker, users, vboxusers, systemd-journal, wireshark]
+        groups: [docker, users, vboxusers, systemd-journal, wireshark, sudo]
         state: present
