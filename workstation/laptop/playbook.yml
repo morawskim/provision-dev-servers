@@ -172,6 +172,7 @@
           - wrk
           - xsv
           - yarn
+          - yubico-piv-tool
           - yubikey-manager
           - zip
 
