@@ -9,7 +9,7 @@
       version: '3.4'
       services:
         maddy:
-          image: foxcpp/maddy:latest
+          image: foxcpp/maddy:0.7
           ports:
             - "1025:25"
             - "10143:143"
