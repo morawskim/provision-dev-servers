@@ -2,6 +2,7 @@ github_releases:
   morawskim/faker-cli: 2.0.0
   mvisonneau/gitlab-ci-pipelines-exporter: 0.5.4
   tellerops/teller: 1.5.6
+  Luzifer/ots: 1.11.0
 docker_images:
   library/php: 8.2.0
   morawskim/htrace.sh: 1.1.7
