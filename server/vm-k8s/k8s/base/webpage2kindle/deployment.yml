@@ -17,7 +17,8 @@ spec:
     spec:
       volumes:
       - name: shared-data
-        emptyDir: {}
+        persistentVolumeClaim:
+          claimName: webpage2kindle
       initContainers:
       - name: create-db
         image: registry.gitlab.com/morawskim/webpage2kindle/symfony-app:main
@@ -45,7 +46,42 @@ spec:
         - name: shared-data
           mountPath: /app/var/data
         resources: {}
-      #todo FIX ME! create dedicated deployment for consumer
+status: {}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: webpage2kindle-consumer
+  name: webpage2kindle-consumer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: webpage2kindle-consumer
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: webpage2kindle-consumer
+    spec:
+      volumes:
+      - name: shared-data
+        persistentVolumeClaim:
+          claimName: webpage2kindle
+      initContainers:
+      - name: create-db
+        image: registry.gitlab.com/morawskim/webpage2kindle/symfony-app:main
+        command:
+          - "/app/bin/console"
+          - "broadway:event-store:create"
+        envFrom:
+        - configMapRef:
+            name: webpage2kindle-php-config
+        volumeMounts:
+        - name: shared-data
+          mountPath: /app/var/data
+      containers:
       - image: registry.gitlab.com/morawskim/webpage2kindle/symfony-app:main
         name: consumer
         command: [ "/app/bin/console", "rabbitmq:multiple-consumer", "-m", "10", "pipeline" ]
