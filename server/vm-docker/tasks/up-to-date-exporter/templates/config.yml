@@ -3,6 +3,8 @@ github_releases:
   mvisonneau/gitlab-ci-pipelines-exporter: 0.5.4
   tellerops/teller: 1.5.6
   Luzifer/ots: 1.11.0
+  FriendsOfBehat/SymfonyExtension: 2.4.2
+  broadway/broadway-bundle: 0.6.1
 docker_images:
   library/php: 8.2.0
   morawskim/htrace.sh: 1.1.7
@@ -11,3 +13,4 @@ github_tags:
   morawskim/faker-images: 0.8.0
   aws/aws-cli: 2.9.8
   trimstray/htrace.sh: 1.1.7
+  chrisguitarguy/RequestIdBundle: 5.1.0
