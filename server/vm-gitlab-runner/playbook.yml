@@ -38,6 +38,11 @@
      - name: Apt-pin for gitlab-runner
        template: src=templates/pin-gitlab-runner.pref dest=/etc/apt/preferences.d/pin-gitlab-runner.pref
 
+     - name: Install node-exporter
+       package:
+         name: prometheus-node-exporter
+     - name: Start node-exporter
+       service: name=prometheus-node-exporter enabled=true state=started
      - name: Install required packages
        package:
         name:

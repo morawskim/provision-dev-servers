@@ -18,6 +18,11 @@
           license_key: "{{ NEWRELIC_LICENSE_KEY }}"
       when: "(vagrant_hostname is not defined) or (vagrant_hostname|length == 0)"
   tasks:
+    - name: Install node-exporter
+      package:
+        name: prometheus-node-exporter
+    - name: Start node-exporter
+      service: name=prometheus-node-exporter enabled=true state=started
     - name: Install required packages
       snap:
         name:

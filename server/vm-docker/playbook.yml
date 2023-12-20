@@ -42,6 +42,11 @@
       with_items:
          - "192.168.111.88 test.docker"
          - "192.168.111.88 tapo.docker"
+    - name: Install node-exporter
+      package:
+        name: prometheus-node-exporter
+    - name: Start node-exporter
+      service: name=prometheus-node-exporter enabled=true state=started
     - include_tasks: tasks/nextcloud.yml
     - include_tasks: tasks/ttrss/ttrss.yml
     - include_tasks: tasks/noip/playbook.yml
