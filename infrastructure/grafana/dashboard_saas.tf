@@ -9,3 +9,9 @@ resource "grafana_dashboard" "gitlab_jobs" {
   folder = grafana_folder.saas.id
   overwrite = true
 }
+
+resource "grafana_dashboard" "node_exporter" {
+  config_json = replace(file("dashboard/node-exporter-full.json"), "$${DS_PROMETHEUS}", local.prometheus_uid)
+  folder = grafana_folder.saas.id
+  overwrite = true
+}
