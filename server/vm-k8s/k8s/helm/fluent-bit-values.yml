@@ -1,0 +1,14 @@
+rbac:
+  eventsAccess: true
+
+config:
+  inputs: |
+    [INPUT]
+        Name kubernetes_events
+        Tag k8s_events.*
+        kube_url https://kubernetes.default.svc
+
+  outputs: |
+    [OUTPUT]
+        Name stdout
+        Match k8s_events.*
