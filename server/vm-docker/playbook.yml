@@ -55,6 +55,5 @@
     - include_tasks: tasks/backup.yml
     - include_tasks: tasks/traefik2/playbook.yml
     - include_tasks: tasks/gitlab-ci-pipelines-exporter/playbook.yml
-    - include_tasks: tasks/up-to-date-exporter/playbook.yml
     - include_tasks: tasks/maddy/playbook.yml
     - include_tasks: tasks/ddns-updater/playbook.yml

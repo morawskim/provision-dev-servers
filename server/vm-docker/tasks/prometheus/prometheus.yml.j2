@@ -35,7 +35,7 @@ scrape_configs:
     scheme: http
     # List of labeled statically configured targets for this job.
     static_configs:
-      - targets: ["up-to-date-exporter:9333"]
+      - targets: ["up-to-date-exporter.docker:81"]
   - job_name: maddy
     # The HTTP resource path on which to fetch metrics from targets.
     metrics_path: /metrics

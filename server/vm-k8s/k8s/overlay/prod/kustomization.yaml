@@ -1,10 +1,10 @@
 bases:
 - ../../base/podinfo
-- ../../base/nginx
 - ../../base/tapo-metrics
 - ../../base/ots
 - ../../base/jsonplaceholder
 - ../../base/webpage2kindle
+- ../../base/up-to-date-exporter
 
 namespace: prod
 
@@ -63,3 +63,10 @@ patches:
     target:
       kind: Ingress
       name: webpage2kindle
+  - patch: |-
+      - op: replace
+        path: /spec/rules/0/host
+        value: up-to-date-exporter.docker
+    target:
+      kind: Ingress
+      name: up-to-date-exporter

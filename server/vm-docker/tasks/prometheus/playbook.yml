@@ -25,5 +25,6 @@
               max-file: "2"
           extra_hosts:
             - "tapo.docker:192.168.111.88"
+            - "up-to-date-exporter.docker:192.168.111.88"
       volumes:
         prometheus:

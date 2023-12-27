@@ -16,6 +16,11 @@ http:
       service: tapo
       entryPoints:
         - internal
+    upToDate:
+      rule: Host(`up-to-date-exporter.docker`)
+      service: upToDate
+      entryPoints:
+        - internal
     ots:
       rule: Host(`ots.morawskim.pl`)
       service: ots
@@ -48,6 +53,11 @@ http:
         servers:
           - url: http://k8s:80
     tapo:
+      loadBalancer:
+        passHostHeader: true
+        servers:
+          - url: http://k8s:80
+    upToDate:
       loadBalancer:
         passHostHeader: true
         servers:

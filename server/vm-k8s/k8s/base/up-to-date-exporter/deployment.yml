@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: up-to-date-exporter
+  name: up-to-date-exporter
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: up-to-date-exporter
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: up-to-date-exporter
+    spec:
+      volumes:
+      - name: config
+        configMap:
+          name: up-to-date-exporter
+          items:
+            - key: config.yml
+              path: config.yml
+      containers:
+      - image: morawskim/up-to-date-exporter:latest
+        imagePullPolicy: Always
+        name: metrics
+        resources: {}
+        volumeMounts:
+          - name: config
+            mountPath: /etc/up-to-date-exporter
+        args:
+          - --config.file
+          - /etc/up-to-date-exporter/config.yml
+status: {}

@@ -1,0 +1,23 @@
+apiVersion: v1
+data:
+  config.yml: |
+    github_releases:
+      morawskim/faker-cli: 2.0.0
+      mvisonneau/gitlab-ci-pipelines-exporter: 0.5.4
+      tellerops/teller: 1.5.6
+      Luzifer/ots: 1.11.0
+      FriendsOfBehat/SymfonyExtension: 2.4.2
+      broadway/broadway-bundle: 0.6.1
+    docker_images:
+      library/php: 8.2.0
+      morawskim/htrace.sh: 1.1.7
+      library/redis: 7.0.0
+    github_tags:
+      stasiu20/ssorder: 2.21.0
+      morawskim/faker-images: 0.8.0
+      aws/aws-cli: 2.9.8
+      trimstray/htrace.sh: 1.1.7
+      chrisguitarguy/RequestIdBundle: 5.1.0
+kind: ConfigMap
+metadata:
+  name: up-to-date-exporter
