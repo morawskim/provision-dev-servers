@@ -8,6 +8,7 @@ github_releases:
 docker_images:
   library/php: 8.2.0
   morawskim/htrace.sh: 1.1.7
+  library/redis: 7.0.0
 github_tags:
   stasiu20/ssorder: 2.21.0
   morawskim/faker-images: 0.8.0
