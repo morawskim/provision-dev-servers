@@ -2,3 +2,4 @@ namespace: monitoring
 
 resources:
 - k8s-metrics
+- ./newrelicSealedSecret.yaml

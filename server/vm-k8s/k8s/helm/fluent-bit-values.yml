@@ -1,6 +1,13 @@
 rbac:
   eventsAccess: true
 
+env:
+- name: LICENSE_KEY
+  valueFrom:
+    secretKeyRef:
+      name: newrelic
+      key: LICENSE_KEY
+
 config:
   inputs: |
     [INPUT]
@@ -9,6 +16,23 @@ config:
         kube_url https://kubernetes.default.svc
 
   outputs: |
+    #[OUTPUT]
+    #    Name stdout
+    #    Match k8s_events.*
     [OUTPUT]
-        Name stdout
+        Name nrlogs
+        Match *
+        license_key ${LICENSE_KEY}
+        base_uri https://log-api.eu.newrelic.com/log/v1
+  filters: |
+    [FILTER]
+        Name kubernetes
+        Match kube.*
+        Merge_Log On
+        Keep_Log Off
+        K8S-Logging.Parser On
+        K8S-Logging.Exclude On
+    [FILTER]
+        Name modify
         Match k8s_events.*
+        Add log_source k8s_events
