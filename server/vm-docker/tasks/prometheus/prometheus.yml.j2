@@ -63,9 +63,27 @@ scrape_configs:
         - "docker.pck.internal:9100"
         - "gitlab.pck.internal:9100"
         - "k8s.pck.internal:9100"
+  - job_name: k8s
+    # The HTTP resource path on which to fetch metrics from targets.
+    metrics_path: /metrics
+    # Configures the protocol scheme used for requests.
+    scheme: https
+    tls_config:
+      insecure_skip_verify: true
+    bearer_token: {{ K8S_TOKEN_TO_FETCH_METRICS }}
+    # List of labeled statically configured targets for this job.
+    static_configs:
+      - targets: ["k8s.pck.internal:16443"]
 
 remote_write:
   - url: https://prometheus-prod-01-eu-west-0.grafana.net/api/prom/push
     basic_auth:
       username: {{ PROMETHEUS_REMOTE_WRITE_USERNAME }}
       password: {{ PROMETHEUS_REMOTE_WRITE_PASSWORD }}
+    write_relabel_configs:
+    - source_labels: [__name__]
+      regex: "node_systemd_unit_state"
+      action: drop
+    - source_labels: [job]
+      regex: "k8s"
+      action: drop

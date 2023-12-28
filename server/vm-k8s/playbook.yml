@@ -45,6 +45,9 @@
     - name: Enable ingress microk8s addon
       command:
         cmd: microk8s enable ingress
+    - name: Enable metrics-server microk8s addon
+      command:
+        cmd: microk8s enable metrics-server
     # - name: Reset connection so docker group is picked up.
     #   meta: reset_connection
     - name: Install kubeseal {{ kubeseal_version }}

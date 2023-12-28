@@ -1,0 +1,5 @@
+resources:
+- role.yml
+- roleBinding.yml
+- serviceAccount.yml
+- secret.yml
