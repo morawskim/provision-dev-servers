@@ -1,6 +1,7 @@
 bases:
 - ../../base/podinfo
 - ../../base/tapo-metrics
+- ../../base/noip
 - ../../base/ots
 - ../../base/jsonplaceholder
 - ../../base/webpage2kindle
@@ -11,6 +12,7 @@ namespace: prod
 resources:
 - tapo/sealed-secret.yml
 - webpage2kindle/sealed-secret.yml
+- noip/sealed-secret.yml
 
 configMapGenerator:
 - name: webpage2kindle-php-config

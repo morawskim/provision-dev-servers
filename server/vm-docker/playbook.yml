@@ -49,7 +49,6 @@
       service: name=prometheus-node-exporter enabled=true state=started
     - include_tasks: tasks/nextcloud.yml
     - include_tasks: tasks/ttrss/ttrss.yml
-    - include_tasks: tasks/noip/playbook.yml
     - include_tasks: tasks/fluentbit/playbook.yml
     - include_tasks: tasks/prometheus/playbook.yml
     - include_tasks: tasks/backup.yml

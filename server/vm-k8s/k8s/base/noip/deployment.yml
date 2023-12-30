@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: noip
+  name: noip
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: noip
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: noip
+    spec:
+      volumes:
+      - name: config
+        secret:
+          secretName: noip
+          items:
+            - key: .env
+              path: .env
+      containers:
+      - image: ghcr.io/morawskim/noip-client-go:latest
+        name: noip
+        args:
+          - "daemon"
+        resources: {}
+        volumeMounts:
+          - name: config
+            mountPath: /.env
+            subPath: ".env"
+status: {}
