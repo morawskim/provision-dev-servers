@@ -21,6 +21,7 @@ spec:
           claimName: webpage2kindle
       initContainers:
       - name: create-db
+        imagePullPolicy: Always
         image: registry.gitlab.com/morawskim/webpage2kindle/symfony-app:main
         command:
           - "/app/bin/console"
@@ -33,6 +34,7 @@ spec:
           mountPath: /app/var/data
       containers:
       - image: registry.gitlab.com/morawskim/webpage2kindle/symfony-app:main
+        imagePullPolicy: Always
         name: webpage2kindle
         env:
         - name: SERVER_NAME
@@ -115,6 +117,7 @@ spec:
     spec:
       containers:
       - image: registry.gitlab.com/morawskim/webpage2kindle/node-microservice:main
+        imagePullPolicy: Always
         name: webpage2kindle
         envFrom:
         - secretRef:
@@ -140,6 +143,7 @@ spec:
     spec:
       containers:
       - image: registry.gitlab.com/morawskim/webpage2kindle/go-microservice:main
+        imagePullPolicy: Always
         name: webpage2kindle
         args:
           - --http
