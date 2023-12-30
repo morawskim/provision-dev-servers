@@ -6,6 +6,7 @@ bases:
 - ../../base/jsonplaceholder
 - ../../base/webpage2kindle
 - ../../base/up-to-date-exporter
+- ../../base/ddns-updater
 
 namespace: prod
 
@@ -13,6 +14,7 @@ resources:
 - tapo/sealed-secret.yml
 - webpage2kindle/sealed-secret.yml
 - noip/sealed-secret.yml
+- ddns-updater/sealed-secret.yml
 
 configMapGenerator:
 - name: webpage2kindle-php-config

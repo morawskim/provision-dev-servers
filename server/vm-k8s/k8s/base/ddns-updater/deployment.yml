@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: ddns-updater
+  name: ddns-updater
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ddns-updater
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: ddns-updater
+    spec:
+      containers:
+      - image: ghcr.io/qdm12/ddns-updater
+        name: ddns-updater
+        resources: {}
+        env:
+        - name: CONFIG
+          valueFrom:
+            secretKeyRef:
+              name: ddns-updater
+              key: config.json
+status: {}
