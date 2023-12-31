@@ -44,6 +44,7 @@
     - name: Install required packages CLI
       package:
         name:
+          - age
           - android-tools
           - ansible
           - aws-cli2
@@ -153,6 +154,7 @@
           - skopeo
           - skopeo-bash-completion
           - snapd
+          - sops
           - starship
           - sudo-policy-sudo-auth-self
           - susepaste
