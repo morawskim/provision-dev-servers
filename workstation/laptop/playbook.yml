@@ -76,6 +76,8 @@
           - git-delta
           - git-review
           - go1.21
+          - golangci-lint
+          - govulncheck
           - graphviz
           - guestfs-tools
           - helm
