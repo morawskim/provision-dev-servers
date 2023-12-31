@@ -20,6 +20,7 @@
         - https://gist.githubusercontent.com/morawskim/0e5d812efbacc894a179516cd8dbca60/raw/2efa2ae80a2feb03f13952bdc07a47383592f972/RPM-GPG-KEY
         - http://codecs.opensuse.org/openh264/openSUSE_Tumbleweed/repodata/repomd.xml.key
         - https://download.opensuse.org/repositories/multimedia:/apps/openSUSE_Tumbleweed/repodata/repomd.xml.key
+        - https://downloads.k8slens.dev/keys/gpg
 
     - name: Add repositories
       community.general.zypper_repository:
@@ -38,6 +39,7 @@
         - { name: ~, description: 'Vivaldi repository', repo: 'https://repo.vivaldi.com/archive/vivaldi-suse.repo' }
         - { name: ~, description: ~, repo: 'https://download.opensuse.org/repositories/system:snappy/openSUSE_Tumbleweed/system:snappy.repo' }
         - { name: ~, description: ~, repo: 'http://codecs.opensuse.org/openh264/openSUSE_Tumbleweed/openSUSE:Factory:openh264:PUBLISHED.repo' }
+        - { name: ~, description: ~, repo: 'https://downloads.k8slens.dev/rpm/lens.repo' }
 
     - name: Install required packages CLI
       package:
@@ -231,6 +233,7 @@
           - krdc
           - krusader
           - ksnip
+          #- lens
           - libreoffice-l10n-pl
           - libturbojpeg0 # for cameractrls
           - lshw-gui
@@ -264,7 +267,6 @@
           - yubikey-manager-qt
           # FROM morawskim
           - jetbrains-toolbox
-          - lens
           - susepaste-qt
           - xrectsel
           - zoom
