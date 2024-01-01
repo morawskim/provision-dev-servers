@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: kube-state-metrics
+spec:
+  rules:
+  - host: "kube-state-metrics.docker"
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: kube-state-metrics
+            port:
+              number: 8080
+  ingressClassName: public

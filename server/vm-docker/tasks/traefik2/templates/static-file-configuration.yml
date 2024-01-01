@@ -21,6 +21,11 @@ http:
       service: upToDate
       entryPoints:
         - internal
+    kubeStateMetrics:
+      rule: Host(`kube-state-metrics.docker`)
+      service: kubeStateMetrics
+      entryPoints:
+        - internal
     ots:
       rule: Host(`ots.morawskim.pl`)
       service: ots
@@ -58,6 +63,11 @@ http:
         servers:
           - url: http://k8s:80
     upToDate:
+      loadBalancer:
+        passHostHeader: true
+        servers:
+          - url: http://k8s:80
+    kubeStateMetrics:
       loadBalancer:
         passHostHeader: true
         servers:
