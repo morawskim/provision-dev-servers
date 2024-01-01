@@ -1,0 +1,8 @@
+rbac:
+  # If true, create & use RBAC resources
+  create: true
+
+serviceAccount:
+  # Specifies whether a ServiceAccount should be created, require rbac true
+  create: true
+  name: kube-state-metrics
