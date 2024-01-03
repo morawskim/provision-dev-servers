@@ -7,6 +7,7 @@ bases:
 - ../../base/webpage2kindle
 - ../../base/up-to-date-exporter
 - ../../base/ddns-updater
+- ../../base/gitlab-ci-pipelines-exporter
 
 namespace: prod
 
@@ -15,6 +16,7 @@ resources:
 - webpage2kindle/sealed-secret.yml
 - noip/sealed-secret.yml
 - ddns-updater/sealed-secret.yml
+- gitlab-ci-pipelines-exporter/sealed-secret.yml
 
 configMapGenerator:
 - name: webpage2kindle-php-config
@@ -74,3 +76,10 @@ patches:
     target:
       kind: Ingress
       name: up-to-date-exporter
+  - patch: |-
+      - op: replace
+        path: /spec/rules/0/host
+        value: gitlab-ci-pipelines-exporter.docker
+    target:
+      kind: Ingress
+      name: gitlab-ci-pipelines-exporter

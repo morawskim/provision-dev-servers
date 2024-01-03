@@ -1,0 +1,21 @@
+apiVersion: v1
+data:
+  config.yml: |
+    gitlab:
+      url: https://gitlab.com
+
+    # Pull jobs related metrics on all projects
+    project_defaults:
+      pull:
+        pipeline:
+          jobs:
+            enabled: true
+
+    #Pull all projects accessible by the provided token
+    wildcards:
+      - owner:
+          name: morawskim
+          kind: user
+kind: ConfigMap
+metadata:
+  name: gitlab-ci-pipelines-exporter

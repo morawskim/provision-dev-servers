@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: gitlab-ci-pipelines-exporter
+  name: gitlab-ci-pipelines-exporter
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gitlab-ci-pipelines-exporter
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: gitlab-ci-pipelines-exporter
+    spec:
+      volumes:
+      - name: config
+        configMap:
+          name: gitlab-ci-pipelines-exporter
+          items:
+            - key: config.yml
+              path: gitlab-ci-pipelines-exporter-config.yml
+      containers:
+      - image: ghcr.io/mvisonneau/gitlab-ci-pipelines-exporter:v0.5.4
+        name: metrics
+        resources: {}
+        args:
+        - run
+        - --config
+        - /etc/gitlab-ci-pipelines-exporter-config.yml
+        envFrom:
+        - secretRef:
+            name: gitlab-ci-pipelines-exporter
+        volumeMounts:
+          - name: config
+            mountPath: /etc/gitlab-ci-pipelines-exporter-config.yml
+            subPath: "gitlab-ci-pipelines-exporter-config.yml"
+status: {}

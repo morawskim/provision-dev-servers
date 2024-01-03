@@ -21,6 +21,11 @@ http:
       service: upToDate
       entryPoints:
         - internal
+    gitlabCiPipelinesExporter:
+      rule: Host(`gitlab-ci-pipelines-exporter.docker`)
+      service: gitlabCiPipelinesExporter
+      entryPoints:
+        - internal
     kubeStateMetrics:
       rule: Host(`kube-state-metrics.docker`)
       service: kubeStateMetrics
@@ -58,6 +63,11 @@ http:
         servers:
           - url: http://k8s:80
     tapo:
+      loadBalancer:
+        passHostHeader: true
+        servers:
+          - url: http://k8s:80
+    gitlabCiPipelinesExporter:
       loadBalancer:
         passHostHeader: true
         servers:

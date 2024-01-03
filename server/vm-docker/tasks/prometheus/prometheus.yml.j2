@@ -27,7 +27,7 @@ scrape_configs:
     scheme: http
     # List of labeled statically configured targets for this job.
     static_configs:
-      - targets: ["gitlab-exporter:8080"]
+      - targets: ["gitlab-ci-pipelines-exporter.docker:81"]
   - job_name: up-to-date-exporter
     # The HTTP resource path on which to fetch metrics from targets.
     metrics_path: /metrics
