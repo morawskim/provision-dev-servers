@@ -23,7 +23,7 @@ spec:
             - key: config.yml
               path: gitlab-ci-pipelines-exporter-config.yml
       containers:
-      - image: ghcr.io/mvisonneau/gitlab-ci-pipelines-exporter:v0.5.4
+      - image: ghcr.io/mvisonneau/gitlab-ci-pipelines-exporter:v0.5.6
         name: metrics
         resources: {}
         args:

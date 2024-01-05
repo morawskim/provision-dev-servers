@@ -3,7 +3,7 @@ data:
   config.yml: |
     github_releases:
       morawskim/faker-cli: 2.0.0
-      mvisonneau/gitlab-ci-pipelines-exporter: 0.5.4
+      mvisonneau/gitlab-ci-pipelines-exporter: 0.5.6
       tellerops/teller: 1.5.6
       Luzifer/ots: 1.11.0
       FriendsOfBehat/SymfonyExtension: 2.4.2
