@@ -81,6 +81,6 @@
     enabled: yes
 - name: Add backup gpg key
   gpg_key:
-    content: "{{ lookup('file', 'backup/0x66AE3CFE.asc') }}"
+    content: "{{ lookup('file', 'backup/0x1E94F1FB.asc') }}"
     trust: '5'
 # }}}
