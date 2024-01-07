@@ -7,7 +7,12 @@ To restore data from backup firstly we need an account with permission to S3 buc
 Call command to see files stored in bucket ` duplicity list-current-files --encrypt-key <GPG_KEY_ID>  boto3+s3://<BUCKET>/PATH/TO/BACKUP`
 To see a value of GPG_KEY_ID check the file `parameters/vars.yml`.
 
-You can restore all fiels or select only a one file (via `--file-to-restore file/from/backup` parameter) - `duplicity restore  --encrypt-key <GPG_KEY_ID>  boto3+s3://<BUCKET>/PATH/TO/BACKUP ./directory/where/restored/data/will/be/saved`
+You can restore all fiels or select only a one file (via `--path-to-restore file/from/backup` parameter) - `duplicity restore  --encrypt-key <GPG_KEY_ID>  boto3+s3://<BUCKET>/PATH/TO/BACKUP ./directory/where/restored/data/will/be/saved`
+
+> **WARNING**: The option `--path-to-restore` has been introducted in duplicity 2.
+> CommandLineError: Option '--file-to-restore was changed in 2.0.0.
+>    --file-to-restore to --path-to-restore
+>    --do-not-restore-ownership to --no-restore-ownership
 
 ## Disaster recovery
 
