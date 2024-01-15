@@ -28,6 +28,7 @@
           - qemu-ui-spice-core
           - firewalld
           - bind-utils
+          - guestfs-tools
           #- python3-firewall
         state: present
     - name: Start libvirtd
