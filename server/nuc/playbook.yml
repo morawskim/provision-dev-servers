@@ -1,6 +1,5 @@
 ---
 - hosts: nuc
-  become: true
   vars:
     libvirt_default_pool_name: default
     libvirt_dns: "{{ '192.168.111.1' if 'guest' != ansible_facts.virtualization_role else '192.168.120.1' }}"
@@ -35,11 +34,6 @@
       service: name=libvirtd state=started enabled=yes
     - name: Start firewalld
       service: name=firewalld state=started enabled=yes
-    - name: Update account
-      user:
-        name: "marcin"
-        groups: [libvirt, systemd-journal]
-        state: present
     - name: firewalld add interface to internal zone
       firewalld:
         zone: internal

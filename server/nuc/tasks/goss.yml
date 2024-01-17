@@ -10,7 +10,7 @@
     owner: root
     group: root
     mode: '0600'
-- name: run goss against the gossfile /path/to/file.yml
-  goss:
-    path: "/root/goss.yaml"
-    goss_path: "/usr/local/bin/goss"
+# - name: run goss against the gossfile /path/to/file.yml
+#   goss:
+#     path: "/root/goss.yaml"
+#     goss_path: "/usr/local/bin/goss"

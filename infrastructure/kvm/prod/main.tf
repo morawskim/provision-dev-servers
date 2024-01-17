@@ -9,7 +9,7 @@ terraform {
 }
 
 provider "libvirt" {
-  uri   = "qemu+ssh://marcin@intel.morawskim.pl/system"
+  uri   = "qemu+ssh://root@intel.morawskim.pl/system"
 }
 
 module "network" {
@@ -21,8 +21,8 @@ module "vm-docker" {
   source    = "../modules/vm"
   name = "docker"
   disk = 1024*1024*1024*60 # 60 GB
-  memory = 2860
-  vcpu   = 3
+  memory = 2400
+  vcpu   = 2
   cpu_mode = "host-passthrough"
   network_id = module.network.id
   ssh_keys = [
@@ -47,8 +47,8 @@ module "vm-gitlab" {
 module "vm-k8s" {
   source    = "../modules/vm"
   name = "k8s"
-  disk = 1024*1024*1024*60 # 60 GB
-  memory = 2500
+  disk = 1024*1024*1024*80 # 60 GB
+  memory = 2800
   vcpu   = 3
   cpu_mode = "host-passthrough"
   network_id = module.network.id
