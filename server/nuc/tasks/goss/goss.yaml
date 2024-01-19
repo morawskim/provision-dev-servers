@@ -3,6 +3,10 @@ port:
     listening: true
     ip:
     - 0.0.0.0
+  tcp:631:
+    listening: true
+    ip:
+    - 0.0.0.0
 service:
   sshd:
     enabled: true
@@ -10,12 +14,6 @@ service:
   libvirtd:
     enabled: true
     running: true
-user:
-  marcin:
-    exists: true
-    groups:
-    - libvirt
-    - systemd-journal
 process:
   libvirtd:
     running: true
