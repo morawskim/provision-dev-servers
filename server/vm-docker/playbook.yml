@@ -34,14 +34,6 @@
         name: "{{ username }}"
         groups: docker
         append: yes
-    - name: Add entry to a hosts file
-      lineinfile:
-        path: /etc/hosts
-        line: "{{ item }}"
-        state: present
-      with_items:
-         - "192.168.111.88 test.docker"
-         - "192.168.111.88 tapo.docker"
     - name: Install node-exporter
       package:
         name: prometheus-node-exporter

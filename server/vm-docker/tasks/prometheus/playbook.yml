@@ -24,9 +24,9 @@
               max-size: "20m"
               max-file: "2"
           extra_hosts:
-            - "tapo.docker:192.168.111.88"
-            - "up-to-date-exporter.docker:192.168.111.88"
-            - "kube-state-metrics.docker:192.168.111.88"
-            - "gitlab-ci-pipelines-exporter.docker:192.168.111.88"
+            - "tapo.docker:192.168.111.85"
+            - "up-to-date-exporter.docker:192.168.111.85"
+            - "kube-state-metrics.docker:192.168.111.85"
+            - "gitlab-ci-pipelines-exporter.docker:192.168.111.85"
       volumes:
         prometheus:

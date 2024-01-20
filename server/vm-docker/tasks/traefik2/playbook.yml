@@ -55,9 +55,6 @@
               - --certificatesresolvers.myresolver.acme.httpchallenge.entrypoint=web
               - "--providers.docker=true"
               - "--providers.docker.exposedbydefault=false"
-            extra_hosts:
-              - "test.docker:192.168.111.88"
-              - "tapo.docker:192.168.111.88"
       networks:
         traefik:
             external: true
