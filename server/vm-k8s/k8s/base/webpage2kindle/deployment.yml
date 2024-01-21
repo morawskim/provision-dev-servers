@@ -86,7 +86,7 @@ spec:
       containers:
       - image: registry.gitlab.com/morawskim/webpage2kindle/symfony-app:main
         name: consumer
-        command: [ "/app/bin/console", "rabbitmq:multiple-consumer", "-m", "10", "pipeline" ]
+        command: [ "/app/bin/console", "rabbitmq:multiple-consumer", "-m", "50", "pipeline" ]
         envFrom:
         - secretRef:
             name: webpage2kindle-php
@@ -95,7 +95,13 @@ spec:
         volumeMounts:
         - name: shared-data
           mountPath: /app/var/data
-        resources: {}
+        resources:
+          request:
+            cpu: 200m
+            memory: 32M
+          limit:
+            cpu: 500m
+            memory: 48M
 status: {}
 ---
 apiVersion: apps/v1
