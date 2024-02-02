@@ -7,6 +7,7 @@ bases:
 - ../../base/up-to-date-exporter
 - ../../base/ddns-updater
 - ../../base/gitlab-ci-pipelines-exporter
+- ../../base/maddy
 
 namespace: prod
 
@@ -16,6 +17,7 @@ resources:
 - noip/sealed-secret.yml
 - ddns-updater/sealed-secret.yml
 - gitlab-ci-pipelines-exporter/sealed-secret.yml
+- maddy/sealed-secret.yml
 
 configMapGenerator:
 - name: webpage2kindle-php-config
@@ -82,3 +84,10 @@ patches:
     target:
       kind: Ingress
       name: gitlab-ci-pipelines-exporter
+  - patch: |-
+      - op: replace
+        path: /spec/rules/0/host
+        value: webmail.morawskim.pl
+    target:
+      kind: Ingress
+      name: roundcube

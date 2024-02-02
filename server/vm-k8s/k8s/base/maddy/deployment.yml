@@ -1,0 +1,75 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: maddy
+  name: maddy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: maddy
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: maddy
+    spec:
+      volumes:
+      - name: config
+        configMap:
+          name: maddy
+          items:
+            - key: maddy.conf
+              path: maddy.conf
+      containers:
+      - image: foxcpp/maddy:0.7
+        name: maddy
+        resources: {}
+        env:
+        - name: MADDY_HOSTNAME
+          value: mx1.mail.mdemo.ovh
+        - name: MADDY_DOMAIN
+          value: mail.mdemo.ovh
+        envFrom:
+        - secretRef:
+            name: maddy
+        volumeMounts:
+          - name: config
+            mountPath: /data/maddy.conf
+            subPath: "maddy.conf"
+status: {}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: roundcube
+  name: roundcube
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: roundcube
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: roundcube
+    spec:
+      containers:
+      - image: roundcube/roundcubemail:1.6.x-apache
+        name: roundcube
+        resources: {}
+        env:
+        - name: ROUNDCUBEMAIL_DEFAULT_HOST
+          value: ssl://mx1.mail.mdemo.ovh
+        - name: ROUNDCUBEMAIL_DEFAULT_PORT
+          value: "993"
+        - name: ROUNDCUBEMAIL_SMTP_SERVER
+          value: tls://mx1.mail.mdemo.ovh
+        - name: ROUNDCUBEMAIL_SMTP_PORT
+          value: "587"
+        - name: ROUNDCUBEMAIL_DB_TYPE
+          value: sqlite
+status: {}

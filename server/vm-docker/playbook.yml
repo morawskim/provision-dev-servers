@@ -45,4 +45,3 @@
     - include_tasks: tasks/prometheus/playbook.yml
     - include_tasks: tasks/backup.yml
     - include_tasks: tasks/traefik2/playbook.yml
-    - include_tasks: tasks/maddy/playbook.yml

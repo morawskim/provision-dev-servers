@@ -46,6 +46,11 @@ http:
       service: webpage2kindle
       tls:
         certResolver: myresolver
+    webmail:
+      rule: Host(`webmail.morawskim.pl`)
+      service: webmail
+      tls:
+        certResolver: myresolver
   services:
     test:
       loadBalancer:
@@ -93,6 +98,11 @@ http:
         servers:
           - url: http://k8s:80
     webpage2kindle:
+      loadBalancer:
+        passHostHeader: true
+        servers:
+          - url: http://k8s:80
+    webmail:
       loadBalancer:
         passHostHeader: true
         servers:

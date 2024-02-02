@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: roundcube
+spec:
+  rules:
+  - host: "roundcube.10.0.2.15.nip.io"
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: roundcube
+            port:
+              number: 80
+  ingressClassName: public
