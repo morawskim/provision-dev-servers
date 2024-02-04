@@ -1,0 +1,29 @@
+---
+- hosts: localhost
+  vars_files:
+    - parameters/secrets.yml
+  tasks:
+    - name: Search for maddy pod
+      kubernetes.core.k8s_info:
+        kind: Pod
+        label_selectors:
+          - app=maddy
+      register: pod
+    - name: "Extract pod name"
+      set_fact:
+        podName: "{{pod.resources[0].metadata.name}}"
+    - name: Display pod name
+      debug:
+        msg: "{{podName}}"
+    - name: Create creds
+      kubernetes.core.k8s_exec:
+        namespace: prod
+        pod: "{{podName}}"
+        command: sh -c "echo {{item.password}} | maddy creds create {{item.email}}"
+      with_items: "{{MADDY_ACOUNTS}}"
+    - name: Create imap-acct
+      kubernetes.core.k8s_exec:
+        namespace: prod
+        pod: "{{podName}}"
+        command: maddy imap-acct create {{item.email}}
+      with_items: "{{MADDY_ACOUNTS}}"
