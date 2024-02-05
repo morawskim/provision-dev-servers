@@ -96,12 +96,19 @@ spec:
         - name: shared-data
           mountPath: /app/var/data
         resources:
-          request:
+          requests:
             cpu: 200m
             memory: 32M
-          limit:
+          limits:
             cpu: 500m
             memory: 48M
+        livenessProbe:
+          exec:
+            command:
+              - /app/bin/console
+              - app:check-connection-to-rabbitmq
+          initialDelaySeconds: 5
+          periodSeconds: 30
 status: {}
 ---
 apiVersion: apps/v1
