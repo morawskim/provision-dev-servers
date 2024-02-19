@@ -1,0 +1,19 @@
+apiVersion: v1
+data:
+  TTRSS_DB_HOST: 'ttrss-mysql'
+  TTRSS_DB_PORT: '3306'
+  TTRSS_DB_TYPE: 'mysql'
+  TTRSS_PHP_EXECUTABLE: '/usr/local/bin/php'
+  # You will likely need to set this to the correct value, see README.md
+  # for more information.
+  TTRSS_SELF_URL_PATH: 'ttrss.10.0.2.15.nip.io'
+  # You can customize other config.php defines by setting overrides here.
+  # See app/Dockerfile for complete list. Examples:
+  # TTRSS_PLUGINS=auth_remote
+  # TTRSS_SINGLE_USER_MODE=true
+  # TTRSS_SESSION_COOKIE_LIFETIME=2592000
+  # TTRSS_FORCE_ARTICLE_PURGE=30
+  # etc, etc.
+kind: ConfigMap
+metadata:
+  name: ttrss

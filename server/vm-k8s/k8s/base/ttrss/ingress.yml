@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ttrss
+spec:
+  rules:
+  - host: "ttrss.10.0.2.15.nip.io"
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: ttrss
+            port:
+              number: 80
+  ingressClassName: public

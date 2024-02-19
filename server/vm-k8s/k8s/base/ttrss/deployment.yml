@@ -1,0 +1,130 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: ttrss
+  name: ttrss
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ttrss
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: ttrss
+    spec:
+      containers:
+      - image: morawskim/ttrss-mysql:2021-03-31
+        name: ttrss
+        envFrom:
+        - configMapRef:
+            name: ttrss
+        env:
+        - name: TTRSS_DB_PASS
+          valueFrom:
+            secretKeyRef:
+              name: ttrss-mysql
+              key: MYSQL_PASSWORD
+        - name: TTRSS_DB_USER
+          valueFrom:
+            secretKeyRef:
+              name: ttrss-mysql
+              key: MYSQL_USER
+        - name: TTRSS_DB_NAME
+          valueFrom:
+            secretKeyRef:
+              name: ttrss-mysql
+              key: MYSQL_DATABASE
+        resources: {}
+status: {}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: ttrss-updater
+  name: ttrss-updater
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ttrss-updater
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: ttrss-updater
+    spec:
+      containers:
+      - image: morawskim/ttrss-mysql:2021-03-31
+        name: ttrss-updater
+        command: ["/usr/local/bin/php",  "/var/www/html/update_daemon2.php"]
+        envFrom:
+        - configMapRef:
+            name: ttrss
+        env:
+        - name: TTRSS_DB_PASS
+          valueFrom:
+            secretKeyRef:
+              name: ttrss-mysql
+              key: MYSQL_PASSWORD
+        - name: TTRSS_DB_USER
+          valueFrom:
+            secretKeyRef:
+              name: ttrss-mysql
+              key: MYSQL_USER
+        - name: TTRSS_DB_NAME
+          valueFrom:
+            secretKeyRef:
+              name: ttrss-mysql
+              key: MYSQL_DATABASE
+        resources: {}
+        securityContext:
+          runAsUser: 33
+status: {}
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: ttrss-mysql
+spec:
+  selector:
+    matchLabels:
+      app: ttrss-mysql
+  serviceName: "ttrss-mysql"
+  replicas: 1
+  minReadySeconds: 10
+  template:
+    metadata:
+      labels:
+        app: ttrss-mysql
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+      - name: mysql
+        image: mysql:5.7
+        ports:
+        - containerPort: 3306
+          name: mysql
+        volumeMounts:
+        - name: mysql
+          mountPath: /var/lib/mysql
+        resources:
+          requests:
+            memory: 64M
+          limits:
+            memory: 480M
+        envFrom:
+        - secretRef:
+            name: ttrss-mysql
+  volumeClaimTemplates:
+  - metadata:
+      name: mysql
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: "microk8s-hostpath"
+      resources:
+        requests:
+          storage: 1Gi
