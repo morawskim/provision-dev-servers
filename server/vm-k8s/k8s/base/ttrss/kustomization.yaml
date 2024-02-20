@@ -1,5 +1,6 @@
 resources:
 - configMap.yml
+- cronJob.yml
 - deployment.yml
 - ingress.yml
 - service.yml

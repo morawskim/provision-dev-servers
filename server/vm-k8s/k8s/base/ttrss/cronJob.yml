@@ -1,0 +1,46 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: ttrss-backup
+spec:
+  failedJobsHistoryLimit: 1
+  successfulJobsHistoryLimit: 1
+  schedule: 05 01 * * *
+  jobTemplate:
+    metadata:
+      name: ttrss-backup
+    spec:
+      template:
+        metadata:
+        spec:
+          hostname: backup-ttrss-mysql
+          restartPolicy: Never
+          containers:
+          - image: morawskim/restic-aws-backup
+            name: backup
+            resources: {}
+            # Uncomment for debuging purposes
+            #command: ["/bin/bash", "-c", "while true; do date; sleep 60; done"]
+            command:
+            - "/bin/bash"
+            - "-c"
+            - "/usr/local/bin/aws-assume-role.sh arn:aws:iam::358149850566:role/backup_role backup_role -- bash -c '/usr/bin/mysqldump --single-transaction --quick --skip-lock-tables --routines --databases $DATABASE_NAME -u$DATABASE_USER -p$DATABASE_PASSWORD -h ttrss-mysql | /usr/bin/pigz | restic backup --stdin --stdin-filename ttrss.sql.gz --tag ttrss'"
+            env:
+            - name: AWS_DEFAULT_REGION
+              value: eu-central-1
+            - name: DATABASE_USER
+              value: root
+            - name: DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: ttrss-mysql
+                  key: MYSQL_ROOT_PASSWORD
+            - name: DATABASE_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: ttrss-mysql
+                  key: MYSQL_DATABASE
+            envFrom:
+            - secretRef:
+                name: backup-ttrss-restic
+status: {}

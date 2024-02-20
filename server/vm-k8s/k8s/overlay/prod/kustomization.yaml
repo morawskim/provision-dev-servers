@@ -20,6 +20,7 @@ resources:
 - gitlab-ci-pipelines-exporter/sealed-secret.yml
 - maddy/sealed-secret.yml
 - ttrss/sealed-secret.yml
+- ttrss/restic-sealed-secret.yml
 
 configMapGenerator:
 - name: webpage2kindle-php-config

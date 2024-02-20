@@ -115,7 +115,7 @@ spec:
           requests:
             memory: 64M
           limits:
-            memory: 480M
+            memory: 380M
         envFrom:
         - secretRef:
             name: ttrss-mysql
