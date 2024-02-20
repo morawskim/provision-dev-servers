@@ -5,6 +5,11 @@ http:
       service: test
       entryPoints:
         - web
+    ttrss:
+      rule: Host(`ttrss.morawskim.pl`)
+      service: ttrss
+      tls:
+        certResolver: myresolver
     test2:
       rule: Host(`test.morawskim.pl`)
       service: test2
@@ -53,6 +58,11 @@ http:
         certResolver: myresolver
   services:
     test:
+      loadBalancer:
+        passHostHeader: true
+        servers:
+          - url: http://k8s:80
+    ttrss:
       loadBalancer:
         passHostHeader: true
         servers:

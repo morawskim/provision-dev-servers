@@ -6,6 +6,7 @@
 - name: Deploy ttrss via docker-compose
   docker_compose:
     project_name: ttrss
+    stopped: true
     definition:
       version: '2.4'
       services:

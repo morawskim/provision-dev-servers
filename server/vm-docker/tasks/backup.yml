@@ -7,6 +7,7 @@
       - python3-packaging
       - python3-boto3
       - awscli
+      - restic
 - name: Creates backups directory
   file:
     path: "{{ BACKUP_DIR }}"
@@ -77,10 +78,49 @@
 - name: Enable a timer unit for duplicity
   systemd:
     name: duplicity.timer
-    state: started
-    enabled: yes
+    state: stopped
+    enabled: false
 - name: Add backup gpg key
   gpg_key:
     content: "{{ lookup('file', 'backup/0x1E94F1FB.asc') }}"
     trust: '5'
+# }}}
+
+# {{{ restic
+- name: Copy AWS wrapper
+  copy:
+    src: backup/aws-assume-role.sh
+    dest: /usr/local/bin/aws-assume-role.sh
+    owner: root
+    group: root
+    mode: '0700'
+- name: Create env file for restic
+  no_log: true
+  template:
+    src: backup/restic.env.j2
+    dest: "/etc/default/restic.env"
+    owner: root
+    group: root
+    mode: '0640'
+- name: Create service's systemd unit
+  template:
+    src: backup/restic.service.j2
+    dest: "/etc/systemd/system/restic.service"
+- name: Create timer's systemd unit
+  template:
+    src: backup/restic.timer.j2
+    dest: "/etc/systemd/system/restic.timer"
+- name: Reload systemd
+  systemd:
+    daemon_reload: yes
+- name: Enable a service unit for restic
+  systemd:
+    name: restic.service
+    enabled: yes
+    state: stopped
+- name: Enable a timer unit for restic
+  systemd:
+    name: restic.timer
+    state: started
+    enabled: yes
 # }}}
