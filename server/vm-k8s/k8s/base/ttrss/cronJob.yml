@@ -4,12 +4,14 @@ metadata:
   name: ttrss-backup
 spec:
   failedJobsHistoryLimit: 1
-  successfulJobsHistoryLimit: 1
+  successfulJobsHistoryLimit: 0
   schedule: 05 01 * * *
   jobTemplate:
     metadata:
       name: ttrss-backup
     spec:
+      backoffLimit: 0
+      completions: 1
       template:
         metadata:
         spec:

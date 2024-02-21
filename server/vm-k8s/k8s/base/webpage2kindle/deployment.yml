@@ -47,7 +47,11 @@ spec:
         volumeMounts:
         - name: shared-data
           mountPath: /app/var/data
-        resources: {}
+        resources:
+          requests:
+            memory: 64Mi
+          limits:
+            memory: 254Mi
 status: {}
 ---
 apiVersion: apps/v1
