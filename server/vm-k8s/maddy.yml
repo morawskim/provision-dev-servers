@@ -19,7 +19,7 @@
       kubernetes.core.k8s_exec:
         namespace: prod
         pod: "{{podName}}"
-        command: sh -c "echo {{item.password}} | maddy creds create {{item.email}}"
+        command: sh -c "echo -n {{item.password}} | maddy creds create {{item.email}}"
       with_items: "{{MADDY_ACOUNTS}}"
     - name: Create imap-acct
       kubernetes.core.k8s_exec:
