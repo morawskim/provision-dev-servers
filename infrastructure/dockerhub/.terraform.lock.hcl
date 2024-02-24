@@ -1,7 +1,7 @@
-# This file is maintained automatically by "terraform init".
+# This file is maintained automatically by "tofu init".
 # Manual edits may be lost in future updates.
 
-provider "registry.terraform.io/magenta-aps/dockerhub" {
+provider "registry.opentofu.org/magenta-aps/dockerhub" {
   version     = "0.0.14"
   constraints = "0.0.14"
   hashes = [

@@ -43,3 +43,43 @@ resource "dockerhub_repository" "lorem_space_backend" {
   When that task will be resolve the shared photos will be added to this container image.
   EOT
 }
+
+resource "dockerhub_repository" "restic" {
+  name        = "restic-aws-backup"
+  namespace   = "morawskim"
+  description = "Tools to create backup of mysql and store it in AWS S3"
+  full_description = <<-EOT
+  # Restic AWS backup
+
+  The image contains following tools:
+  * mysqldump
+  * restic
+  * pigz
+  * awscli
+
+  All these tools are helpful to create backups of MySQL database and store it in AWS S3.
+
+  Additional a bash script `aws-assume-role.sh` exists which helps retrieve temporary AWS credentials.
+  Usage `aws-assume-role.sh AWS_ROLE_ARN AWS_ROLE_SESSION_NAME -- restic-command-with-arguments`
+  EOT
+}
+
+resource "dockerhub_repository" "swaks" {
+  name        = "swaks"
+  namespace   = "morawskim"
+  description = "Swaks - Swiss Army Knife for SMTP"
+  full_description = <<-EOT
+  # Swaks - Swiss Army Knife for SMTP
+
+  Swaks is a featureful, flexible, scriptable, transaction-oriented SMTP test tool written and maintained by [John Jetmore](https://jetmore.org/john/).  It is free to use and licensed under the GNU GPLv2. Features include:
+
+  * SMTP extensions including TLS, authentication, pipelining, PROXY, PRDR, and XCLIENT
+  * Protocols including SMTP, ESMTP, and LMTP
+  * Transports including UNIX-domain sockets, internet-domain sockets (IPv4 and IPv6), and pipes to spawned processes
+  * Completely scriptable configuration, with option specification via environment variables, configuration files, and command line
+
+  The official project page is [https://jetmore.org/john/code/swaks/](https://jetmore.org/john/code/swaks/).
+
+  The image is build via packer. The source code can be found [here](https://github.com/morawskim/packer-images).
+  EOT
+}
