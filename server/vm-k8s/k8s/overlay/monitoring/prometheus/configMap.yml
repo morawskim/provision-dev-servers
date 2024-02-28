@@ -1,0 +1,126 @@
+apiVersion: v1
+data:
+  config.yml: |
+    global:
+      # How frequently to scrape targets by default.
+      scrape_interval: 1m
+      # How long until a scrape request times out.
+      scrape_timeout: 10s
+
+    # A list of scrape configurations.
+    scrape_configs:
+      # The job name assigned to scraped metrics by default.
+      - job_name: webpage2kindle
+        # How frequently to scrape targets from this job.
+        scrape_interval: 1m
+        # Per-scrape timeout when scraping this job.
+        scrape_timeout: 10s
+        # The HTTP resource path on which to fetch metrics from targets.
+        metrics_path: /metrics
+        # Configures the protocol scheme used for requests.
+        scheme: https
+        # List of labeled statically configured targets for this job.
+        static_configs:
+          - targets: ["kindle.morawskim.pl"]
+
+      # The job name assigned to scraped metrics by default.
+      - job_name: gitlab-exporter
+        # The HTTP resource path on which to fetch metrics from targets.
+        metrics_path: /metrics
+        # Configures the protocol scheme used for requests.
+        scheme: http
+        # List of labeled statically configured targets for this job.
+        static_configs:
+          - targets: ["gitlab-ci-pipelines-exporter.prod"]
+
+      - job_name: up-to-date-exporter
+        # The HTTP resource path on which to fetch metrics from targets.
+        metrics_path: /metrics
+        # Configures the protocol scheme used for requests.
+        scheme: http
+        # List of labeled statically configured targets for this job.
+        static_configs:
+          - targets: ["up-to-date-exporter.prod"]
+
+      - job_name: maddy
+        # The HTTP resource path on which to fetch metrics from targets.
+        metrics_path: /metrics
+        # Configures the protocol scheme used for requests.
+        scheme: http
+        # List of labeled statically configured targets for this job.
+        static_configs:
+          - targets: ["maddy-metrics.prod"]
+
+      - job_name: tapo
+        # The HTTP resource path on which to fetch metrics from targets.
+        metrics_path: /metrics
+        # Configures the protocol scheme used for requests.
+        scheme: http
+        # List of labeled statically configured targets for this job.
+        static_configs:
+          - targets: ["tapo-metrics.prod:80"]
+
+      - job_name: node_exporter
+        # The HTTP resource path on which to fetch metrics from targets.
+        metrics_path: /metrics
+        # Configures the protocol scheme used for requests.
+        scheme: http
+        # List of labeled statically configured targets for this job.
+        static_configs:
+          - targets:
+            - "docker.pck.internal:9100"
+            - "gitlab.pck.internal:9100"
+            - "k8s.pck.internal:9100"
+
+      - job_name: k8s
+        # The HTTP resource path on which to fetch metrics from targets.
+        metrics_path: /metrics
+        # Configures the protocol scheme used for requests.
+        scheme: https
+        tls_config:
+          insecure_skip_verify: true
+        bearer_token: "{{ K8S_TOKEN_TO_FETCH_METRICS }}"
+        # List of labeled statically configured targets for this job.
+        static_configs:
+          - targets: ["k8s.pck.internal:16443"]
+
+      - job_name: prometheus
+        # The HTTP resource path on which to fetch metrics from targets.
+        metrics_path: /metrics
+        # Configures the protocol scheme used for requests.
+        scheme: http
+        # List of labeled statically configured targets for this job.
+        static_configs:
+          - targets: ["127.0.0.1:9090"]
+
+      - job_name: kube-state-metrics
+        # The HTTP resource path on which to fetch metrics from targets.
+        metrics_path: /metrics
+        # Configures the protocol scheme used for requests.
+        scheme: http
+        # List of labeled statically configured targets for this job.
+        static_configs:
+          - targets: ["kube-state-metrics.docker:81"]
+
+    # remote_write:
+    #   - url: https://prometheus-prod-01-eu-west-0.grafana.net/api/prom/push
+    #     basic_auth:
+    #       username: "{{ PROMETHEUS_REMOTE_WRITE_USERNAME }}"
+    #       password: "{{ PROMETHEUS_REMOTE_WRITE_PASSWORD }}"
+    #       #password_file
+    #     write_relabel_configs:
+    #       - source_labels: [__name__]
+    #         regex: "node_systemd_unit_state"
+    #         action: drop
+    #       - source_labels: [job]
+    #         regex: "k8s"
+    #         action: drop
+    #       - source_labels: [job]
+    #         regex: "prometheus"
+    #         action: drop
+    #       - source_labels: [job]
+    #         regex: "kube-state-metrics"
+    #         action: drop
+kind: ConfigMap
+metadata:
+  name: prometheus

@@ -40,3 +40,16 @@ spec:
     - port: 80
       targetPort: 80
       protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: maddy-metrics
+spec:
+  selector:
+    app: maddy
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: 9749
+      protocol: TCP
