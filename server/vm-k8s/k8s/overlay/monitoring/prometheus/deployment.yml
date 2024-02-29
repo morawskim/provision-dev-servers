@@ -25,6 +25,9 @@ spec:
           items:
             - key: config.yml
               path: prometheus.yml
+      - name: secrets
+        secret:
+          secretName: prometheus
       containers:
       - image: prom/prometheus:v2.36.2
         name: prometheus
@@ -42,4 +45,7 @@ spec:
           - name: config
             mountPath: /etc/prometheus/prometheus.yml
             subPath: "prometheus.yml"
+          - name: secrets
+            mountPath: /secrets
+            readOnly: true
 status: {}

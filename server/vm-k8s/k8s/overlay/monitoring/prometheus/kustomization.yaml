@@ -3,3 +3,4 @@ resources:
 - deployment.yml
 - pvc.yml
 - service.yml
+- sealedSecret.yml

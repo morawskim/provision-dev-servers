@@ -102,25 +102,24 @@ data:
         static_configs:
           - targets: ["kube-state-metrics.docker:81"]
 
-    # remote_write:
-    #   - url: https://prometheus-prod-01-eu-west-0.grafana.net/api/prom/push
-    #     basic_auth:
-    #       username: "{{ PROMETHEUS_REMOTE_WRITE_USERNAME }}"
-    #       password: "{{ PROMETHEUS_REMOTE_WRITE_PASSWORD }}"
-    #       #password_file
-    #     write_relabel_configs:
-    #       - source_labels: [__name__]
-    #         regex: "node_systemd_unit_state"
-    #         action: drop
-    #       - source_labels: [job]
-    #         regex: "k8s"
-    #         action: drop
-    #       - source_labels: [job]
-    #         regex: "prometheus"
-    #         action: drop
-    #       - source_labels: [job]
-    #         regex: "kube-state-metrics"
-    #         action: drop
+    remote_write:
+      - url: https://prometheus-prod-01-eu-west-0.grafana.net/api/prom/push
+        basic_auth:
+          username: "532706"
+          password_file: "/secrets/PROMETHEUS_REMOTE_WRITE_PASSWORD"
+        write_relabel_configs:
+          - source_labels: [__name__]
+            regex: "node_systemd_unit_state"
+            action: drop
+          - source_labels: [job]
+            regex: "k8s"
+            action: drop
+          - source_labels: [job]
+            regex: "prometheus"
+            action: drop
+          - source_labels: [job]
+            regex: "kube-state-metrics"
+            action: drop
 kind: ConfigMap
 metadata:
   name: prometheus
