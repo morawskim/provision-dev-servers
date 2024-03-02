@@ -32,13 +32,6 @@
     owner: root
     group: root
     mode: '0755'
-- name: Copy duplicity AWS wrapper
-  copy:
-    src: backup/duplicity-aws-assume-role.sh
-    dest: /usr/local/bin/duplicity-aws-assume-role.sh
-    owner: root
-    group: root
-    mode: '0700'
 - name: Creates a cron job for backup
   cron:
     name: "daily backup"
