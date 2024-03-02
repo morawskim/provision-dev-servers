@@ -37,6 +37,12 @@
     - name: Install node-exporter
       package:
         name: prometheus-node-exporter
+    - name: Configure node-exporter
+      lineinfile:
+        path: /etc/default/prometheus-node-exporter
+        regexp: '^ARGS='
+        line: ARGS=--collector.netdev.ignored-devices="veth.*|br-.*" --collector.netclass.ignored-devices="veth.*|br-.*"
+      notify: Restart node_exporter
     - name: Start node-exporter
       service: name=prometheus-node-exporter enabled=true state=started
     - include_tasks: tasks/nextcloud.yml
@@ -44,3 +50,8 @@
     - include_tasks: tasks/prometheus/playbook.yml
     - include_tasks: tasks/backup.yml
     - include_tasks: tasks/traefik2/playbook.yml
+  handlers:
+    - name: Restart node_exporter
+      service:
+        name: prometheus-node-exporter
+        state: restarted

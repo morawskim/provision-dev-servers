@@ -21,6 +21,13 @@
     - name: Install node-exporter
       package:
         name: prometheus-node-exporter
+    - name: Configure node-exporter
+      lineinfile:
+        path: /etc/default/prometheus-node-exporter
+        regexp: '^ARGS='
+        line: ARGS=--collector.netdev.device-exclude="cali.*" --collector.netclass.ignored-devices="cali.*"
+        # --collector.arp.exclude="cali.*" requires 1.4.0+
+      notify: Restart node_exporter
     - name: Start node-exporter
       service: name=prometheus-node-exporter enabled=true state=started
     - name: Install required packages
@@ -78,3 +85,8 @@
         dest: ~/.kube/config
         mode: '0640'
       become: no
+  handlers:
+    - name: Restart node_exporter
+      service:
+        name: prometheus-node-exporter
+        state: restarted
