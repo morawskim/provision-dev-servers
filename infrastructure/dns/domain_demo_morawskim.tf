@@ -24,7 +24,7 @@ resource "cloudflare_record" "demo_mx" {
   name     = "mx1.mail"
   type     = "A"
   ttl      = 60
-  value    = "78.154.68.48"
+  value    = "46.182.97.244"
 }
 
 resource "cloudflare_record" "demo_mail_spf" {
