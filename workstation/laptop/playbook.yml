@@ -65,7 +65,6 @@
           - docker
           - docker-bash-completion
           - docker-compose-switch
-          - duplicity
           - eza
           - fd
           - fzf
@@ -104,6 +103,7 @@
           - nodejs-devel
           - okteto
           - opensc
+          - opentofu
           - openvpn
           - operator-sdk
           - operator-sdk-bash-completion
@@ -149,6 +149,8 @@
           - python3-firewall
           - python310-yamllint
           - quilt
+          - restic
+          - restic-bash-completion
           - rpmorphan
           - ruby3.2-rubygem-tmuxinator
           - sensors
@@ -164,7 +166,6 @@
           - systemd-logger
           - tcpdump
           - telnet
-          - terraform
           - texlive-latex-bin-bin
           - the_silver_searcher
           - tmux
