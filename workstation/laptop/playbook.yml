@@ -74,7 +74,7 @@
           - git
           - git-delta
           - git-review
-          - go1.21
+          - go1.22
           - golangci-lint
           - govulncheck
           - graphviz
@@ -148,11 +148,11 @@
           - pwgen
           - python3-firewall
           - python310-yamllint
+          - python311-kubernetes # for ansible
           - quilt
           - restic
           - restic-bash-completion
           - rpmorphan
-          - ruby3.2-rubygem-tmuxinator
           - sensors
           - sipcalc
           - skopeo
@@ -252,6 +252,7 @@
           - remmina-plugin-rdp
           - retext
           - ruqola
+          - secret-tool
           - skrooge
           - skypeforlinux
           #- snapd
