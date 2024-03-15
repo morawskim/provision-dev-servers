@@ -35,13 +35,13 @@ spec:
           requests:
             memory: 32Mi
           limits:
-            memory: 128Mi
+            memory: 256Mi
         args:
         - '--config.file=/etc/prometheus/prometheus.yml'
         - '--storage.tsdb.path=/prometheus'
         volumeMounts:
           - name: prometheus-data
-            mountPath: /prometheus2
+            mountPath: /prometheus
           - name: config
             mountPath: /etc/prometheus/prometheus.yml
             subPath: "prometheus.yml"
