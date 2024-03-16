@@ -1,0 +1,8 @@
+bases:
+- ../../base/podinfo
+
+namespace: test
+
+resources:
+- traefik.yaml
+- podinfo-traefik-ingress.yaml

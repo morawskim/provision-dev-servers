@@ -18,6 +18,19 @@ Go to directory `cd ./charts` and download chart `helm pull --untar prometheus-c
 
 Return to parent directory (where is stored this README) and install kube-state-metrics `helm install -n monitoring kube-state-metrics ./charts/kube-state-metrics -f kube-state-metrics-values.yml`
 
+## Traefik
+
+Add chart repository `helm repo add traefik https://traefik.github.io/charts`
+
+Go to directory `cd ./charts` and run download chart `helm pull traefik/traefik --untar`
+
+Return to parent directory (where is stored this README) and install traefik `helm install -n traefik traefik ./charts/traefik -f traefik-values.yml`
+
+For security concerns, the dashboard is not expose by default. To access dashboard use port-forward: `kubectl port-forward -n traefik $(kubectl get pods -A --selector "app.kubernetes.io/name=traefik" --output=name) 9000:9000`.
+
+It can then be reached at: `http://127.0.0.1:9000/dashboard/`
+⚠️ The trailing "/" is very important. Otherwise you get 404.
+
 ## Troubleshooting
 
 ### Dump K8s resources

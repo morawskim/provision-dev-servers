@@ -1,0 +1,17 @@
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: podinfo
+spec:
+  entryPoints:
+    - web
+  routes:
+    - kind: Rule
+      match: Host(`podinfo`)
+      services:
+        - kind: Service
+          name: podinfo
+          port: 9898
+      middlewares:
+        - name: add-x-forwarded-proto

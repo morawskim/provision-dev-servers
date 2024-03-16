@@ -30,3 +30,7 @@ Next create sealed secret - `kubeseal --format yaml <mysecret.yaml > mysealedsec
 And apply resource - `kubectl apply -f mysealedsecret.yaml`
 
 Finally you can check the decoded value of secret from cluster - `kubectl get secret mysecret -o jsonpath='{.data.foo}' | base64 --decode`
+
+## Tips
+
+Many services are exposed by NodePort. To list all used ports use command `kubectl get svc --all-namespaces -o go-template='{{range .items}}{{range.spec.ports}}{{if .nodePort}}{{.nodePort}}{{"\n"}}{{end}}{{end}}{{end}}'`
