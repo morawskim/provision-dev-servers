@@ -1,0 +1,10 @@
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: add-x-forwarded-proto
+  namespace: default
+spec:
+  headers:
+    customRequestHeaders:
+      X-My-Header: "test"
+      X-Forwarded-Proto: "https"

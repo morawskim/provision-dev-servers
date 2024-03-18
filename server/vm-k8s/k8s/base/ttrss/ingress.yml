@@ -1,17 +1,16 @@
-apiVersion: networking.k8s.io/v1
-kind: Ingress
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
 metadata:
   name: ttrss
 spec:
-  rules:
-  - host: "ttrss.10.0.2.15.nip.io"
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: ttrss
-            port:
-              number: 80
-  ingressClassName: public
+  entryPoints:
+    - web
+  routes:
+    - kind: Rule
+      match: Host(`ttrss.10.0.2.15.nip.io`)
+      services:
+        - kind: Service
+          name: ttrss
+          port: 80
+      middlewares:
+        - name: add-x-forwarded-proto

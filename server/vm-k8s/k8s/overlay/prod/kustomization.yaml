@@ -9,6 +9,7 @@ bases:
 - ../../base/gitlab-ci-pipelines-exporter
 - ../../base/maddy
 - ../../base/ttrss
+- ../../base/traefik-middlewares
 
 namespace: prod
 
@@ -100,8 +101,8 @@ patches:
       name: roundcube
   - patch: |-
       - op: replace
-        path: /spec/rules/0/host
-        value: ttrss.morawskim.pl
+        path: /spec/routes/0/match
+        value: Host(`ttrss.morawskim.pl`)
     target:
-      kind: Ingress
+      kind: IngressRoute
       name: ttrss
