@@ -10,6 +10,11 @@ http:
       service: ttrss
       tls:
         certResolver: myresolver
+    nextcloud:
+      rule: Host(`nextcloud.morawskim.pl`)
+      service: nextcloud
+      tls:
+        certResolver: myresolver
     test2:
       rule: Host(`test.morawskim.pl`)
       service: test2
@@ -67,6 +72,11 @@ http:
         passHostHeader: true
         servers:
           - url: http://k8s:32080
+    nextcloud:
+      loadBalancer:
+        passHostHeader: true
+        servers:
+          - url: http://k8s:80
     test2:
       loadBalancer:
         passHostHeader: true

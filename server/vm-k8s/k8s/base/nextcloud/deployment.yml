@@ -1,0 +1,98 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: nextcloud
+  name: nextcloud
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nextcloud
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: nextcloud
+    spec:
+      volumes:
+      - name: nextcloud-data
+        persistentVolumeClaim:
+          claimName: nextcloud-data
+      - name: nextcloud-config
+        persistentVolumeClaim:
+          claimName: nextcloud-config
+      containers:
+      - image: nextcloud:23.0.4-apache
+        name: nextcloud
+        volumeMounts:
+        - name: nextcloud-data
+          mountPath: /data
+        - name: nextcloud-config
+          mountPath: /var/www/html/config
+        env:
+        - name: MYSQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: nextcloud-mysql
+              key: MYSQL_PASSWORD
+        - name: MYSQL_USER
+          valueFrom:
+            secretKeyRef:
+              name: nextcloud-mysql
+              key: MYSQL_USER
+        - name: MYSQL_DATABASE
+          valueFrom:
+            secretKeyRef:
+              name: nextcloud-mysql
+              key: MYSQL_DATABASE
+        - name: NEXTCLOUD_DATA_DIR
+          value: /data
+        resources: {}
+status: {}
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: nextcloud-mysql
+spec:
+  selector:
+    matchLabels:
+      app: nextcloud-mysql
+  serviceName: "nextcloud-mysql"
+  replicas: 1
+  minReadySeconds: 10
+  template:
+    metadata:
+      labels:
+        app: nextcloud-mysql
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+      - name: mysql
+        image: mysql:5.7
+        args:
+        - --sort_buffer_size=2M
+        ports:
+        - containerPort: 3306
+          name: mysql
+        volumeMounts:
+        - name: mysql
+          mountPath: /var/lib/mysql
+        resources:
+          requests:
+            memory: 64M
+          limits:
+            memory: 380M
+        envFrom:
+        - secretRef:
+            name: nextcloud-mysql
+  volumeClaimTemplates:
+  - metadata:
+      name: mysql
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: "microk8s-hostpath"
+      resources:
+        requests:
+          storage: 500Mi

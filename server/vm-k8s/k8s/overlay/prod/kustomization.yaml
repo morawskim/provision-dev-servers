@@ -10,6 +10,7 @@ bases:
 - ../../base/maddy
 - ../../base/ttrss
 - ../../base/traefik-middlewares
+- ../../base/nextcloud
 
 namespace: prod
 
@@ -22,6 +23,7 @@ resources:
 - maddy/sealed-secret.yml
 - ttrss/sealed-secret.yml
 - ttrss/restic-sealed-secret.yml
+- nextcloud/sealed-secret.yml
 
 configMapGenerator:
 - name: webpage2kindle-php-config
@@ -106,3 +108,10 @@ patches:
     target:
       kind: IngressRoute
       name: ttrss
+  - patch: |-
+      - op: replace
+        path: /spec/rules/0/host
+        value: nextcloud.morawskim.pl
+    target:
+      kind: Ingress
+      name: nextcloud

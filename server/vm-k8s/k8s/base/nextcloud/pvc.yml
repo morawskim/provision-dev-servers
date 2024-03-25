@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nextcloud-data
+spec:
+  accessModes:
+  - ReadWriteOnce
+  storageClassName: "microk8s-hostpath"
+  resources:
+    requests:
+      storage: 50Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nextcloud-config
+spec:
+  accessModes:
+  - ReadWriteOnce
+  storageClassName: "microk8s-hostpath"
+  resources:
+    requests:
+      storage: 100Mi
