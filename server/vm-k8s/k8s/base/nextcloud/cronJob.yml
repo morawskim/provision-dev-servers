@@ -1,0 +1,105 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: nextcloud-backup
+spec:
+  failedJobsHistoryLimit: 1
+  successfulJobsHistoryLimit: 0
+  schedule: 05 02 * * *
+  jobTemplate:
+    metadata:
+      name: nextcloud-backup
+    spec:
+      backoffLimit: 0
+      completions: 1
+      template:
+        metadata:
+        spec:
+          hostname: backup-nextcloud-mysql
+          restartPolicy: Never
+          containers:
+          - image: morawskim/restic-aws-backup
+            name: backup
+            resources: {}
+            # Uncomment for debuging purposes
+            #command: ["/bin/bash", "-c", "while true; do date; sleep 60; done"]
+            command:
+            - "/bin/bash"
+            - "-c"
+            - "/usr/local/bin/aws-assume-role.sh arn:aws:iam::358149850566:role/backup_role backup_role -- bash -c '/usr/bin/mysqldump --single-transaction --quick --skip-lock-tables --routines --databases $DATABASE_NAME -u$DATABASE_USER -p$DATABASE_PASSWORD -h nextcloud-mysql | /usr/bin/pigz | restic backup --stdin --stdin-filename nextcloud.sql.gz --tag nextcloud'"
+            env:
+            - name: AWS_DEFAULT_REGION
+              value: eu-central-1
+            - name: DATABASE_USER
+              value: root
+            - name: DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: nextcloud-mysql
+                  key: MYSQL_ROOT_PASSWORD
+            - name: DATABASE_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: nextcloud-mysql
+                  key: MYSQL_DATABASE
+            envFrom:
+            - secretRef:
+                name: backup-ttrss-restic
+status: {}
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: nextcloud-data-backup
+spec:
+  failedJobsHistoryLimit: 1
+  successfulJobsHistoryLimit: 0
+  schedule: 15 02 * * *
+  jobTemplate:
+    metadata:
+      name: nextcloud-data-backup
+    spec:
+      backoffLimit: 0
+      completions: 1
+      template:
+        metadata:
+        spec:
+          hostname: backup-nextcloud-data
+          restartPolicy: Never
+          volumes:
+            - name: nextcloud-data
+              persistentVolumeClaim:
+                claimName: nextcloud-data
+          containers:
+          - image: morawskim/restic-aws-backup
+            name: backup
+            resources: {}
+            # Uncomment for debuging purposes
+            #command: ["/bin/bash", "-c", "while true; do date; sleep 60; done"]
+            volumeMounts:
+            - name: nextcloud-data
+              mountPath: /data
+              readOnly: true
+            command:
+            - "/bin/bash"
+            - "-c"
+            - "/usr/local/bin/aws-assume-role.sh arn:aws:iam::358149850566:role/backup_role backup_role -- restic backup /data --tag nextcloud"
+            env:
+            - name: AWS_DEFAULT_REGION
+              value: eu-central-1
+            - name: DATABASE_USER
+              value: root
+            - name: DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: nextcloud-mysql
+                  key: MYSQL_ROOT_PASSWORD
+            - name: DATABASE_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: nextcloud-mysql
+                  key: MYSQL_DATABASE
+            envFrom:
+            - secretRef:
+                name: backup-ttrss-restic
+status: {}
