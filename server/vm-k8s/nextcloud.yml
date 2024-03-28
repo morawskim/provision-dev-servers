@@ -1,0 +1,25 @@
+---
+- hosts: localhost
+  tasks:
+    - name: Search for nextcloud pod
+      kubernetes.core.k8s_info:
+        kind: Pod
+        label_selectors:
+          - app=nextcloud
+      register: pod
+    - name: "Extract pod name"
+      set_fact:
+        podName: "{{pod.resources[0].metadata.name}}"
+    - name: Display pod name
+      debug:
+        msg: "{{podName}}"
+    - name: Install apps
+      kubernetes.core.k8s_exec:
+        namespace: prod
+        pod: "{{podName}}"
+        command: "su -s /bin/bash www-data -c '/var/www/html/occ app:install {{item}}'"
+      with_items:
+      - calendar
+      - notes
+      - bruteforcesettings
+
