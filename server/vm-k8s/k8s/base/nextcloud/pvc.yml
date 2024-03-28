@@ -21,3 +21,15 @@ spec:
   resources:
     requests:
       storage: 100Mi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nextcloud-apps
+spec:
+  accessModes:
+  - ReadWriteOnce
+  storageClassName: "microk8s-hostpath"
+  resources:
+    requests:
+      storage: 200Mi

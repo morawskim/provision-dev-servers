@@ -22,6 +22,9 @@ spec:
       - name: nextcloud-config
         persistentVolumeClaim:
           claimName: nextcloud-config
+      - name: nextcloud-apps
+        persistentVolumeClaim:
+          claimName: nextcloud-apps
       containers:
       - image: nextcloud:23.0.4-apache
         name: nextcloud
@@ -30,6 +33,8 @@ spec:
           mountPath: /data
         - name: nextcloud-config
           mountPath: /var/www/html/config
+        - name: nextcloud-apps
+          mountPath: /var/www/html/custom_apps
         env:
         - name: MYSQL_PASSWORD
           valueFrom:
