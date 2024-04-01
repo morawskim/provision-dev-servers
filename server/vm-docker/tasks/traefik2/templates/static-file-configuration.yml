@@ -21,26 +21,6 @@ http:
     testInternal:
       rule: Host(`test.docker`)
       service: testInternal
-    tapo:
-      rule: Host(`tapo.docker`)
-      service: tapo
-      entryPoints:
-        - internal
-    upToDate:
-      rule: Host(`up-to-date-exporter.docker`)
-      service: upToDate
-      entryPoints:
-        - internal
-    gitlabCiPipelinesExporter:
-      rule: Host(`gitlab-ci-pipelines-exporter.docker`)
-      service: gitlabCiPipelinesExporter
-      entryPoints:
-        - internal
-    kubeStateMetrics:
-      rule: Host(`kube-state-metrics.docker`)
-      service: kubeStateMetrics
-      entryPoints:
-        - internal
     ots:
       rule: Host(`ots.morawskim.pl`)
       service: ots
@@ -76,7 +56,7 @@ http:
       loadBalancer:
         passHostHeader: true
         servers:
-          - url: http://k8s:80
+          - url: http://k8s:32080
     test2:
       loadBalancer:
         passHostHeader: true
@@ -87,43 +67,23 @@ http:
         passHostHeader: true
         servers:
           - url: http://k8s:80
-    tapo:
-      loadBalancer:
-        passHostHeader: true
-        servers:
-          - url: http://k8s:80
-    gitlabCiPipelinesExporter:
-      loadBalancer:
-        passHostHeader: true
-        servers:
-          - url: http://k8s:80
-    upToDate:
-      loadBalancer:
-        passHostHeader: true
-        servers:
-          - url: http://k8s:80
-    kubeStateMetrics:
-      loadBalancer:
-        passHostHeader: true
-        servers:
-          - url: http://k8s:80
     ots:
       loadBalancer:
         passHostHeader: true
         servers:
-          - url: http://k8s:80
+          - url: http://k8s:32080
     jsonplaceholder:
       loadBalancer:
         passHostHeader: true
         servers:
-          - url: http://k8s:80
+          - url: http://k8s:32080
     webpage2kindle:
       loadBalancer:
         passHostHeader: true
         servers:
-          - url: http://k8s:80
+          - url: http://k8s:32080
     webmail:
       loadBalancer:
         passHostHeader: true
         servers:
-          - url: http://k8s:80
+          - url: http://k8s:32080

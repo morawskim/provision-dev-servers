@@ -61,24 +61,24 @@ patches:
       name: tapo-metrics
   - patch: |-
       - op: replace
-        path: /spec/rules/0/host
-        value: ots.morawskim.pl
+        path: /spec/routes/0/match
+        value: Host(`ots.morawskim.pl`)
     target:
-      kind: Ingress
+      kind: IngressRoute
       name: ots
   - patch: |-
       - op: replace
-        path: /spec/rules/0/host
-        value: jsonplaceholder.morawskim.pl
+        path: /spec/routes/0/match
+        value: Host(`jsonplaceholder.morawskim.pl`)
     target:
-      kind: Ingress
+      kind: IngressRoute
       name: jsonplaceholder
   - patch: |-
       - op: replace
-        path: /spec/rules/0/host
-        value: kindle.morawskim.pl
+        path: /spec/routes/0/match
+        value: Host(`kindle.morawskim.pl`)
     target:
-      kind: Ingress
+      kind: IngressRoute
       name: webpage2kindle
   - patch: |-
       - op: replace
@@ -96,10 +96,10 @@ patches:
       name: gitlab-ci-pipelines-exporter
   - patch: |-
       - op: replace
-        path: /spec/rules/0/host
-        value: webmail.morawskim.pl
+        path: /spec/routes/0/match
+        value: Host(`webmail.morawskim.pl`)
     target:
-      kind: Ingress
+      kind: IngressRoute
       name: roundcube
   - patch: |-
       - op: replace
@@ -110,8 +110,8 @@ patches:
       name: ttrss
   - patch: |-
       - op: replace
-        path: /spec/rules/0/host
-        value: nextcloud.morawskim.pl
+        path: /spec/routes/0/match
+        value: Host(`nextcloud.morawskim.pl`)
     target:
-      kind: Ingress
+      kind: IngressRoute
       name: nextcloud

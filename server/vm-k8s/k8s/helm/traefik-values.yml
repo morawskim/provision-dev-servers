@@ -5,6 +5,11 @@ ports:
   websecure:
     exposedPort: 443
     nodePort: 32443
+  internal:
+    port: 8081
+    exposedPort: 81
+    nodePort: 32081
+    protocol: TCP
 ingressClass:
   isDefaultClass: false
 service:
