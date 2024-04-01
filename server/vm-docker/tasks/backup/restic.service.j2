@@ -1,7 +1,0 @@
-[Unit]
-Description=Run restic backup
-
-[Service]
-Type=oneshot
-EnvironmentFile=/etc/default/restic.env
-ExecStart=/usr/local/bin/aws-assume-role.sh {{ AWS_ROLE_ARN }} -- /usr/bin/restic -o s3.region="eu-central-1" -r {{RESTIC_REPOSITORY}} backup {{ BACKUP_DIR }}
