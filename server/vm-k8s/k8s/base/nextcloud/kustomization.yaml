@@ -1,4 +1,5 @@
 resources:
+- cronJob.yml
 - deployment.yml
 - ingress.yml
 - pvc.yml
