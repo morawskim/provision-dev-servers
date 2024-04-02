@@ -46,6 +46,7 @@
       when: "'guest' != ansible_facts.virtualization_role"
     - include_tasks: tasks/cockpit.yml
     - include_tasks: tasks/fluent-bit.yml
+    - include_tasks: tasks/node_exporter.yml
     - include_tasks: tasks/goss.yml
   handlers:
     - name: Restart libvirtd
@@ -60,3 +61,6 @@
       service:
         name: fluent-bit
         state: restarted
+    - name: Restart node_exporter
+      service:
+        name: prometheus-node-exporter

@@ -9,8 +9,8 @@ port:
     - 0.0.0.0
   tcp:9090:
     listening: true
-    ip:
-    - 0.0.0.0
+  tcp:9100:
+    listening: true
 service:
   sshd:
     enabled: true
@@ -18,6 +18,11 @@ service:
   libvirtd:
     enabled: true
     running: true
+  prometheus-node_exporter:
+    enabled: true
+    running: true
 process:
   libvirtd:
+    running: true
+  node_exporter:
     running: true
