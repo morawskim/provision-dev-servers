@@ -26,6 +26,16 @@ spec:
         persistentVolumeClaim:
           claimName: nextcloud-apps
       containers:
+      - name: nextcloud-exporter
+        image: xperimental/nextcloud-exporter:0.7.0
+        env:
+          - name: NEXTCLOUD_SERVER
+            value: http://localhost
+          - name: NEXTCLOUD_AUTH_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: nextcloud
+                key: NEXTCLOUD_EXPORTER_TOKEN
       - image: nextcloud:23.0.4-apache
         name: nextcloud
         volumeMounts:

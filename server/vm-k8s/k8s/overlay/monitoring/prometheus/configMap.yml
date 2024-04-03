@@ -102,6 +102,11 @@ data:
         static_configs:
           - targets: ["kube-state-metrics.docker:81"]
 
+      - job_name: nextcloud
+        scrape_interval: 120s
+        static_configs:
+          - targets: ['nextcloud.prod:9205']
+
     remote_write:
       - url: https://prometheus-prod-01-eu-west-0.grafana.net/api/prom/push
         basic_auth:

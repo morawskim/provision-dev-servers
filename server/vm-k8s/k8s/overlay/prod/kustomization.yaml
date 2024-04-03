@@ -24,6 +24,7 @@ resources:
 - ttrss/sealed-secret.yml
 - ttrss/restic-sealed-secret.yml
 - nextcloud/sealed-secret.yml
+- nextcloud/nextcloud-sealed-secret.yml
 
 configMapGenerator:
 - name: webpage2kindle-php-config
