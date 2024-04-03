@@ -4,8 +4,8 @@ A Terraform script to manage Grafana.
 
 ## Usage
 
-1. Call `terraform init`
-1. Call `GRAFANA_AUTH=yourToken terraform apply -var-file=aws.tfvars`
+1. Call `tofu init`
+1. Call `GRAFANA_AUTH=yourToken tofu apply -var-file=aws.tfvars`
 
 To get token, log-in to grafana panel and from left menu hover on the gear icon and select "API keys".
 
