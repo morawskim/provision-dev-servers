@@ -21,3 +21,9 @@ resource "grafana_dashboard" "nextcloud" {
   folder = grafana_folder.saas.id
   overwrite = true
 }
+
+resource "grafana_dashboard" "node_exporter_temperatures" {
+  config_json = replace(file("dashboard/node-exporter-temperatures.json"), "$${DS_PROMETHEUS}", local.prometheus_uid)
+  folder = grafana_folder.saas.id
+  overwrite = true
+}
