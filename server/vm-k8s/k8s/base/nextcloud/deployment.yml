@@ -31,6 +31,8 @@ spec:
         env:
           - name: NEXTCLOUD_SERVER
             value: http://localhost
+          - name: NEXTCLOUD_INFO_APPS
+            value: "1"
           - name: NEXTCLOUD_AUTH_TOKEN
             valueFrom:
               secretKeyRef:

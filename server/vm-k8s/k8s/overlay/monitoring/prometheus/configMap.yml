@@ -71,6 +71,7 @@ data:
             - "docker.pck.internal:9100"
             - "gitlab.pck.internal:9100"
             - "k8s.pck.internal:9100"
+            - "intel.morawskim.pl:9100"
 
       - job_name: k8s
         # The HTTP resource path on which to fetch metrics from targets.
