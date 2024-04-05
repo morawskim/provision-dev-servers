@@ -48,4 +48,6 @@ spec:
           - name: secrets
             mountPath: /secrets
             readOnly: true
+        ports:
+        - containerPort: 9090
 status: {}

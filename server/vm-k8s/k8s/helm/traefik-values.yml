@@ -14,3 +14,7 @@ ingressClass:
   isDefaultClass: false
 service:
   type: NodePort
+logs:
+  access:
+    # -- To enable access logs
+    enabled: true
