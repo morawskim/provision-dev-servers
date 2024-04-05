@@ -4,7 +4,7 @@ metadata:
   name: ots
 spec:
   entryPoints:
-    - web
+    - websecure
   routes:
     - kind: Rule
       match: Host(`ots.10.0.2.15.nip.io`)
@@ -14,3 +14,5 @@ spec:
           port: 80
       middlewares:
         - name: add-x-forwarded-proto
+  tls:
+    certResolver: myresolver

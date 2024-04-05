@@ -2,6 +2,8 @@ ports:
   web:
     exposedPort: 80
     nodePort: 32080
+    redirectTo:
+      port: websecure
   websecure:
     exposedPort: 443
     nodePort: 32443
@@ -18,3 +20,24 @@ logs:
   access:
     # -- To enable access logs
     enabled: true
+
+persistence:
+  enabled: true
+  storageClass: microk8s-hostpath
+certResolvers:
+  myresolver:
+    httpchallenge:
+      entrypoint: web
+    email: marcin@morawskim.pl
+    storage: /data/acme.json
+deployment:
+  initContainers:
+    - name: volume-permissions
+      image: busybox:latest
+      command: ["sh", "-c", "touch /data/acme.json; chmod -v 600 /data/acme.json"]
+      volumeMounts:
+      - mountPath: /data
+        name: data
+
+additionalArguments:
+  - --log.level=INFO
