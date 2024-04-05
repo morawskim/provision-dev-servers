@@ -103,3 +103,39 @@ spec:
             - secretRef:
                 name: backup-ttrss-restic
 status: {}
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: restic-prune
+spec:
+  failedJobsHistoryLimit: 1
+  successfulJobsHistoryLimit: 0
+  schedule: 05 03 * * *
+  jobTemplate:
+    metadata:
+      name: restic-prune
+    spec:
+      backoffLimit: 0
+      completions: 1
+      template:
+        metadata:
+        spec:
+          hostname: backup-prune
+          restartPolicy: Never
+          containers:
+          - image: morawskim/restic-aws-backup
+            name: backup
+            resources: {}
+            # Uncomment for debuging purposes
+            #command: ["/bin/bash", "-c", "while true; do date; sleep 60; done"]
+            command:
+            - "/bin/bash"
+            - "-c"
+            - "/usr/local/bin/aws-assume-role.sh arn:aws:iam::358149850566:role/backup_role backup_role -- bash -c 'restic unlock && restic forget --keep-last 3 --prune'"
+            env:
+            - name: AWS_DEFAULT_REGION
+              value: eu-central-1
+            envFrom:
+            - secretRef:
+                name: backup-ttrss-restic
