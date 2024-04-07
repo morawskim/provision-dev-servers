@@ -1,0 +1,16 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: tapo
+spec:
+  entryPoints:
+    - internal
+  routes:
+    - kind: Rule
+      match: Host(`tapo.i.morawskim.pl`)
+      services:
+        - kind: Service
+          name: tapo-metrics
+          port: 80
+      middlewares:
+        - name: add-x-forwarded-proto

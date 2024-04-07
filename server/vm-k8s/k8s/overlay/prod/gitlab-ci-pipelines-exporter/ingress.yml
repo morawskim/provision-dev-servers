@@ -1,0 +1,16 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: gitlab-ci-pipelines-exporter
+spec:
+  entryPoints:
+    - internal
+  routes:
+    - kind: Rule
+      match: Host(`gitlab-ci-exporter.i.morawskim.pl`)
+      services:
+        - kind: Service
+          name: gitlab-ci-pipelines-exporter
+          port: 80
+      middlewares:
+        - name: add-x-forwarded-proto

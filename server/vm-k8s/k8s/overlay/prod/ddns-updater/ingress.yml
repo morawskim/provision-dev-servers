@@ -1,0 +1,16 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: ddns-updater
+spec:
+  entryPoints:
+    - internal
+  routes:
+    - kind: Rule
+      match: Host(`ddns.i.morawskim.pl`)
+      services:
+        - kind: Service
+          name: ddns-updater-web
+          port: 80
+      middlewares:
+        - name: add-x-forwarded-proto

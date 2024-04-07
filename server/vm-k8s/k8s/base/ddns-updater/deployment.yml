@@ -25,4 +25,6 @@ spec:
             secretKeyRef:
               name: ddns-updater
               key: config.json
+        ports:
+        - containerPort: 8000
 status: {}

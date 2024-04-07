@@ -1,0 +1,16 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: up-to-date-exporter
+spec:
+  entryPoints:
+    - internal
+  routes:
+    - kind: Rule
+      match: Host(`up-to-date-exporter.i.morawskim.pl`)
+      services:
+        - kind: Service
+          name: up-to-date-exporter
+          port: 80
+      middlewares:
+        - name: add-x-forwarded-proto

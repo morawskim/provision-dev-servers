@@ -16,15 +16,19 @@ namespace: prod
 
 resources:
 - tapo/sealed-secret.yml
+- tapo/ingress.yml
 - webpage2kindle/sealed-secret.yml
 - noip/sealed-secret.yml
 - ddns-updater/sealed-secret.yml
+- ddns-updater/ingress.yml
 - gitlab-ci-pipelines-exporter/sealed-secret.yml
+- gitlab-ci-pipelines-exporter/ingress.yml
 - maddy/sealed-secret.yml
 - ttrss/sealed-secret.yml
 - ttrss/restic-sealed-secret.yml
 - nextcloud/sealed-secret.yml
 - nextcloud/nextcloud-sealed-secret.yml
+- up-to-date-exporter/ingress.yml
 
 configMapGenerator:
 - name: webpage2kindle-php-config
@@ -55,13 +59,6 @@ patches:
       name: nginx
   - patch: |-
       - op: replace
-        path: /spec/rules/0/host
-        value: tapo.docker
-    target:
-      kind: Ingress
-      name: tapo-metrics
-  - patch: |-
-      - op: replace
         path: /spec/routes/0/match
         value: Host(`ots.morawskim.pl`)
     target:
@@ -81,20 +78,6 @@ patches:
     target:
       kind: IngressRoute
       name: webpage2kindle
-  - patch: |-
-      - op: replace
-        path: /spec/rules/0/host
-        value: up-to-date-exporter.docker
-    target:
-      kind: Ingress
-      name: up-to-date-exporter
-  - patch: |-
-      - op: replace
-        path: /spec/rules/0/host
-        value: gitlab-ci-pipelines-exporter.docker
-    target:
-      kind: Ingress
-      name: gitlab-ci-pipelines-exporter
   - patch: |-
       - op: replace
         path: /spec/routes/0/match

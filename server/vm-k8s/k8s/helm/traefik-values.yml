@@ -12,6 +12,9 @@ ports:
     exposedPort: 81
     nodePort: 32081
     protocol: TCP
+    expose: true
+    tls:
+      enabled: true
 ingressClass:
   isDefaultClass: false
 service:
@@ -30,6 +33,12 @@ certResolvers:
       entrypoint: web
     email: marcin@morawskim.pl
     storage: /data/acme.json
+
+tlsStore:
+  default:
+    defaultCertificate:
+      secretName: certs
+
 deployment:
   initContainers:
     - name: volume-permissions
