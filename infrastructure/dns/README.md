@@ -15,4 +15,4 @@ Use passphrase to decrypt this file and see values for variables `OVH_APPLICATIO
 
 ## Apply changes
 
-`OVH_APPLICATION_KEY=key OVH_APPLICATION_SECRET=secret OVH_CONSUMER_KEY=consumer-key CLOUDFLARE_API_TOKEN=token terraform apply`
+`OVH_APPLICATION_KEY=key OVH_APPLICATION_SECRET=secret OVH_CONSUMER_KEY=consumer-key CLOUDFLARE_API_TOKEN=token tofu apply`

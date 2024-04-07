@@ -86,6 +86,14 @@ resource "ovh_domain_zone_record" "preview" {
   target    = "noip.morawskim.pl."
 }
 
+resource "ovh_domain_zone_record" "internal" {
+  zone      = "morawskim.pl"
+  subdomain = "*.i"
+  fieldtype = "CNAME"
+  ttl       = "0"
+  target    = "intel.morawskim.pl."
+}
+
 resource "ovh_domain_zone_record" "alias" {
   for_each  = local.aliases
   zone      = "morawskim.pl"
