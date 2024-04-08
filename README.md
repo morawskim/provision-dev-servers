@@ -26,7 +26,7 @@ The directory `servers` contains ansible playbook, which configure virtual machi
 
 The vm-gitlab playbook install and configure gitlab-runner, which can be used in lieu of GitLab's shared runners.
 
-The vm-docker playbook install and configure docker with applications.
+The vm-k8s playbook setup one-node Kubernetes cluster.
 
 ### Workstation directory
 
@@ -46,10 +46,5 @@ Ansible playbooks in workstation directory are used to setup and maintain config
 1. make vagrant-apply
 
 Now you can connect to vm. Open a new terminal go to dir to which you cloned this repository and type `make vagrant-ssh-jump VM=<vm-name>` to connect to virtual machine.
-At the moment only docker and gitlab are allowed as `vm-name`.
+At the moment only k8s and gitlab are allowed as `vm-name`.
 Also you might need to wait few seconds to connect to vm (vm machine need be booted).
-
-
-do intel nuc jesli dns sie wysypie - rozlaczy.... - jako pierwszy wpis nameserver
-@192.168.111.1
-

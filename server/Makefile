@@ -1,4 +1,4 @@
-.PHONY: deploy-nuc deploy-docker deploy-gitlab-runner deploy-nuc-vagrant deploy-gitlab-runner-vagrant setup-ansible-modules
+.PHONY: deploy-nuc deploy-gitlab-runner deploy-nuc-vagrant deploy-gitlab-runner-vagrant setup-ansible-modules
 
 
 define macro-deploy-nuc
@@ -7,10 +7,6 @@ endef
 
 define macro-deploy-gitlab-runner
 	ANSIBLE_ROLES_PATH=$(PWD)/ansible/roles ansible-playbook --inventory $(1) --ask-vault-pass vm-gitlab-runner/playbook.yml
-endef
-
-define macro-deploy-docker
-	ANSIBLE_ROLES_PATH=$(PWD)/ansible/roles ANSIBLE_LIBRARY=$(PWD)/ansible/modules:/usr/share/ansible/plugins/modules ansible-playbook --inventory $(1) --ask-vault-pass vm-docker/playbook.yml
 endef
 
 define macro-deploy-k8s
@@ -24,9 +20,6 @@ setup-ansible-modules:
 	ansible-galaxy collection install community.libvirt
 	ansible-galaxy collection install community.general
 	ansible-galaxy role install -p ansible/roles  newrelic.newrelic-infra
-
-deploy-docker: setup-ansible-modules
-	$(call macro-deploy-docker, "./inventory.ini")
 
 deploy-nuc: setup-ansible-modules
 	 $(call macro-deploy-nuc, "./inventory.ini")
@@ -42,6 +35,3 @@ deploy-nuc-vagrant: setup-ansible-modules
 
 deploy-gitlab-runner-vagrant: setup-ansible-modules
 	$(call macro-deploy-gitlab-runner, "./inventory-vagrant.ini")
-
-deploy-docker-vagrant: setup-ansible-modules
-	$(call macro-deploy-docker, "./inventory-vagrant.ini")
