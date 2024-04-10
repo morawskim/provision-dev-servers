@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: forward-auth
+  name: forward-auth
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: forward-auth
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: forward-auth
+    spec:
+      containers:
+      - image: mesosphere/traefik-forward-auth
+        name: forward-auth
+        resources: {}
+        envFrom:
+        - secretRef:
+            name: openid-auth-forward
+        ports:
+        - containerPort: 4181
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: forward-auth
+  name: traefik-forward-auth
+spec:
+  ports:
+  - port: 4181
+    protocol: TCP
+    targetPort: 4181
+  selector:
+    app: forward-auth
+status:
+  loadBalancer: {}

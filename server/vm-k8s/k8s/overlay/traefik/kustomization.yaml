@@ -1,0 +1,5 @@
+namespace: traefik
+
+resources:
+- forward-auth.yml
+- openid-auth-forward-sealed-secret.yml
