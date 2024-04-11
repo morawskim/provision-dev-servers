@@ -13,4 +13,5 @@ spec:
           name: gitlab-ci-pipelines-exporter
           port: 80
       middlewares:
+        - name: openid-auth
         - name: add-x-forwarded-proto
