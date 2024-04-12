@@ -80,3 +80,46 @@
         dest: /home/marcin/.vim
         owner: marcin
         state: link
+    - name: Find Firefox default profile directory
+      find:
+        paths: "{{ ansible_env.HOME }}/.mozilla/firefox"
+        patterns: "*.default-release"
+        file_type: directory
+      register: firefox_profile
+    - name: Add  root-mkcert cert
+      shell: |
+        certutil -A -d {{item}} -t C,, -n root-mkcert
+      args:
+        stdin: |
+            -----BEGIN CERTIFICATE-----
+            MIIE4DCCA0igAwIBAgIRAMSobikWUkGBcihVjkoRu5MwDQYJKoZIhvcNAQELBQAw
+            gYcxHjAcBgNVBAoTFW1rY2VydCBkZXZlbG9wbWVudCBDQTEuMCwGA1UECwwlbWFy
+            Y2luQGxvY2FsaG9zdC5sb2NhbGRvbWFpbiAoTWFyY2luKTE1MDMGA1UEAwwsbWtj
+            ZXJ0IG1hcmNpbkBsb2NhbGhvc3QubG9jYWxkb21haW4gKE1hcmNpbikwHhcNMjQw
+            MzA4MTUzODA3WhcNMzQwMzA4MTUzODA3WjCBhzEeMBwGA1UEChMVbWtjZXJ0IGRl
+            dmVsb3BtZW50IENBMS4wLAYDVQQLDCVtYXJjaW5AbG9jYWxob3N0LmxvY2FsZG9t
+            YWluIChNYXJjaW4pMTUwMwYDVQQDDCxta2NlcnQgbWFyY2luQGxvY2FsaG9zdC5s
+            b2NhbGRvbWFpbiAoTWFyY2luKTCCAaIwDQYJKoZIhvcNAQEBBQADggGPADCCAYoC
+            ggGBALPW/67svTARQYWUbbsqDG4FTg33Wr3FDDJM/nTujjhweBZE8KePWd6eQTCc
+            dbraUjyGdlIJBABLPIV3cqOTb4PWxNX9QGnpYgtHKrAB/qk++0eT2a1xrr9MZgd8
+            BMiOQYlkpbya83KDzQxyzUpn8ptY2zKIQr0og+28cAyMnhFqHT1LUFa0Zk8NHYCT
+            zB6Xm+i5snsOhNkerWh4Q1H7lKYV0zj6uB6L64dyK99U6axgdvs1X6g76qPO6hNT
+            07RsI0AmxHMN/nxjuFnluR3Qtg1qigYRr4cF10ocSylfO/lp/qmCTfHgZ6cxBR7b
+            7RHJBnYpwMZnWWgRDsi0IRjcYeEq3MsfdxRbtRqu8T7EQecDytzGYuJJ+RgCMeju
+            9kzWVGvD/DiJsJlOmGcRucyfLNnEtTp1jA0KOK3ju+0CHjRmrdwGd3ZXf3NSvEc2
+            reVam4hsJ76Gx64ZkA9cZmBypc/hB2V7ZSQaK3qcNrlwyxCSsyumW65JppvKoUsy
+            HauU6wIDAQABo0UwQzAOBgNVHQ8BAf8EBAMCAgQwEgYDVR0TAQH/BAgwBgEB/wIB
+            ADAdBgNVHQ4EFgQUfTXOjlSfeYiiyfqD4TGWz1LyQ1IwDQYJKoZIhvcNAQELBQAD
+            ggGBAGT6cwwMER6x615fi/K4jlt4lSlt1TYEqEWoFWVnN8DoxOzTukyhteo6tnrv
+            6apR4epXfovPm5Z0u/AlAUyDbb2nyiYJwWYh70RUEOzycAOuJ9VKV3Mjnr1iCMFc
+            By33jN+F0dZVcSzd5RNM/6GXtbtokwvW+xyY5VU+VHcrDpVyvV+5O7y7YNV+QKY6
+            rFkkQ0DEHIaRy+tuUpkA4mob0Od102apPm3JSitZn4j7d4i7dpyBhusIEqNvBlxv
+            Cogt7RYDyOaC1lMb+Xyoa3by95G8izCqZuLi8p2PSbVTdo3PlOx7DnrpAYBjN+DP
+            +cRHsTHMZw58W+9E+r4z9Cd/BFkOKhg0+2sbgO2m+XDir4V0WF/dmyUCkf2HXMAe
+            NsV55atY3MBIeNQzpwvvZBsuZ6n8bmsuylb9ux3BOfsa9uoknAj4qUa/WCkF0Z7h
+            QO3nFgtDRfCjnjYeldpFnKRe44ahxcBvD7e7AZmXvoH5MPIZBq18m/snLpvL51jc
+            hoEcSw==
+            -----END CERTIFICATE-----
+      with_items:
+      - "{{ firefox_profile.files.0.path }}"
+      - "{{ ansible_env.HOME }}/.pki/nssdb"
