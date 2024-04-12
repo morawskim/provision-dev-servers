@@ -8,3 +8,11 @@ spec:
     customRequestHeaders:
       X-My-Header: "test"
       X-Forwarded-Proto: "https"
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: openid-auth
+spec:
+  forwardAuth:
+    address: http://traefik-forward-auth.traefik:4181

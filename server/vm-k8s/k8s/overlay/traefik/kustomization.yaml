@@ -1,5 +1,6 @@
 namespace: traefik
 
 resources:
+- certs-sealed-secret.yaml
 - forward-auth.yml
 - openid-auth-forward-sealed-secret.yml
