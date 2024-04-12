@@ -1,7 +1,7 @@
-# This file is maintained automatically by "terraform init".
+# This file is maintained automatically by "tofu init".
 # Manual edits may be lost in future updates.
 
-provider "registry.terraform.io/auth0/auth0" {
+provider "registry.opentofu.org/auth0/auth0" {
   version     = "0.45.0"
   constraints = "0.45.0"
   hashes = [
