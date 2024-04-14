@@ -23,6 +23,9 @@ logs:
   access:
     # -- To enable access logs
     enabled: true
+  general:
+    level: INFO
+    #format: json
 
 persistence:
   enabled: true
@@ -47,6 +50,3 @@ deployment:
       volumeMounts:
       - mountPath: /data
         name: data
-
-additionalArguments:
-  - --log.level=INFO
