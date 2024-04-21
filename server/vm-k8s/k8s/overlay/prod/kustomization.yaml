@@ -25,9 +25,7 @@ resources:
 - gitlab-ci-pipelines-exporter/ingress.yml
 - maddy/sealed-secret.yml
 - ttrss/sealed-secret.yml
-- ttrss/restic-sealed-secret.yml
 - nextcloud/sealed-secret.yml
-- nextcloud/nextcloud-sealed-secret.yml
 - up-to-date-exporter/ingress.yml
 
 configMapGenerator:

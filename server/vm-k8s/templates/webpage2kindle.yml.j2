@@ -1,0 +1,26 @@
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: webpage2kindle-node2
+  namespace: prod
+data:
+  SENTRY_DSN: {{WEBPAGE2KINDLE_NODE_SENTRY_DSN | b64encode}}
+type: Opaque
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: webpage2kindle-php2
+  namespace: prod
+data:
+  AUTH0_CLIENT_ID: {{ WEBPAGE2KINDLE_PHP_AUTH0_CLIENT_ID | b64encode}}
+  AUTH0_CLIENT_SECRET: {{ WEBPAGE2KINDLE_PHP_AUTH0_CLIENT_SECRET | b64encode}}
+  AUTH0_DOMAIN: {{ WEBPAGE2KINDLE_PHP_AUTH0_DOMAIN | b64encode}}
+  MERCURE_PUBLIC_URL: {{ WEBPAGE2KINDLE_PHP_MERCURE_PUBLIC_URL | b64encode}}
+  MERCURE_PUBLISHER_JWT_KEY: {{ WEBPAGE2KINDLE_PHP_MERCURE_PUBLISHER_JWT_KEY | b64encode}}
+  MERCURE_SUBSCRIBER_JWT_KEY: {{ WEBPAGE2KINDLE_PHP_MERCURE_SUBSCRIBER_JWT_KEY | b64encode}}
+  MERCURE_URL: {{ WEBPAGE2KINDLE_PHP_MERCURE_URL | b64encode}}
+  RABBITMQ_URL: {{ WEBPAGE2KINDLE_PHP_RABBITMQ_URL |  b64encode}}
+  SENTRY_DSN: {{ WEBPAGE2KINDLE_PHP_SENTRY_DSN | b64encode}}
+type: Opaque

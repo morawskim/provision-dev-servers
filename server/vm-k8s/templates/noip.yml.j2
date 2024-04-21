@@ -1,0 +1,9 @@
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: noip2
+  namespace: prod
+data:
+  .env: {{ NOIP_ENV | b64encode}}
+type: Opaque

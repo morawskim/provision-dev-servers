@@ -1,0 +1,13 @@
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: openid-auth-forward2
+  namespace: traefik
+data:
+  CLIENT_ID: {{TRAEFIK_OIDC_CLIENT_ID | b64encode}}
+  CLIENT_SECRET: {{TRAEFIK_OIDC_CLIENT_SECRET | b64encode}}
+  ENCRYPTION_KEY: {{TRAEFIK_OIDC_ENCRYPTION_KEY | b64encode}}
+  PROVIDER_URI: {{TRAEFIK_OIDC_PROVIDER_URI | b64encode}}
+  SECRET: {{TRAEFIK_OIDC_SECRET | b64encode}}
+type: Opaque

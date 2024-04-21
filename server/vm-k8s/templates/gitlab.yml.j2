@@ -1,0 +1,9 @@
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: gitlab-ci-pipelines-exporter2
+  namespace: prod
+data:
+  GCPE_GITLAB_TOKEN: {{GCPE_GITLAB_TOKEN | b64encode}}
+type: Opaque

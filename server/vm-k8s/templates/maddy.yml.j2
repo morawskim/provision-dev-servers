@@ -1,0 +1,9 @@
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: maddy2
+  namespace: prod
+data:
+  MADDY_CLOUDFLARE_TOKEN: {{MADDY_CLOUDFLARE_TOKEN | b64encode}}
+type: Opaque
