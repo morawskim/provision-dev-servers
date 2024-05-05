@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: Secret
 metadata:
-  name: maddy2
+  name: maddy
   namespace: prod
 data:
   MADDY_CLOUDFLARE_TOKEN: {{MADDY_CLOUDFLARE_TOKEN | b64encode}}

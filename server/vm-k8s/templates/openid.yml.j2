@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: Secret
 metadata:
-  name: openid-auth-forward2
+  name: openid-auth-forward
   namespace: traefik
 data:
   CLIENT_ID: {{TRAEFIK_OIDC_CLIENT_ID | b64encode}}

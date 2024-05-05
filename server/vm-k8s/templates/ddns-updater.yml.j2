@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: Secret
 metadata:
-  name: ddns-updater2
+  name: ddns-updater
   namespace: prod
 data:
   config.json: {{ DDNS_CONFIG | b64encode}}

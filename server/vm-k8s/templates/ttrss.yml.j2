@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: Secret
 metadata:
-  name: backup-ttrss-restic2
+  name: backup-ttrss-restic
   namespace: prod
 data:
   AWS_ACCESS_KEY_ID: {{AWS_ACCESS_KEY_ID | b64encode}}
@@ -14,7 +14,7 @@ type: Opaque
 apiVersion: v1
 kind: Secret
 metadata:
-  name: ttrss-mysql2
+  name: ttrss-mysql
   namespace: prod
 data:
   MYSQL_DATABASE: {{TTRSS_DB_NAME | b64encode}}
