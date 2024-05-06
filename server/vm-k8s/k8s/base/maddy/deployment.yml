@@ -22,10 +22,17 @@ spec:
           items:
             - key: maddy.conf
               path: maddy.conf
+      - name: data
+        persistentVolumeClaim:
+          claimName: maddy
       containers:
       - image: foxcpp/maddy:0.7
         name: maddy
         resources: {}
+        args:
+        - -config
+        - /etc/maddy.conf
+        - run
         env:
         - name: MADDY_HOSTNAME
           value: mx1.mail.mdemo.ovh
@@ -36,8 +43,10 @@ spec:
             name: maddy
         volumeMounts:
           - name: config
-            mountPath: /data/maddy.conf
+            mountPath: /etc/maddy.conf
             subPath: "maddy.conf"
+          - name: data
+            mountPath: /data
 status: {}
 ---
 apiVersion: apps/v1

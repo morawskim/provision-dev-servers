@@ -3,3 +3,4 @@ resources:
 - ingress.yml
 - service.yml
 - configMap.yml
+- pvc.yml
