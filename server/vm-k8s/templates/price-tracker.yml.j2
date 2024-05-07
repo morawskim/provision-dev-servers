@@ -1,0 +1,24 @@
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: price-tracker
+  namespace: prod
+type: Opaque
+data:
+  config.yml: |
+{% set encoded_content %}
+selectors:
+{% for key, value in PRICE_TRACKER_SELECTORS.items() %}
+      {{ key }}:
+        selector: {{ value.selector | to_yaml }}
+        expression: {{ value.expression | to_yaml }}
+{% endfor %}
+products:
+{% for product in PRICE_TRACKER_PRODUCTS %}
+      - name: {{ product.name | to_yaml }}
+        url: {{ product.url | to_yaml }}
+        selectorRef: {{ product.selectorRef | to_yaml }}
+{% endfor %}
+{% endset %}
+    {{ encoded_content | b64encode }}

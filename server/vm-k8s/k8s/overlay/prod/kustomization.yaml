@@ -11,6 +11,7 @@ bases:
 - ../../base/ttrss
 - ../../base/traefik-middlewares
 - ../../base/nextcloud
+- ../../base/price-tracker
 
 namespace: prod
 
@@ -27,6 +28,7 @@ resources:
 - ttrss/sealed-secret.yml
 - nextcloud/sealed-secret.yml
 - up-to-date-exporter/ingress.yml
+- price-tracker/config-sealed-secret.yml
 
 configMapGenerator:
 - name: webpage2kindle-php-config

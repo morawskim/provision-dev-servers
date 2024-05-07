@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: price-tracker-exporter
+  name: price-tracker-exporter
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: price-tracker-exporter
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: price-tracker-exporter
+    spec:
+      volumes:
+      - name: config
+        secret:
+          secretName: price-tracker
+          items:
+            - key: config.yml
+              path: config.yml
+      containers:
+      - image: ghcr.io/morawskim/price-tracker:v0.1
+        name: price-tracker-exporter
+        imagePullPolicy: Always
+        args:
+          - "--config"
+          - "/config.yml"
+        resources: {}
+        volumeMounts:
+          - name: config
+            mountPath: /config.yml
+            subPath: "config.yml"
+status: {}
