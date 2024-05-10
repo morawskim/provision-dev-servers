@@ -1,6 +1,7 @@
 resources:
 - configMap.yml
 - deployment.yml
+- ingress.yml
 - pvc.yml
 - service.yml
 - sealedSecret.yml

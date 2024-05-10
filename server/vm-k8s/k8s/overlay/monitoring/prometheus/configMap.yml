@@ -68,7 +68,6 @@ data:
         # List of labeled statically configured targets for this job.
         static_configs:
           - targets:
-            - "docker.pck.internal:9100"
             - "gitlab.pck.internal:9100"
             - "k8s.pck.internal:9100"
             - "intel.morawskim.pl:9100"
@@ -107,6 +106,11 @@ data:
         scrape_interval: 120s
         static_configs:
           - targets: ['nextcloud.prod:9205']
+
+      - job_name: price-tracker-exporter
+        scrape_interval: 3h
+        static_configs:
+          - targets: ['price-tracker-exporter.prod']
 
     remote_write:
       - url: https://prometheus-prod-01-eu-west-0.grafana.net/api/prom/push

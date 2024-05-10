@@ -1,6 +1,10 @@
 namespace: monitoring
 
+bases:
+- ../../base/traefik-middlewares
+
 resources:
 - k8s-metrics
 - ./newrelicSealedSecret.yaml
 - ./kubeStateMetricsIngress.yml
+- ./prometheus
