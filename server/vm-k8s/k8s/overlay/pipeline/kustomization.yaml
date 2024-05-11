@@ -1,0 +1,7 @@
+bases:
+- ../../base/pipeline
+
+namespace: pipeline
+
+resources:
+- games/sealed-secret.yml

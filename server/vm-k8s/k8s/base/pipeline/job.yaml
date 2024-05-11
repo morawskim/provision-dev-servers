@@ -1,0 +1,27 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: job-games
+spec:
+  template:
+    spec:
+      volumes:
+      - name: result
+        persistentVolumeClaim:
+          claimName: pipeline-data
+      containers:
+      - image: php:8.3-cli
+        name: games
+        command:
+        - php
+        - -r
+        - 'file_put_contents("/result/games.encrypted", openssl_encrypt(file_get_contents($_ENV["FILE_URL"]), "aes-256-cbc", $_ENV["PASSPHRASE"], 0, openssl_random_pseudo_bytes(openssl_cipher_iv_length("aes-256-cbc"))));'
+        envFrom:
+        - secretRef:
+            name: games
+        volumeMounts:
+        - name: result
+          mountPath: /result
+        resources: {}
+      restartPolicy: Never
+status: {}
