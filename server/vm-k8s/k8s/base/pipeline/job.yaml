@@ -15,7 +15,7 @@ spec:
         command:
         - php
         - -r
-        - 'file_put_contents("/result/games.encrypted", openssl_encrypt(file_get_contents($_ENV["FILE_URL"]), "aes-256-cbc", $_ENV["PASSPHRASE"], 0, openssl_random_pseudo_bytes(openssl_cipher_iv_length("aes-256-cbc"))));'
+        - '$iv = openssl_random_pseudo_bytes(openssl_cipher_iv_length("aes-256-cbc")); $encryptedFile = openssl_encrypt(file_get_contents($_ENV["FILE_URL"]), "aes-256-cbc", $_ENV["PASSPHRASE"], 0, $iv); file_put_contents("/result/games.encrypted", json_encode(["encrypted" => $encryptedFile, "iv" => base64_encode($iv), "columns" => [["title" => "Row num", "formatter" => "rownum"],["title" => "Platform", "field" => "platform", "sorter" => "string", "headerFilter" => "list", "headerFilterParams" => ["valuesLookup" => true, "clearable" => true ]],["title" => "Name", "field" => "game", "sorter" => "string", "headerFilter" => "input"],[ "title" => "Date", "field" => "date", "sorter" => "date", "sorterParams" => ["format" => "yyyy-MM-dd", "alignEmptyValues" => "top",]]]]));'
         envFrom:
         - secretRef:
             name: games
