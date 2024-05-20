@@ -29,6 +29,7 @@ resources:
 - nextcloud/sealed-secret.yml
 - up-to-date-exporter/ingress.yml
 - price-tracker/config-sealed-secret.yml
+- price-tracker/ingress.yml
 
 configMapGenerator:
 - name: webpage2kindle-php-config

@@ -1,0 +1,17 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: price-tracker
+spec:
+  entryPoints:
+    - internal
+  routes:
+    - kind: Rule
+      match: Host(`prices.i.morawskim.pl`)
+      services:
+        - kind: Service
+          name: price-tracker-exporter
+          port: 80
+      middlewares:
+        - name: openid-auth
+        - name: add-x-forwarded-proto
