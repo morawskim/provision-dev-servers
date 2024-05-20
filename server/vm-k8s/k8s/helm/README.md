@@ -31,6 +31,18 @@ For security concerns, the dashboard is not expose by default. To access dashboa
 It can then be reached at: `http://127.0.0.1:9000/dashboard/`
 ⚠️ The trailing "/" is very important. Otherwise you get 404.
 
+## OpenFaaS
+
+Add chart repository `helm repo add openfaas https://openfaas.github.io/faas-netes/`
+
+Go to directory `cd ./charts` and run download chart `helm pull --untar openfaas/openfaas`
+
+Return to parent directory (where is stored this README) and install openfaas `helm upgrade openfaas --install -n openfaas ./charts/openfaas`
+
+To retrive the admin password run: `echo $(kubectl -n openfaas get secret basic-auth -o jsonpath="{.data.basic-auth-password}" | base64 --decode)`
+
+To access dashboard use port-forward: `kubectl port-forward -n openfaas $(kubectl get pods -n openfaas -A --selector "app=gateway" --output=name) 8080:8080`
+
 ## Troubleshooting
 
 ### Dump K8s resources
