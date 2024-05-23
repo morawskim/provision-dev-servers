@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: matomo-mysql
+  namespace: prod
+data:
+  MYSQL_DATABASE: {{ MATOMO_DB_NAME | b64encode}}
+  MYSQL_PASSWORD: {{ MATOMO_DB_PASS | b64encode}}
+  MYSQL_ROOT_PASSWORD: {{ MATOMO_DB_ROOT_PASSWORD | b64encode}}
+  MYSQL_USER: {{ MATOMO_DB_USER | b64encode}}
+type: Opaque

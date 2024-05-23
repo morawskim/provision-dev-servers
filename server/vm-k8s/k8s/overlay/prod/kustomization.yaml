@@ -12,6 +12,7 @@ bases:
 - ../../base/traefik-middlewares
 - ../../base/nextcloud
 - ../../base/price-tracker
+- ../../base/matomo
 
 namespace: prod
 
@@ -30,6 +31,7 @@ resources:
 - up-to-date-exporter/ingress.yml
 - price-tracker/config-sealed-secret.yml
 - price-tracker/ingress.yml
+- matomo/sealed-secret.yml
 
 configMapGenerator:
 - name: webpage2kindle-php-config
@@ -100,3 +102,10 @@ patches:
     target:
       kind: IngressRoute
       name: nextcloud
+  - patch: |-
+      - op: replace
+        path: /spec/routes/0/match
+        value: Host(`matomo.morawskim.pl`)
+    target:
+      kind: IngressRoute
+      name: matomo
