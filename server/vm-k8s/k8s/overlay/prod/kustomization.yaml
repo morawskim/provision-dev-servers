@@ -32,6 +32,7 @@ resources:
 - price-tracker/config-sealed-secret.yml
 - price-tracker/ingress.yml
 - matomo/sealed-secret.yml
+- matomo/cronJob.yml
 
 configMapGenerator:
 - name: webpage2kindle-php-config
