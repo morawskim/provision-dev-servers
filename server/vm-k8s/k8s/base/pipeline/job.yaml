@@ -9,19 +9,80 @@ spec:
       - name: result
         persistentVolumeClaim:
           claimName: pipeline-data
+      - name: config
+        configMap:
+          name: encrypt-file-php-script
+          items:
+            - key: encryptFile.php
+              path: encryptFile.php
       containers:
       - image: php:8.3-cli
         name: games
         command:
         - php
-        - -r
-        - '$iv = openssl_random_pseudo_bytes(openssl_cipher_iv_length("aes-256-cbc")); $encryptedFile = openssl_encrypt(file_get_contents($_ENV["FILE_URL"]), "aes-256-cbc", $_ENV["PASSPHRASE"], 0, $iv); file_put_contents("/result/games.encrypted", json_encode(["encrypted" => $encryptedFile, "iv" => base64_encode($iv), "columns" => [["title" => "Row num", "formatter" => "rownum"],["title" => "Platform", "field" => "platform", "sorter" => "string", "headerFilter" => "list", "headerFilterParams" => ["valuesLookup" => true, "clearable" => true ]],["title" => "Name", "field" => "game", "sorter" => "string", "headerFilter" => "input"],[ "title" => "Date", "field" => "date", "sorter" => "date", "sorterParams" => ["format" => "yyyy-MM-dd", "alignEmptyValues" => "top",]]]]));'
+        - "/encryptFile.php"
         envFrom:
         - secretRef:
             name: games
         volumeMounts:
         - name: result
           mountPath: /result
+        - name: config
+          mountPath: /encryptFile.php
+          subPath: "encryptFile.php"
         resources: {}
       restartPolicy: Never
 status: {}
+---
+apiVersion: v1
+data:
+  encryptFile.php: |
+    <?php
+    $iv = openssl_random_pseudo_bytes(openssl_cipher_iv_length("aes-256-cbc"));
+    $encryptedFile = openssl_encrypt(file_get_contents($_ENV["FILE_URL"]), "aes-256-cbc", $_ENV["PASSPHRASE"], 0, $iv);
+    $fileHandler = fopen('php://memory', 'rwb');
+    fwrite(
+        $fileHandler,
+        json_encode(
+            [
+                "encrypted" => $encryptedFile,
+                "iv" => base64_encode($iv),
+                "columns" => [
+                    ["title" => "Row num", "formatter" => "rownum"],
+                    [
+                        "title" => "Platform",
+                        "field" => "platform",
+                        "sorter" => "string",
+                        "headerFilter" => "list",
+                        "headerFilterParams" => ["valuesLookup" => true, "clearable" => true]
+                    ],
+                    ["title" => "Name", "field" => "game", "sorter" => "string", "headerFilter" => "input"],
+                    [
+                        "title" => "Date",
+                        "field" => "date",
+                        "sorter" => "date",
+                        "sorterParams" => ["format" => "yyyy-MM-dd", "alignEmptyValues" => "top",]
+                    ]
+                ]
+            ],
+            JSON_THROW_ON_ERROR
+        )
+    );
+
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $_ENV["UPLOAD_URL"]);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, ['X-Requested-With: XMLHttpRequest']);
+    curl_setopt($ch, CURLOPT_PUT, true);
+    curl_setopt($ch, CURLOPT_INFILE, $fileHandler);
+    $response = curl_exec($ch);
+
+    if ($response === false) {
+        throw new RuntimeException("curl uplaod error: " . curl_error($ch));
+    }
+
+    curl_close($ch);
+kind: ConfigMap
+metadata:
+  name: encrypt-file-php-script
