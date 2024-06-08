@@ -1,0 +1,222 @@
+---
+- hosts: localhost
+  become: true
+  connection: local
+  vars:
+    my_username: marcin
+    # see https://github.com/okteto/okteto/releases
+    okteto_version: 2.8.0
+    # see https://github.com/kdash-rs/kdash/releases
+    kdash_version: v0.6.0
+    #see https://getcomposer.org/download/
+    composer_version: 2.7.6
+    #see https://github.com/wagoodman/dive/releases
+    dive_version: v0.12.0
+    # see https://github.com/tellerops/teller/releases
+    teller_version: v2.0.7
+    # see https://github.com/c-bata/kube-prompt/releases
+    kube_prompt_version: v1.0.11
+    # see https://github.com/bitnami-labs/sealed-secrets/releases
+    sealed_secrets_version: v0.26.3
+  tasks:
+    # Setup docker
+    - name: Update apt-get repo and cache
+      apt: update_cache=yes force_apt_get=yes cache_valid_time=3600
+    - name: Install required system packages
+      apt: name={{ item }} state=latest update_cache=yes
+      loop: [ 'apt-transport-https', 'ca-certificates', 'python3-pip']
+    - name: Add Docker GPG apt Key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+    - name: Add Docker Repository
+      apt_repository:
+        repo: deb https://download.docker.com/linux/ubuntu {{ ansible_facts['distribution_release'] }} stable
+        state: present
+    - name: Update apt and install docker-ce
+      apt: update_cache=yes name=docker-ce state=latest
+    - name: Start docker
+      service: name=docker state=started enabled=yes
+
+    - name: Enable the ppa:ondrej/php repo on Ubuntu systems
+      apt_repository:
+        repo: ppa:ondrej/php
+        update_cache: true
+    - name: Enable the ppa:longsleep/golang-backports repo on Ubuntu systems
+      apt_repository:
+        repo: ppa:longsleep/golang-backports
+        update_cache: true
+    - name: Update apt
+      apt: update_cache=yes
+
+    - name: Install required packages
+      package:
+        name:
+          - jq
+          - tmux
+          - pipx
+          - python3-venv
+          - vim
+          - whois
+          - ipcalc
+          - bcal
+          - colordiff
+          - silversearcher-ag
+          - powerline
+          - php8.3-cli
+          - php8.3-curl
+          - php8.3-xml
+          - php8.3-xdebug
+          - bind9-dnsutils
+          - whois
+          - skopeo
+          - yadm
+          - fd-find
+          - bat
+          - golang-1.22
+          - libxml2-utils
+          - dialog
+          - sqlite3
+          - gawk
+          - gdb
+          - virtualbox
+          - git-delta
+          - python3-jsonpatch # provide jsondiff
+        state: present
+    - name: Install hardware packages
+      package:
+        name:
+          - solaar
+          - yubikey-manager
+          - opensc-pkcs11
+        state: present
+    - name: Add docker to the user's groups
+      user:
+        name: "{{my_username}}"
+        groups: docker,video
+        append: yes
+
+    - name: Install required packages GUI
+      package:
+        name:
+          - ghex
+          - peek
+          - libreoffice-l10n-pl
+          - xclip
+          - vim-gtk3
+          - kcachegrind
+          - wireshark
+          - sqlitebrowser
+          - gimp
+          - vlc
+          - filezilla
+          - google-chrome-stable
+          - ksnip
+          - lsd
+        state: present
+    - name: Install starship
+      unarchive:
+        src: https://github.com/starship/starship/releases/latest/download/starship-x86_64-unknown-linux-gnu.tar.gz
+        dest: /usr/local/bin/
+        remote_src: yes
+        creates: /starship
+    - name: Install snap packages
+      snap:
+        name:
+          - spotify
+          - httpie
+          - pastel
+          - peco
+          - fx
+          - postman
+          - htmlq
+          - yq
+          - ngrok
+        state: present
+    - name: Install snap classic packages
+      snap:
+        name:
+          - helm
+          - code
+          - goland
+          - phpstorm
+        classic: yes
+        state: present
+    - name: Install fzf 0.29
+      unarchive:
+        src: https://github.com/junegunn/fzf/releases/download/0.29.0/fzf-0.29.0-linux_amd64.tar.gz
+        dest: /usr/local/bin/
+        remote_src: yes
+    - name: Fetch fzf key-bindings for bash
+      get_url:
+        url: https://raw.githubusercontent.com/junegunn/fzf/0.29.0/shell/key-bindings.bash
+        dest: /etc/bash_completion.d/fzf-key-bindings.bash
+        mode: '0444'
+
+    - name: Install kubeseal
+      unarchive:
+        src: https://github.com/bitnami-labs/sealed-secrets/releases/download/v{{ sealed_secrets_version | replace('v', '') }}/kubeseal-{{ sealed_secrets_version | replace('v', '') }}-linux-amd64.tar.gz
+        dest: /usr/local/bin/
+        remote_src: yes
+        creates: /kubeseal
+        include:
+          - kubeseal
+    - name: Install kube-prompt
+      unarchive:
+        src: https://github.com/c-bata/kube-prompt/releases/download/v{{ kube_prompt_version | replace('v', '') }}/kube-prompt_v{{ kube_prompt_version | replace('v', '') }}_linux_amd64.zip
+        dest: /usr/local/bin/
+        remote_src: yes
+        creates: /kube-prompt
+    - name: Install teller
+      unarchive:
+        src: https://github.com/tellerops/teller/releases/download/v{{ teller_version | replace('v', '') }}/teller-x86_64-linux.tar.xz
+        dest: /usr/local/bin/
+        remote_src: yes
+        creates: /teller
+    - name: Install dive
+      apt:
+        deb: https://github.com/wagoodman/dive/releases/download/v{{ dive_version | replace('v', '') }}/dive_{{ dive_version | replace('v', '') }}_linux_amd64.deb
+    - name: Install okteto
+      get_url:
+        url: https://github.com/okteto/okteto/releases/download/{{okteto_version}}/okteto-Linux-x86_64
+        dest: /usr/local/bin/okteto
+        mode: '0755'
+    - name: Install kdash
+      unarchive:
+        src: https://github.com/kdash-rs/kdash/releases/download/v{{ kdash_version | replace('v','') }}/kdash-linux-musl.tar.gz
+        dest: /usr/local/bin/
+        remote_src: yes
+        creates: /kdash
+    - name: Download composer
+      get_url:
+        url: https://getcomposer.org/download/{{composer_version}}/composer.phar
+        dest: /usr/local/bin/composer-{{composer_version}}
+        mode: '0755'
+    # install awscli
+    - name: Get awscliv2 installer
+      unarchive:
+        src: https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip
+        dest: "/tmp"
+        remote_src: yes
+        creates: /tmp/aws
+        mode: 0755
+      register: aws_cli_unarchive_installer
+    - name: Update awscli package.
+      shell: /tmp/aws/install --install-dir /usr/local/aws-cli --bin-dir /usr/local/bin --update
+      when: aws_cli_unarchive_installer.changed
+    # SAM
+    - name: Creates directory
+      file:
+        path: /tmp/aws-sam
+        state: directory
+    - name: Get SAM installer
+      unarchive:
+        src: https://github.com/aws/aws-sam-cli/releases/latest/download/aws-sam-cli-linux-x86_64.zip
+        dest: "/tmp/aws-sam"
+        remote_src: yes
+        creates: /tmp/aws-sam/install
+        mode: 0755
+      register: aws_sam_unarchive_installer
+    - name: Update awscli package.
+      shell: /tmp/aws-sam/install --install-dir /usr/local/aws-sam-cli --bin-dir /usr/local/bin --update
+      when: aws_sam_unarchive_installer.changed
