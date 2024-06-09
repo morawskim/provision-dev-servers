@@ -82,6 +82,7 @@
           - virtualbox
           - git-delta
           - python3-jsonpatch # provide jsondiff
+          - curl
         state: present
     - name: Install hardware packages
       package:
@@ -113,6 +114,7 @@
           - google-chrome-stable
           - ksnip
           - lsd
+          - yakuake
         state: present
     - name: Install starship
       unarchive:
