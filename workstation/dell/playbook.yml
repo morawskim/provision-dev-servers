@@ -132,6 +132,7 @@
           - htmlq
           - yq
           - ngrok
+          - kustomize
         state: present
     - name: Install snap classic packages
       snap:
@@ -140,6 +141,7 @@
           - code
           - goland
           - phpstorm
+          - kubectl
         classic: yes
         state: present
     - name: Install fzf 0.29
@@ -192,6 +194,9 @@
         url: https://getcomposer.org/download/{{composer_version}}/composer.phar
         dest: /usr/local/bin/composer-{{composer_version}}
         mode: '0755'
+    - name: Install minikube
+      apt:
+        deb: https://storage.googleapis.com/minikube/releases/latest/minikube_latest_amd64.deb
     # install awscli
     - name: Get awscliv2 installer
       unarchive:
