@@ -67,6 +67,7 @@
           - php8.3-curl
           - php8.3-xml
           - php8.3-xdebug
+          - php8.3-mbstring
           - bind9-dnsutils
           - whois
           - skopeo
