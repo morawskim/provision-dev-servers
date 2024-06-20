@@ -46,6 +46,16 @@
       apt_repository:
         repo: ppa:longsleep/golang-backports
         update_cache: true
+    - name: Fetch the Lens GPG key
+      get_url:
+        url: https://gist.githubusercontent.com/morawskim/0e5d812efbacc894a179516cd8dbca60/raw/239246229ab5674152d23ec2cb179e010badc2b8/lens-deb.gpg
+        dest: /usr/share/keyrings/lens-archive-keyring.gpg
+        mode: 0644
+    - name: Add Lens Repository
+      apt_repository:
+        repo: deb [arch=amd64 signed-by=/usr/share/keyrings/lens-archive-keyring.gpg] https://downloads.k8slens.dev/apt/debian stable main
+        state: present
+        update_cache: true
     - name: Update apt
       apt: update_cache=yes
 
@@ -116,6 +126,7 @@
           - ksnip
           - lsd
           - yakuake
+          - lens
         state: present
     - name: Install starship
       unarchive:
