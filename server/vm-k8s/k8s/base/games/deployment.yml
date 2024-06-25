@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: games
+  name: games
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: games
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: games
+    spec:
+      containers:
+      - image: ghcr.io/morawskim/webcrypto:v0.1
+        name: games
+        envFrom:
+          - secretRef:
+              name: games
+        resources: {}
+status: {}

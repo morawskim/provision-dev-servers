@@ -13,6 +13,7 @@ bases:
 - ../../base/nextcloud
 - ../../base/price-tracker
 - ../../base/matomo
+- ../../base/games
 
 namespace: prod
 
@@ -33,6 +34,8 @@ resources:
 - price-tracker/ingress.yml
 - matomo/sealed-secret.yml
 - matomo/cronJob.yml
+- games/sealed-secret.yml
+- games/ingress.yml
 
 configMapGenerator:
 - name: webpage2kindle-php-config
