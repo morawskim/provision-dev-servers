@@ -1,8 +1,9 @@
-bases:
-- ../../base/podinfo
-
 namespace: test
 
 resources:
 - traefik.yaml
 - podinfo-traefik-ingress.yaml
+- ../../base/podinfo
+
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization

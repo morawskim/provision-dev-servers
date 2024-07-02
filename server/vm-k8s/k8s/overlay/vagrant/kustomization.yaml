@@ -1,13 +1,17 @@
-bases:
-- ../../base/podinfo
-
 namespace: vagrant
 
+resources:
+- ../../base/podinfo
+
+
 patches:
-  - patch: |-
-      - op: replace
-        path: /spec/rules/0/host
-        value: podinfo-vagrant.10.0.2.15.nip.io
-    target:
-      kind: Ingress
-      name: podinfo
+- patch: |-
+    - op: replace
+      path: /spec/rules/0/host
+      value: podinfo-vagrant.10.0.2.15.nip.io
+  target:
+    kind: Ingress
+    name: podinfo
+
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization

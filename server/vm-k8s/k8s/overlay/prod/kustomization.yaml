@@ -1,20 +1,3 @@
-bases:
-- ../../base/tapo-metrics
-- ../../base/noip
-- ../../base/ots
-- ../../base/jsonplaceholder
-- ../../base/webpage2kindle
-- ../../base/up-to-date-exporter
-- ../../base/ddns-updater
-- ../../base/gitlab-ci-pipelines-exporter
-- ../../base/maddy
-- ../../base/ttrss
-- ../../base/traefik-middlewares
-- ../../base/nextcloud
-- ../../base/price-tracker
-- ../../base/matomo
-- ../../base/games
-
 namespace: prod
 
 resources:
@@ -36,80 +19,98 @@ resources:
 - matomo/cronJob.yml
 - games/sealed-secret.yml
 - games/ingress.yml
+- ../../base/tapo-metrics
+- ../../base/noip
+- ../../base/ots
+- ../../base/jsonplaceholder
+- ../../base/webpage2kindle
+- ../../base/up-to-date-exporter
+- ../../base/ddns-updater
+- ../../base/gitlab-ci-pipelines-exporter
+- ../../base/maddy
+- ../../base/ttrss
+- ../../base/traefik-middlewares
+- ../../base/nextcloud
+- ../../base/price-tracker
+- ../../base/matomo
+- ../../base/games
 
 configMapGenerator:
-- name: webpage2kindle-php-config
-  literals:
+- literals:
   - MERCURE_URL=http://webpage2kindle/.well-known/mercure
   - DATABASE_URL=sqlite:///%kernel.project_dir%/var/data/data.db
   - NODE_MICROSERVICE_URL=http://webpage2kindle-node-microservice
   - GO_READABILITY_MICROSERVICE_URL=http://go-readability-api:8080
-- name: ttrss
-  behavior: merge
+  name: webpage2kindle-php-config
+- behavior: merge
   literals:
   - TTRSS_SELF_URL_PATH=https://ttrss.morawskim.pl
+  name: ttrss
 
 patches:
-  - patch: |-
-      - op: replace
-        path: /spec/rules/0/host
-        value: test.preview.morawskim.pl
-    target:
-      kind: Ingress
-      name: podinfo
-  - patch: |-
-      - op: replace
-        path: /spec/rules/0/host
-        value: test.docker
-    target:
-      kind: Ingress
-      name: nginx
-  - patch: |-
-      - op: replace
-        path: /spec/routes/0/match
-        value: Host(`ots.morawskim.pl`)
-    target:
-      kind: IngressRoute
-      name: ots
-  - patch: |-
-      - op: replace
-        path: /spec/routes/0/match
-        value: Host(`jsonplaceholder.morawskim.pl`)
-    target:
-      kind: IngressRoute
-      name: jsonplaceholder
-  - patch: |-
-      - op: replace
-        path: /spec/routes/0/match
-        value: Host(`kindle.morawskim.pl`)
-    target:
-      kind: IngressRoute
-      name: webpage2kindle
-  - patch: |-
-      - op: replace
-        path: /spec/routes/0/match
-        value: Host(`webmail.morawskim.pl`)
-    target:
-      kind: IngressRoute
-      name: roundcube
-  - patch: |-
-      - op: replace
-        path: /spec/routes/0/match
-        value: Host(`ttrss.morawskim.pl`)
-    target:
-      kind: IngressRoute
-      name: ttrss
-  - patch: |-
-      - op: replace
-        path: /spec/routes/0/match
-        value: Host(`nextcloud.morawskim.pl`)
-    target:
-      kind: IngressRoute
-      name: nextcloud
-  - patch: |-
-      - op: replace
-        path: /spec/routes/0/match
-        value: Host(`matomo.morawskim.pl`)
-    target:
-      kind: IngressRoute
-      name: matomo
+- patch: |-
+    - op: replace
+      path: /spec/rules/0/host
+      value: test.preview.morawskim.pl
+  target:
+    kind: Ingress
+    name: podinfo
+- patch: |-
+    - op: replace
+      path: /spec/rules/0/host
+      value: test.docker
+  target:
+    kind: Ingress
+    name: nginx
+- patch: |-
+    - op: replace
+      path: /spec/routes/0/match
+      value: Host(`ots.morawskim.pl`)
+  target:
+    kind: IngressRoute
+    name: ots
+- patch: |-
+    - op: replace
+      path: /spec/routes/0/match
+      value: Host(`jsonplaceholder.morawskim.pl`)
+  target:
+    kind: IngressRoute
+    name: jsonplaceholder
+- patch: |-
+    - op: replace
+      path: /spec/routes/0/match
+      value: Host(`kindle.morawskim.pl`)
+  target:
+    kind: IngressRoute
+    name: webpage2kindle
+- patch: |-
+    - op: replace
+      path: /spec/routes/0/match
+      value: Host(`webmail.morawskim.pl`)
+  target:
+    kind: IngressRoute
+    name: roundcube
+- patch: |-
+    - op: replace
+      path: /spec/routes/0/match
+      value: Host(`ttrss.morawskim.pl`)
+  target:
+    kind: IngressRoute
+    name: ttrss
+- patch: |-
+    - op: replace
+      path: /spec/routes/0/match
+      value: Host(`nextcloud.morawskim.pl`)
+  target:
+    kind: IngressRoute
+    name: nextcloud
+- patch: |-
+    - op: replace
+      path: /spec/routes/0/match
+      value: Host(`matomo.morawskim.pl`)
+  target:
+    kind: IngressRoute
+    name: matomo
+
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
