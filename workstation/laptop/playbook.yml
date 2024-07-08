@@ -253,8 +253,6 @@
           - secret-tool
           - skrooge
           #- snapd
-          - spotifyd
-          - spotify-qt
           - sqlitebrowser
           - telegram-desktop
           - virtualbox-qt
@@ -298,6 +296,7 @@
           - bw
           - pastel
           - peco
+          - spotify
     - name: Install hardware packages
       package:
         name:
