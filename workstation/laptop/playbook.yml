@@ -84,7 +84,8 @@
           - iotop
           - ipcalc
           - jq
-          - kubernetes1.23-client
+          - kubernetes1.29-client
+          - kustomize
           - lftp
           - libxml2-tools
           - mariadb-client
@@ -139,6 +140,7 @@
           - php8-fileinfo
           - php8-tokenizer
           - php8-redis
+          - php8-sodium
           - php8-xdebug
           - php8-mbstring
           - powerline
@@ -253,6 +255,7 @@
           - secret-tool
           - skrooge
           #- snapd
+          - spectacle
           - sqlitebrowser
           - telegram-desktop
           - virtualbox-qt
