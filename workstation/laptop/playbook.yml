@@ -45,7 +45,6 @@
           - age
           - android-tools
           - ansible
-          - aws-cli2
           - bash-completion
           - bat
           - bc
@@ -304,6 +303,18 @@
       package:
         name:
           - solaar
+    # install awscli
+    - name: Get awscliv2 installer
+      unarchive:
+        src: https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip
+        dest: "/tmp"
+        remote_src: yes
+        creates: /tmp/aws
+        mode: 0755
+      register: aws_cli_unarchive_installer
+    - name: Update awscli package.
+      shell: /tmp/aws/install --install-dir /usr/local/aws-cli --bin-dir /usr/local/bin --update
+      when: aws_cli_unarchive_installer.changed
     - name: firewalld add source to internal zone
       firewalld:
         source: 172.16.0.0/12
