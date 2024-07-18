@@ -15,23 +15,18 @@ spec:
       labels:
         app: price-tracker-exporter
     spec:
-      volumes:
-      - name: config
-        secret:
-          secretName: price-tracker
-          items:
-            - key: config.yml
-              path: config.yml
       containers:
-      - image: ghcr.io/morawskim/price-tracker:v0.1
+      - image: ghcr.io/morawskim/price-tracker:v0.2
         name: price-tracker-exporter
         imagePullPolicy: Always
+        env:
+        - name: CONFIG_URL
+          valueFrom:
+            secretKeyRef:
+              name: price-tracker
+              key: CONFIG_URL
         args:
           - "--config"
-          - "/config.yml"
+          - $(CONFIG_URL)
         resources: {}
-        volumeMounts:
-          - name: config
-            mountPath: /config.yml
-            subPath: "config.yml"
 status: {}
