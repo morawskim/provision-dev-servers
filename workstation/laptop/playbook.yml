@@ -20,6 +20,7 @@
         - http://codecs.opensuse.org/openh264/openSUSE_Tumbleweed/repodata/repomd.xml.key
         - https://download.opensuse.org/repositories/multimedia:/apps/openSUSE_Tumbleweed/repodata/repomd.xml.key
         - https://downloads.k8slens.dev/keys/gpg
+        - https://ftp.gwdg.de/pub/linux/packman/gpg-pubkey-1abd1afb.asc
 
     - name: Add repositories
       community.general.zypper_repository:
@@ -30,6 +31,7 @@
         runrefresh: 1
         repo: "{{ item.repo }}"
         disable_gpg_check: "{{ item.disable_gpg_check | default(0) }}"
+        priority: "{{ item.priority | default(1) }}"
       with_items:
         - { name: code, description: 'Visual Studio Code', repo: 'https://packages.microsoft.com/yumrepos/vscode' }
         - { name: google-chrome, description: 'google-chrome', repo: 'http://dl.google.com/linux/chrome/rpm/stable/x86_64'}
@@ -38,6 +40,7 @@
         - { name: ~, description: ~, repo: 'https://download.opensuse.org/repositories/system:snappy/openSUSE_Tumbleweed/system:snappy.repo' }
         - { name: ~, description: ~, repo: 'http://codecs.opensuse.org/openh264/openSUSE_Tumbleweed/openSUSE:Factory:openh264:PUBLISHED.repo' }
         - { name: ~, description: ~, repo: 'https://downloads.k8slens.dev/rpm/lens.repo' }
+        - { name: packman, description: 'packman multimedia', repo: 'https://ftp.gwdg.de/pub/linux/packman/suse/openSUSE_Tumbleweed/', priority: 90 }
 
     - name: Install required packages CLI
       package:
@@ -243,6 +246,7 @@
           - lshw-gui
           - mozilla-nss-tools
           - nextcloud-client
+          - obs-studio
           - peek
           - plasma-browser-integration
           - plasma-nm5-openvpn
