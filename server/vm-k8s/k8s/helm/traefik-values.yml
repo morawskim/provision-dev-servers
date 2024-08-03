@@ -12,11 +12,15 @@ ports:
     exposedPort: 81
     nodePort: 32081
     protocol: TCP
-    expose: true
+    expose:
+      default: true
     tls:
       enabled: true
 ingressClass:
   isDefaultClass: false
+ingressRoute:
+  dashboard:
+    enabled: true
 service:
   type: NodePort
 logs:

@@ -1,4 +1,10 @@
-{{- if and .Values.rbac.enabled (or .Values.providers.kubernetesIngress.enabled (not .Values.rbac.namespaced)) -}}
+{{- $version := include "imageVersion" $ }}
+{{- if .Values.rbac.enabled }}
+{{- if or
+       (semverCompare ">=v3.1.0-0" $version)
+       (not .Values.rbac.namespaced)
+       (and .Values.rbac.namespaced .Values.providers.kubernetesIngress.enabled (not .Values.providers.kubernetesIngress.disableIngressClassLookup))
+}}
 ---
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
@@ -14,4 +20,5 @@ subjects:
   - kind: ServiceAccount
     name: {{ include "traefik.serviceAccountName" . }}
     namespace: {{ template "traefik.namespace" . }}
+{{- end -}}
 {{- end -}}
