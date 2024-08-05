@@ -16,7 +16,7 @@ spec:
         app: ots
     spec:
       containers:
-      - image: luzifer/ots:v1.11.0
+      - image: luzifer/ots:v1.12.0
         name: ots
         resources: {}
 status: {}
