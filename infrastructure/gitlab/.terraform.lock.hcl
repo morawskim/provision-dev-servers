@@ -1,7 +1,7 @@
-# This file is maintained automatically by "terraform init".
+# This file is maintained automatically by "tofu init".
 # Manual edits may be lost in future updates.
 
-provider "registry.terraform.io/gitlabhq/gitlab" {
+provider "registry.opentofu.org/gitlabhq/gitlab" {
   version     = "3.18.0"
   constraints = "3.18.0"
   hashes = [

@@ -25,5 +25,6 @@ locals {
     "morawskim/webpage2kindle",
     "morawskim/sync-docker-images",
     "morawskim/up-to-date-exporter",
+    "morawskim/rpm-pipeline"
   ])
 }
