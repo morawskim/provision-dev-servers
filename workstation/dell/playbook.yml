@@ -94,6 +94,7 @@
           - git-delta
           - python3-jsonpatch # provide jsondiff
           - curl
+          - pass
         state: present
     - name: Install hardware packages
       package:
