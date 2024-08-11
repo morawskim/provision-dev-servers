@@ -102,6 +102,7 @@
           - solaar
           - yubikey-manager
           - opensc-pkcs11
+          - libpam-u2f
         state: present
     - name: Add docker to the user's groups
       user:
