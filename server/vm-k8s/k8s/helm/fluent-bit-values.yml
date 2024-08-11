@@ -14,7 +14,11 @@ config:
         Name kubernetes_events
         Tag k8s_events.*
         kube_url https://kubernetes.default.svc
-
+    [INPUT]
+        Name    tail
+        Tag     kube.*
+        Path    /var/log/containers/*.log
+        multiline.parser    docker, cri
   outputs: |
     #[OUTPUT]
     #    Name stdout
@@ -29,10 +33,21 @@ config:
         Name kubernetes
         Match kube.*
         Merge_Log On
-        Keep_Log Off
+        #Keep_Log Off
         K8S-Logging.Parser On
         K8S-Logging.Exclude On
     [FILTER]
         Name modify
         Match k8s_events.*
         Add log_source k8s_events
+
+extraVolumes:
+- name: k8s-pod-logs
+  hostPath:
+    path: /var/log/containers
+    type: Directory
+
+extraVolumeMounts:
+    - mountPath: /var/log/containers
+      name: k8s-pod-logs
+      readOnly: true
