@@ -129,6 +129,7 @@
           - lsd
           - yakuake
           - lens
+          - kdiff3
         state: present
     - name: Install starship
       unarchive:
