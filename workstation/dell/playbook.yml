@@ -18,6 +18,8 @@
     kube_prompt_version: v1.0.11
     # see https://github.com/bitnami-labs/sealed-secrets/releases
     sealed_secrets_version: v0.26.3
+    # see https://github.com/mithrandie/csvq/releases
+    csvq_version: v1.18.1
   tasks:
     # Setup docker
     - name: Update apt-get repo and cache
@@ -172,6 +174,16 @@
         dest: /etc/bash_completion.d/fzf-key-bindings.bash
         mode: '0444'
 
+    - name: Install csvq
+      unarchive:
+        src: https://github.com/mithrandie/csvq/releases/download/{{ csvq_version }}/csvq-{{ csvq_version }}-linux-amd64.tar.gz
+        dest: /usr/local/bin/
+        remote_src: yes
+        creates: /csvq
+        include:
+          - csvq-{{ csvq_version }}-linux-amd64/csvq
+        extra_opts:
+          - --strip-components=1
     - name: Install kubeseal
       unarchive:
         src: https://github.com/bitnami-labs/sealed-secrets/releases/download/v{{ sealed_secrets_version | replace('v', '') }}/kubeseal-{{ sealed_secrets_version | replace('v', '') }}-linux-amd64.tar.gz
