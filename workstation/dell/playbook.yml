@@ -132,6 +132,7 @@
           - yakuake
           - lens
           - kdiff3
+          - xsel
         state: present
     - name: Install starship
       unarchive:
