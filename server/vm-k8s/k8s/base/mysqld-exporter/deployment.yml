@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: mysqld-exporter
+  name: mysqld-exporter
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysqld-exporter
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: mysqld-exporter
+    spec:
+      volumes:
+      - name: config
+        configMap:
+          name: mysqld-exporter
+          items:
+            - key: .my.cnf
+              path: .my.cnf
+      containers:
+      - image: prom/mysqld-exporter
+        imagePullPolicy: Always
+        name: metrics
+        resources: {}
+        volumeMounts:
+          - name: config
+            mountPath: /etc/mysqld-exporter
+        args:
+          - --config.my-cnf
+          - /etc/mysqld-exporter/.my.cnf
+status: {}
