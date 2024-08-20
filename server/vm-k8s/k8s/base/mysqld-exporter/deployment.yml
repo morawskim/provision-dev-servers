@@ -17,8 +17,8 @@ spec:
     spec:
       volumes:
       - name: config
-        configMap:
-          name: mysqld-exporter
+        secret:
+          secretName: mysqld-exporter
           items:
             - key: .my.cnf
               path: .my.cnf
