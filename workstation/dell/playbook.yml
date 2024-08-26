@@ -153,6 +153,7 @@
           - yq
           - ngrok
           - kustomize
+          - k6
         state: present
     - name: Install snap classic packages
       snap:
