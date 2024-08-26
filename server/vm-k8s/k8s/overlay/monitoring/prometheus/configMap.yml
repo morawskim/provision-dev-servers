@@ -12,7 +12,7 @@ data:
       # The job name assigned to scraped metrics by default.
       - job_name: webpage2kindle
         # How frequently to scrape targets from this job.
-        scrape_interval: 1m
+        scrape_interval: 5m
         # Per-scrape timeout when scraping this job.
         scrape_timeout: 10s
         # The HTTP resource path on which to fetch metrics from targets.
