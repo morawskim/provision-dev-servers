@@ -11,6 +11,7 @@ locals {
     "morawskim/webpage2kindle",
     "morawskim/rpm-pipeline",
     "morawskim/sync-docker-images",
+    "morawskim/mirror-git-repositories",
   ])
   projects_for_nuc_shell_ubuntu_20_lts = toset([
     "morawskim/packer-images",
