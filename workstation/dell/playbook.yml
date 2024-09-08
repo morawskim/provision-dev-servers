@@ -20,6 +20,7 @@
     sealed_secrets_version: v0.26.3
     # see https://github.com/mithrandie/csvq/releases
     csvq_version: v1.18.1
+    websocat_version: 1.13.0
   tasks:
     # Setup docker
     - name: Update apt-get repo and cache
@@ -196,6 +197,11 @@
           - csvq-{{ csvq_version }}-linux-amd64/csvq
         extra_opts:
           - --strip-components=1
+    - name: Install websocat
+      get_url:
+        url: https://github.com/vi/websocat/releases/download/v{{ websocat_version }}/websocat.x86_64-unknown-linux-musl
+        dest: /usr/local/bin/websocat
+        mode: '0755'
     - name: Install kubeseal
       unarchive:
         src: https://github.com/bitnami-labs/sealed-secrets/releases/download/v{{ sealed_secrets_version | replace('v', '') }}/kubeseal-{{ sealed_secrets_version | replace('v', '') }}-linux-amd64.tar.gz
