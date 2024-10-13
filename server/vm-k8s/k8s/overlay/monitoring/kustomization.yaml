@@ -1,10 +1,12 @@
 namespace: monitoring
 
-bases:
-- ../../base/traefik-middlewares
-
 resources:
 - k8s-metrics
 - ./newrelicSealedSecret.yaml
 - ./kubeStateMetricsIngress.yml
+- ./mysqldExporterSealedSecret.yml
 - ./prometheus
+- ../../base/traefik-middlewares
+- ../../base/mysqld-exporter
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
