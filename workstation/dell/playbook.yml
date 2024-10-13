@@ -109,6 +109,7 @@
           - pass
           - nodejs
           - default-jre
+          - pwgen
         state: present
     - name: Install hardware packages
       package:
