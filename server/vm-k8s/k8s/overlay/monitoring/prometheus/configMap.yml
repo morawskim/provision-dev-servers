@@ -112,6 +112,13 @@ data:
         static_configs:
           - targets: ['price-tracker-exporter.prod']
 
+      - job_name: mysqld-exporter-ttrss
+        metrics_path: /probe
+        params:
+          auth_module: ["client.ttrss"]
+          target: ["ttrss-mysql.prod:3306"]
+        static_configs:
+          - targets: ['mysqld-exporter.monitoring']
     remote_write:
       - url: https://prometheus-prod-01-eu-west-0.grafana.net/api/prom/push
         basic_auth:
