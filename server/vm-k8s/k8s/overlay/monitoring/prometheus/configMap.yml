@@ -119,6 +119,21 @@ data:
           target: ["ttrss-mysql.prod:3306"]
         static_configs:
           - targets: ['mysqld-exporter.monitoring']
+      - job_name: mysqld-exporter-nextcloud
+        metrics_path: /probe
+        params:
+          auth_module: ["client.nextcloud"]
+          target: ["nextcloud-mysql.prod:3306"]
+        static_configs:
+          - targets: ['mysqld-exporter.monitoring']
+      - job_name: mysqld-exporter-matomo
+        metrics_path: /probe
+        params:
+          auth_module: ["client.matomo"]
+          target: ["matomo-mysql.prod:3306"]
+        static_configs:
+          - targets: ['mysqld-exporter.monitoring']
+
     remote_write:
       - url: https://prometheus-prod-01-eu-west-0.grafana.net/api/prom/push
         basic_auth:
