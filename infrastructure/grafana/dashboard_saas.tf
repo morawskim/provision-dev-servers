@@ -27,3 +27,9 @@ resource "grafana_dashboard" "node_exporter_temperatures" {
   folder = grafana_folder.saas.id
   overwrite = true
 }
+
+resource "grafana_dashboard" "mysqld_exporter" {
+  config_json = replace(file("dashboard/mysql-overview.json"), "$$datasource", local.prometheus_uid)
+  folder = grafana_folder.saas.id
+  overwrite = true
+}
