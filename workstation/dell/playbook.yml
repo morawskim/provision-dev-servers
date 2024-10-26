@@ -110,6 +110,7 @@
           - nodejs
           - default-jre
           - pwgen
+          - sslscan
         state: present
     - name: Install hardware packages
       package:
