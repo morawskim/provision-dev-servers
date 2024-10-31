@@ -147,6 +147,7 @@
           - lens
           - kdiff3
           - xsel
+          - chromium-browser
         state: present
     - name: Install starship
       unarchive:
