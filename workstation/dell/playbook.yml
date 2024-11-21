@@ -111,6 +111,7 @@
           - default-jre
           - pwgen
           - sslscan
+          - pv
         state: present
     - name: Install hardware packages
       package:
