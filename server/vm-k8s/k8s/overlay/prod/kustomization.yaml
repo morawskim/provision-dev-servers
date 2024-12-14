@@ -19,6 +19,7 @@ resources:
 - matomo/cronJob.yml
 - games/sealed-secret.yml
 - games/ingress.yml
+- changedetection/ingress.yml
 - ../../base/tapo-metrics
 - ../../base/noip
 - ../../base/ots
@@ -34,6 +35,7 @@ resources:
 - ../../base/price-tracker
 - ../../base/matomo
 - ../../base/games
+- ../../base/changedetection
 
 configMapGenerator:
 - literals:
