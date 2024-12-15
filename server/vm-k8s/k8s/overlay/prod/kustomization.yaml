@@ -20,6 +20,7 @@ resources:
 - games/sealed-secret.yml
 - games/ingress.yml
 - changedetection/ingress.yml
+- jupyter/ingress.yml
 - ../../base/tapo-metrics
 - ../../base/noip
 - ../../base/ots
@@ -36,6 +37,7 @@ resources:
 - ../../base/matomo
 - ../../base/games
 - ../../base/changedetection
+- ../../base/jupyter
 
 configMapGenerator:
 - literals:

@@ -1,0 +1,11 @@
+apiVersion: v1
+data:
+  install-packages.sh: |
+    #!/bin/sh
+    # install-packages.sh
+    echo "Installing custom pip packages"
+    pip install --no-cache-dir torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
+    touch /tmp/ready
+kind: ConfigMap
+metadata:
+  name: jupyter-install-pip-packages

@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: jupyter
+  name: jupyter
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jupyter
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: jupyter
+    spec:
+      volumes:
+      - name: config
+        configMap:
+          name: jupyter-install-pip-packages
+          defaultMode: 0555
+          items:
+            - key: install-packages.sh
+              path: install-packages.sh
+      - name: data
+        persistentVolumeClaim:
+          claimName: jupyter
+      # initContainers:
+      # - name: volume-mount-hack
+      #   image: busybox
+      #   command: ["sh", "-c", "chown jovyan:users /home/jovyan"]
+      #   volumeMounts:
+      #   - name: data
+      #     mountPath: /home/jovyan/work
+      containers:
+      - image: quay.io/jupyter/base-notebook:notebook-7.3.1
+        imagePullPolicy: Always
+        name: jupyter
+        resources:
+          limits:
+            cpu: 1000m
+            memory: 1024Mi
+          requests:
+            cpu: 100m
+            memory: 64Mi
+        env:
+        - name: JUPYTER_PORT
+          value: "8888"
+        volumeMounts:
+          - name: config
+            mountPath: /usr/local/bin/start-notebook.d
+          - name: data
+            mountPath: /home/jovyan
+        args:
+          - start-notebook.py
+          - --IdentityProvider.token=''
+        readinessProbe:
+          exec:
+            command:
+              - cat
+              - /tmp/ready
+          initialDelaySeconds: 30
+          periodSeconds: 20
+status: {}
