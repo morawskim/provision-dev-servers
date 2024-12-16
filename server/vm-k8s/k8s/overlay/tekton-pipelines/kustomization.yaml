@@ -1,0 +1,8 @@
+namespace: tekton-pipelines
+
+resources:
+- dashboard/ingress.yml
+- ../../base/traefik-middlewares
+
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization

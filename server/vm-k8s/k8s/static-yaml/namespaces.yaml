@@ -47,3 +47,20 @@ metadata:
   labels:
     istio-injection: enabled
     role: openfaas-fn
+---
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: tekton
+---
+# We need to set additional labels and anootations due to error:
+#Error: Unable to continue with install: Namespace "tekton-pipelines" in namespace "" exists and cannot be imported into the current release: invalid ownership metadata; label validation error: missing key "": must be set to "Helm"; annotation validation error: missing key "meta.helm.sh/release-name": must be set to "tekton"; annotation validation error: missing key "meta.helm.sh/release-namespace": must be set to "tekton-pipelines"
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: tekton-pipelines
+  labels:
+    app.kubernetes.io/managed-by: "Helm"
+  annotations:
+    meta.helm.sh/release-name: "tekton"
+    meta.helm.sh/release-namespace: "tekton-pipelines"

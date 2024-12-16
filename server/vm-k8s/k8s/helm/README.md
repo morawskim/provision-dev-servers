@@ -43,6 +43,19 @@ To retrive the admin password run: `echo $(kubectl -n openfaas get secret basic-
 
 To access dashboard use port-forward: `kubectl port-forward -n openfaas $(kubectl get pods -n openfaas -A --selector "app=gateway" --output=name) 8080:8080`
 
+## Tekton
+
+Add chart repository `helm repo add cdf https://cdfoundation.github.io/tekton-helm-chart/`
+
+Go to directory `cd ./charts` and run download chart `helm pull --untar cdf/tekton-pipeline`
+
+Create namespaces `kubectl apply -f ../static-yaml/namespaces.yaml`
+
+Return to parent directory (where is stored this README) and install tekton `helm upgrade tekton --install -n tekton ./charts/tekton-pipeline -f tekton-values.yml`
+
+Install tekton dashboard - `kubectl apply -f ../static-yaml/tekton-dashboard-full-v0.53.0.yaml`.
+[Source of this file](https://storage.googleapis.com/tekton-releases/dashboard/previous/v0.53.0/release-full.yaml)
+
 ## Troubleshooting
 
 ### Dump K8s resources

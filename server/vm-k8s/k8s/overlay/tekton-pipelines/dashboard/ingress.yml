@@ -1,0 +1,17 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: tekton
+spec:
+  entryPoints:
+    - internal
+  routes:
+    - kind: Rule
+      match: Host(`tekton.i.morawskim.pl`)
+      services:
+        - kind: Service
+          name: tekton-dashboard
+          port: 9097
+      middlewares:
+        - name: openid-auth
+        - name: add-x-forwarded-proto
