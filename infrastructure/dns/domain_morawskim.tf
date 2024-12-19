@@ -1,6 +1,6 @@
 locals {
   aliases = {
-    hosting: "gienek.hostinghouse.pl.",
+    hosting: "u100.hostinghouse.pl.",
     noip: "morawskim.ddns.net.",
     print: "intel.morawskim.pl.",
     kindle: "noip.morawskim.pl.",
@@ -76,7 +76,7 @@ resource "ovh_domain_zone_record" "rpm" {
   subdomain = "rpm"
   fieldtype = "CNAME"
   ttl       = "3600"
-  target    = "gienek.hostinghouse.pl."
+  target    = "u100.hostinghouse.pl."
 }
 
 resource "ovh_domain_zone_record" "preview" {
