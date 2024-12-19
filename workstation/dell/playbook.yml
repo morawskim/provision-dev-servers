@@ -21,6 +21,7 @@
     # see https://github.com/mithrandie/csvq/releases
     csvq_version: v1.18.1
     websocat_version: 1.13.0
+    operator_sdk_version: 1.38.0
   tasks:
     # Setup docker
     - name: Update apt-get repo and cache
@@ -262,6 +263,11 @@
       get_url:
         url: https://getcomposer.org/download/{{composer_version}}/composer.phar
         dest: /usr/local/bin/composer-{{composer_version}}
+        mode: '0755'
+    - name: Install operator-sdk
+      get_url:
+        url: https://github.com/operator-framework/operator-sdk/releases/download/v{{operator_sdk_version}}/operator-sdk_linux_amd64
+        dest: /usr/local/bin/operator-sdk
         mode: '0755'
     - name: Install minikube
       apt:
