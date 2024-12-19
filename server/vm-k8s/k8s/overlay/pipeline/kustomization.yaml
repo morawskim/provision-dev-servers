@@ -1,8 +1,0 @@
-namespace: pipeline
-
-resources:
-- games/sealed-secret.yml
-- ../../base/pipeline
-
-apiVersion: kustomize.config.k8s.io/v1beta1
-kind: Kustomization
