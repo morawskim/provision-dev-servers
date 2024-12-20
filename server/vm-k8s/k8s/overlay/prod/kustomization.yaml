@@ -21,6 +21,7 @@ resources:
 - games/ingress.yml
 - changedetection/ingress.yml
 - jupyter/ingress.yml
+- demo-index/ingress.yml
 - ../../base/tapo-metrics
 - ../../base/noip
 - ../../base/ots
@@ -38,6 +39,7 @@ resources:
 - ../../base/games
 - ../../base/changedetection
 - ../../base/jupyter
+- ../../base/demo-index
 
 configMapGenerator:
 - literals:

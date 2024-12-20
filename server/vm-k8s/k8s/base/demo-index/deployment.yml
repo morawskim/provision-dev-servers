@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo-index
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: demo-index
+  template:
+    metadata:
+      labels:
+        app: demo-index
+    spec:
+      containers:
+      - name: demo-index
+        image: nginx:alpine
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: nginx-index
+          mountPath: /usr/share/nginx/html/index.html
+          subPath: index.html
+        resources:
+          limits:
+            cpu: 200m
+            memory: 16Mi
+          requests:
+            cpu: 100m
+            memory: 8Mi
+      volumes:
+      - name: nginx-index
+        configMap:
+          name: demo-index
+          items:
+            - key: index.html
+              path: index.html
