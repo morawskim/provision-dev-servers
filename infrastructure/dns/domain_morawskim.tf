@@ -9,7 +9,8 @@ locals {
     ttrss: "noip.morawskim.pl.",
     webmail: "noip.morawskim.pl.",
     jsonplaceholder: "noip.morawskim.pl.",
-    matomo: "noip.morawskim.pl."
+    matomo: "noip.morawskim.pl.",
+    demo: "noip.morawskim.pl.",
   }
 }
 
@@ -93,6 +94,14 @@ resource "ovh_domain_zone_record" "internal" {
   fieldtype = "CNAME"
   ttl       = "0"
   target    = "intel.morawskim.pl."
+}
+
+resource "ovh_domain_zone_record" "demo" {
+  zone      = "morawskim.pl"
+  subdomain = "*.demo"
+  fieldtype = "CNAME"
+  ttl       = "0"
+  target    = "noip.morawskim.pl."
 }
 
 resource "ovh_domain_zone_record" "alias" {
