@@ -1,0 +1,20 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: resnet101-image-labels
+  labels:
+    demo.morawskim.pl/traefik-url: "resnet101-image-labels.demo.morawskim.pl"
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`resnet101-image-labels.demo.morawskim.pl`)
+      services:
+        - kind: Service
+          name: resnet101-image-labels
+          port: 80
+      middlewares:
+        - name: add-x-forwarded-proto
+  tls:
+    certResolver: myresolver

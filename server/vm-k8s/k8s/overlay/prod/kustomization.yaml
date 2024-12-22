@@ -22,6 +22,7 @@ resources:
 - changedetection/ingress.yml
 - jupyter/ingress.yml
 - demo-index/ingress.yml
+- resnet101-image-labels/ingress.yml
 - ../../base/tapo-metrics
 - ../../base/noip
 - ../../base/ots
@@ -40,6 +41,7 @@ resources:
 - ../../base/changedetection
 - ../../base/jupyter
 - ../../base/demo-index
+- ../../base/resnet101-image-labels
 
 configMapGenerator:
 - literals:

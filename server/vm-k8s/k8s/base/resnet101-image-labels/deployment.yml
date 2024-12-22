@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: resnet101-image-labels
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: resnet101-image-labels
+  template:
+    metadata:
+      labels:
+        app: resnet101-image-labels
+    spec:
+      containers:
+      - name: resnet101-image-labels
+        image: ghcr.io/morawskim/ai-examples-resnet101-image-labels:latest
+        ports:
+        - containerPort: 5000
+        resources:
+          limits:
+            cpu: 1000m
+            memory: 512Mi
+          requests:
+            cpu: 100m
+            memory: 32Mi
