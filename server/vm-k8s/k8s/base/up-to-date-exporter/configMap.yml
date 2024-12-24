@@ -17,6 +17,8 @@ data:
       stasiu20/ssorder: 2.21.0
       morawskim/faker-images: 0.8.0
       trimstray/htrace.sh: 1.1.7
+    quary_images:
+      jupyter/base-notebook: notebook-7.3.1
 kind: ConfigMap
 metadata:
   name: up-to-date-exporter

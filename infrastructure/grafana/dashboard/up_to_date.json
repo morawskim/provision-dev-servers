@@ -163,6 +163,21 @@
           "legendFormat": "__auto",
           "range": false,
           "refId": "C"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_GRAFANACLOUD-MORAWSKIM-PROM}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "quay_version_up_to_date",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "D"
         }
       ],
       "title": "Up to date",
