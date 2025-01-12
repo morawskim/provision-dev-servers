@@ -113,6 +113,7 @@
           - pwgen
           - sslscan
           - pv
+          - libimage-exiftool-perl
         state: present
     - name: Install hardware packages
       package:
