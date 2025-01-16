@@ -114,6 +114,7 @@
           - sslscan
           - pv
           - libimage-exiftool-perl
+          - hashcat
         state: present
     - name: Install hardware packages
       package:
