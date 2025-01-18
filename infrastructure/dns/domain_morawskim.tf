@@ -11,6 +11,7 @@ locals {
     jsonplaceholder: "noip.morawskim.pl.",
     matomo: "noip.morawskim.pl.",
     demo: "noip.morawskim.pl.",
+    "index": "noip.morawskim.pl.",
   }
 }
 
