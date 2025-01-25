@@ -1,0 +1,20 @@
+---
+- hosts: all
+  become: true
+  vars:
+    home: /home/marcinm
+  tasks:
+    - name: Install required packages
+      package:
+        name:
+          - nvidia-driver-550
+          - nvidia-utils-550
+          - nvidia-dkms-550
+          - hwinfo
+          - python3-venv
+    - name: Git checkout
+      become: false
+      git:
+        repo: 'https://github.com/morawskim/ai-examples.git'
+        dest: "{{ home }}/ai-examples"
+        version: main
