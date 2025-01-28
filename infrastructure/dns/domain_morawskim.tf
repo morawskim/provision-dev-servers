@@ -12,6 +12,7 @@ locals {
     matomo: "noip.morawskim.pl.",
     demo: "noip.morawskim.pl.",
     "index": "noip.morawskim.pl.",
+    memos: "noip.morawskim.pl.",
   }
 }
 
