@@ -4,6 +4,7 @@ resource "auth0_client" "webpage2kindle" {
   app_type        = "regular_web"
   callbacks       = ["http://localhost:4200/login/check-auth0", "https://kindle.morawskim.pl/login/check-auth0"]
   oidc_conformant = true
+  cross_origin_auth = true
 
   jwt_configuration {
     alg = "RS256"

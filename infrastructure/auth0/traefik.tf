@@ -4,6 +4,7 @@ resource "auth0_client" "traefik" {
   app_type        = "regular_web"
   callbacks       = ["https://*.i.morawskim.pl:32081/_oauth"]
   oidc_conformant = true
+  cross_origin_auth = true
 
   jwt_configuration {
     alg = "RS256"
