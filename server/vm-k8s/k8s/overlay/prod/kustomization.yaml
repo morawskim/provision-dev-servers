@@ -23,6 +23,7 @@ resources:
 - jupyter/ingress.yml
 - demo-index/ingress.yml
 - resnet101-image-labels/ingress.yml
+- memos/ingress.yml
 - ../../base/tapo-metrics
 - ../../base/noip
 - ../../base/ots
@@ -42,6 +43,7 @@ resources:
 - ../../base/jupyter
 - ../../base/demo-index
 - ../../base/resnet101-image-labels
+- ../../base/memos
 
 configMapGenerator:
 - literals:

@@ -1,0 +1,18 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: memos
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`memos.morawskim.pl`)
+      services:
+        - kind: Service
+          name: memos
+          port: 80
+      middlewares:
+        - name: add-x-forwarded-proto
+  tls:
+    certResolver: myresolver
