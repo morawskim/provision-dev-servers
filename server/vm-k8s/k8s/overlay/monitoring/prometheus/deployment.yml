@@ -25,6 +25,8 @@ spec:
           items:
             - key: config.yml
               path: prometheus.yml
+            - key: node_export_alerts
+              path: node_exporter.yml
       - name: secrets
         secret:
           secretName: prometheus
@@ -45,6 +47,9 @@ spec:
           - name: config
             mountPath: /etc/prometheus/prometheus.yml
             subPath: "prometheus.yml"
+          - name: config
+            mountPath: /etc/prometheus/node_exporter.yml
+            subPath: "node_exporter.yml"
           - name: secrets
             mountPath: /secrets
             readOnly: true
