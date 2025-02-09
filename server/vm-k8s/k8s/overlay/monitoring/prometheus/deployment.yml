@@ -1,3 +1,4 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -55,4 +56,50 @@ spec:
             readOnly: true
         ports:
         - containerPort: 9090
+status: {}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: alertmanager
+  name: alertmanager
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: alertmanager
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: alertmanager
+    spec:
+      volumes:
+      - name: config
+        configMap:
+          name: prometheus
+          items:
+            - key: alertmanager.yml
+              path: alertmanager.yml
+      - name: secrets
+        secret:
+          secretName: alertmanager
+      containers:
+      - image: prom/alertmanager:v0.27.0
+        name: alertmanager
+        resources:
+          requests:
+            memory: 32Mi
+          limits:
+            memory: 256Mi
+        volumeMounts:
+          - name: config
+            mountPath: /etc/alertmanager/alertmanager.yml
+            subPath: "alertmanager.yml"
+          - name: secrets
+            mountPath: /secrets
+            readOnly: true
+        ports:
+        - containerPort: 9093
 status: {}

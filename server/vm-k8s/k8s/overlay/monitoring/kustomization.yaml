@@ -6,6 +6,7 @@ resources:
 - ./kubeStateMetricsIngress.yml
 - ./mysqldExporterSealedSecret.yml
 - ./prometheus
+- ./alertmanagerSealedSecret.yml
 - ../../base/traefik-middlewares
 - ../../base/mysqld-exporter
 apiVersion: kustomize.config.k8s.io/v1beta1
