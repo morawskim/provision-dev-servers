@@ -467,6 +467,8 @@ data:
     route:
       # `group_wait` default is 30s, indicating the duration to hold off before sending an alert notification.
       group_wait: 10s
+      group_interval: 1m
+      group_by: ["instance", "job", "alertname"]
       receiver: telegram
     receivers:
       - name: telegram
