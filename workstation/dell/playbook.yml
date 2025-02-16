@@ -115,6 +115,8 @@
           - pv
           - libimage-exiftool-perl
           - hashcat
+          - sshpass
+          - qpdf
         state: present
     - name: Install hardware packages
       package:
