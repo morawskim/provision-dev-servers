@@ -28,6 +28,8 @@ spec:
               path: prometheus.yml
             - key: node_export_alerts
               path: node_exporter.yml
+            - key: mysqld_export_alerts
+              path: mysqld_exporter.yml
       - name: secrets
         secret:
           secretName: prometheus
@@ -51,6 +53,9 @@ spec:
           - name: config
             mountPath: /etc/prometheus/node_exporter.yml
             subPath: "node_exporter.yml"
+          - name: config
+            mountPath: /etc/prometheus/mysqld_exporter.yml
+            subPath: "mysqld_exporter.yml"
           - name: secrets
             mountPath: /secrets
             readOnly: true
