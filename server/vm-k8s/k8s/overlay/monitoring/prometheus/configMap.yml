@@ -352,7 +352,7 @@ data:
           #     description: Different kernel versions are running\n  VALUE = {{ $value }}
 
           - alert: HostOomKillDetected
-            expr: increase(node_vmstat_oom_kill[1m]) > 0
+            expr: increase(node_vmstat_oom_kill[2m]) > 0
             for: 0m
             labels:
               severity: warning
