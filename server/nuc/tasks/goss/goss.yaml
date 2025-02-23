@@ -11,6 +11,8 @@ port:
     listening: true
   tcp:9100:
     listening: true
+  tcp:9633:
+    listening: true
 service:
   sshd:
     enabled: true
@@ -19,6 +21,9 @@ service:
     enabled: true
     running: true
   prometheus-node_exporter:
+    enabled: true
+    running: true
+  smartctl_exporter:
     enabled: true
     running: true
 process:

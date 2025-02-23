@@ -1,0 +1,80 @@
+- name: Install node_exporter
+  package:
+    name:
+      - golang-github-prometheus-node_exporter
+- name: Enable and start node_exporter
+  service: name=prometheus-node_exporter state=started enabled=yes
+- name: firewalld enable node_exporter
+  firewalld:
+    port: 9100/tcp
+    permanent: true
+    state: enabled
+    zone: "{{item}}"
+  with_items:
+    - internal
+    - libvirt
+- name: Configure node-exporter
+  lineinfile:
+    path: /etc/sysconfig/prometheus-node_exporter
+    regexp: '^ARGS='
+    line: ARGS=--web.listen-address=0.0.0.0:9100
+  notify: Restart node_exporter
+- name: Add the drivetemp module
+  community.general.modprobe:
+    name: drivetemp
+    state: present
+    persistent: present
+- name: Install smartmontools
+  package:
+    name:
+      - smartmontools
+- name: Install smartctl_exporter
+  unarchive:
+    src: https://github.com/prometheus-community/smartctl_exporter/releases/download/v0.13.0/smartctl_exporter-0.13.0.linux-amd64.tar.gz
+    dest: /usr/local/bin/
+    remote_src: yes
+    creates: /smartctl_exporter
+    remote_src: yes
+    extra_opts:
+      - --strip-components=1
+    exclude:
+      - LICENSE
+- name: Creating a systemd service for smartctl_exporter
+  copy:
+    dest: /etc/systemd/system/smartctl_exporter.service
+    content: |
+      [Unit]
+      Description=smartctl exporter service
+      After=network-online.target
+
+      [Service]
+      Type=simple
+      PIDFile=/run/smartctl_exporter.pid
+      ExecStart=/usr/local/bin/smartctl_exporter
+      User=root
+      Group=root
+      SyslogIdentifier=smartctl_exporter
+      Restart=on-failure
+      RemainAfterExit=no
+      RestartSec=100ms
+      StandardOutput=journal
+      StandardError=journal
+
+      [Install]
+      WantedBy=multi-user.target
+- name: Reload units
+  systemd:
+    daemon_reload: yes
+- name: Enable and start smartctl_exporter
+  service: name=smartctl_exporter state=started enabled=yes
+- name: firewalld enable smartctl_exporter
+  firewalld:
+    port: 9633/tcp
+    permanent: true
+    state: enabled
+    zone: "{{item}}"
+  with_items:
+    - internal
+    - libvirt
+  notify:
+    - Reload firewalld
