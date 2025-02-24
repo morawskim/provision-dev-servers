@@ -30,6 +30,8 @@ spec:
               path: node_exporter.yml
             - key: mysqld_export_alerts
               path: mysqld_exporter.yml
+            - key: smartctl_exporter_alerts
+              path: smartctl_exporter.yml
       - name: secrets
         secret:
           secretName: prometheus
@@ -56,6 +58,9 @@ spec:
           - name: config
             mountPath: /etc/prometheus/mysqld_exporter.yml
             subPath: "mysqld_exporter.yml"
+          - name: config
+            mountPath: /etc/prometheus/smartctl_exporter.yml
+            subPath: "smartctl_exporter.yml"
           - name: secrets
             mountPath: /secrets
             readOnly: true
