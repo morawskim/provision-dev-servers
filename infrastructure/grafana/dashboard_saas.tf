@@ -33,3 +33,19 @@ resource "grafana_dashboard" "mysqld_exporter" {
   folder = grafana_folder.saas.id
   overwrite = true
 }
+
+resource "grafana_dashboard" "smartctl_exporter" {
+  config_json = replace(
+    replace(file("dashboard/smartctl_exporter.json"), "$${datasource}", local.prometheus_uid),
+    "$${DS_VICTORIAMETRICS}",
+    local.prometheus_uid
+  )
+  folder = grafana_folder.saas.id
+  overwrite = true
+}
+
+resource "grafana_dashboard" "smartctl_exporter20204" {
+  config_json = replace(file("dashboard/smartctl_exporter-20204.json"), "$${DS_PROMETHEUS}", local.prometheus_uid)
+  folder = grafana_folder.saas.id
+  overwrite = true
+}
