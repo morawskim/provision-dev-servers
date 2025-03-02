@@ -17,19 +17,6 @@ module "network" {
   subnet = "192.168.111.0/24"
 }
 
-module "vm-docker" {
-  source    = "../modules/vm"
-  name = "docker"
-  disk = 1024*1024*1024*60 # 60 GB
-  memory = 2400
-  vcpu   = 2
-  cpu_mode = "host-passthrough"
-  network_id = module.network.id
-  ssh_keys = [
-    "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBMLzZA7DQH1lfdA8ZB4HiuD4SMes11rdotJIfR9Pjeq0qMdOVisIlLbV7kr4sOfTWNFcPzKQhtIB4MLFuDp6X+E= PIV AUTH pubkey"
-  ]
-}
-
 module "vm-gitlab" {
   source    = "../modules/vm"
   name = "gitlab"
