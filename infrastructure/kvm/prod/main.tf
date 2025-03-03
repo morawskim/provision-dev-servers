@@ -44,3 +44,17 @@ module "vm-k8s" {
     "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBMLzZA7DQH1lfdA8ZB4HiuD4SMes11rdotJIfR9Pjeq0qMdOVisIlLbV7kr4sOfTWNFcPzKQhtIB4MLFuDp6X+E= PIV AUTH pubkey"
   ]
 }
+
+module "vm-wazuh" {
+  source    = "../modules/vm"
+  name = "wazuh"
+  disk = 1024*1024*1024*150 # 150 GB
+  memory = 4000
+  vcpu   = 3
+  cpu_mode = "host-passthrough"
+  network_id = module.network.id
+  distribution = "ubuntu-22-lts"
+  ssh_keys = [
+    "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBMLzZA7DQH1lfdA8ZB4HiuD4SMes11rdotJIfR9Pjeq0qMdOVisIlLbV7kr4sOfTWNFcPzKQhtIB4MLFuDp6X+E= PIV AUTH pubkey"
+  ]
+}
