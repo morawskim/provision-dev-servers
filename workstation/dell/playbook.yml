@@ -69,6 +69,16 @@
         repo: deb [arch=amd64 signed-by=/usr/share/keyrings/lens-archive-keyring.gpg] https://downloads.k8slens.dev/apt/debian stable main
         state: present
         update_cache: true
+    - name: Fetch the vagrant GPG key
+      get_url:
+        url: https://gist.github.com/morawskim/0e5d812efbacc894a179516cd8dbca60/raw/69b90487006abc0ad7cb8ba0f2acf090108a98bd/hashicorp-archive-keyring.gpg
+        dest: /usr/share/keyrings/hashicorp-archive-keyring.gpg
+        mode: 0644
+    - name: Add vagrant Repository
+      apt_repository:
+        repo: deb [arch=amd64 signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com {{ ansible_facts['distribution_release'] }} main
+        state: present
+        update_cache: true
     - name: Update apt
       apt: update_cache=yes
 
@@ -117,6 +127,7 @@
           - hashcat
           - sshpass
           - qpdf
+          - vagrant
         state: present
     - name: Install hardware packages
       package:
