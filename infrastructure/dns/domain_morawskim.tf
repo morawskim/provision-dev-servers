@@ -74,6 +74,14 @@ resource "ovh_domain_zone_record" "intel_sshfp_ed25519_sha256" {
   ttl       = "3600"
   target    = "4 2 877a0e0eeae584672b6029cd3f40af877a4fd718da1447583ffba5594a8ed309"
 }
+resource "ovh_domain_zone_record" "moje_cert_pl" {
+  zone      = "morawskim.pl"
+  #subdomain = "intel"
+  fieldtype = "TXT"
+  ttl       = "3600"
+  target    = "mojecertpl-site-verification-6XFhvOBN6ECE3ex5MHepkimFev0IYnpJ"
+}
+
 resource "ovh_domain_zone_record" "rpm" {
   zone      = "morawskim.pl"
   subdomain = "rpm"
