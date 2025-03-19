@@ -1,7 +1,7 @@
 locals {
   aliases = {
     hosting: "u100.hostinghouse.pl.",
-    noip: "morawskim.ddns.net.",
+    noip: "external.morawskim.pl.",
     print: "intel.morawskim.pl.",
     kindle: "noip.morawskim.pl.",
     nextcloud: "noip.morawskim.pl.",
@@ -30,6 +30,14 @@ resource "ovh_domain_zone_record" "intel" {
   fieldtype = "A"
   ttl       = "60"
   target    = "192.168.50.50"
+}
+
+resource "ovh_domain_zone_record" "external" {
+  zone      = "morawskim.pl"
+  subdomain = "external"
+  fieldtype = "A"
+  ttl       = "60"
+  target    = "100.118.69.98"
 }
 
 resource "ovh_domain_zone_record" "intel_sshfp_rsa_sha" {
@@ -94,7 +102,7 @@ resource "ovh_domain_zone_record" "preview" {
   zone      = "morawskim.pl"
   subdomain = "*.preview"
   fieldtype = "CNAME"
-  ttl       = "0"
+  ttl       = "60"
   target    = "noip.morawskim.pl."
 }
 
@@ -102,7 +110,7 @@ resource "ovh_domain_zone_record" "internal" {
   zone      = "morawskim.pl"
   subdomain = "*.i"
   fieldtype = "CNAME"
-  ttl       = "0"
+  ttl       = "60"
   target    = "intel.morawskim.pl."
 }
 
@@ -110,7 +118,7 @@ resource "ovh_domain_zone_record" "demo" {
   zone      = "morawskim.pl"
   subdomain = "*.demo"
   fieldtype = "CNAME"
-  ttl       = "0"
+  ttl       = "60"
   target    = "noip.morawskim.pl."
 }
 
@@ -119,6 +127,6 @@ resource "ovh_domain_zone_record" "alias" {
   zone      = "morawskim.pl"
   subdomain = each.key
   fieldtype = "CNAME"
-  ttl       = "0"
+  ttl       = "60"
   target    = each.value
 }
