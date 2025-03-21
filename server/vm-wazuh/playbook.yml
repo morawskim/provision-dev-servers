@@ -1,0 +1,14 @@
+---
+- hosts: wazuh
+  become: true
+  vars:
+    libvirt_default_pool_name: default
+    libvirt_dns: "{{ '192.168.111.1' if 'guest' != ansible_facts.virtualization_role else '192.168.120.1' }}"
+  tasks:
+    - name: Fetch wazuh install script
+      get_url:
+        url: https://packages.wazuh.com/4.11/wazuh-install.sh
+        dest: /root/wazuh-install.sh
+        mode: '0755'
+    - name: Install wazuh
+      command: /root/wazuh-install.sh --all-in-one
