@@ -48,6 +48,7 @@
     - include_tasks: tasks/fluent-bit.yml
     - include_tasks: tasks/monitoring.yml
     - include_tasks: tasks/goss.yml
+    - import_tasks: ../common/wazuh-agent.yml
   handlers:
     - name: Restart libvirtd
       service:

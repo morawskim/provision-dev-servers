@@ -85,6 +85,7 @@
         dest: ~/.kube/config
         mode: '0640'
       become: no
+    - import_tasks: ../common/wazuh-agent.yml
   handlers:
     - name: Restart node_exporter
       service:

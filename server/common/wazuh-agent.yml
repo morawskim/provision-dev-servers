@@ -1,0 +1,27 @@
+- name: Install wazuh-agent (deb)
+  apt:
+    deb: https://packages.wazuh.com/4.x/apt/pool/main/w/wazuh-agent/wazuh-agent_4.11.1-1_amd64.deb
+    state: present
+  environment:
+    WAZUH_MANAGER: "wazuh.pck.internal"
+  when:
+    - ansible_facts['distribution'] == "Ubuntu"
+- name: Import a wazuh gpg key
+  rpm_key:
+    state: present
+    key: https://packages.wazuh.com/key/GPG-KEY-WAZUH
+  when:
+    - ansible_facts['distribution'] != "Ubuntu"
+- name: Install wazuh-agent (rpm)
+  package:
+    name: https://packages.wazuh.com/4.x/yum/wazuh-agent-4.11.1-1.x86_64.rpm
+    state: present
+  environment:
+    WAZUH_MANAGER: "wazuh.pck.internal"
+  when:
+    - ansible_facts['distribution'] != "Ubuntu"
+- name: systemd daemon reload
+  systemd_service:
+    daemon_reload: true
+- name: Start wazuh-agent
+  service: name=wazuh-agent state=started enabled=yes

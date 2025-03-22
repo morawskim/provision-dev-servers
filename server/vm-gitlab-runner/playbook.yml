@@ -34,9 +34,10 @@
        apt_repository:
         repo: deb https://packages.gitlab.com/runner/gitlab-runner/ubuntu {{ ansible_facts['distribution_release'] }} main
         state: present
-
      - name: Apt-pin for gitlab-runner
        template: src=templates/pin-gitlab-runner.pref dest=/etc/apt/preferences.d/pin-gitlab-runner.pref
+
+     - import_tasks: ../common/wazuh-agent.yml
 
      - name: Install node-exporter
        package:
