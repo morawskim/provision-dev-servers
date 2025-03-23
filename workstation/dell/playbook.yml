@@ -199,6 +199,18 @@
           - pycharm-professional
         classic: yes
         state: present
+    - name: Install wazuh-agent
+      apt:
+        deb: https://packages.wazuh.com/4.x/apt/pool/main/w/wazuh-agent/wazuh-agent_4.11.1-1_amd64.deb
+        state: present
+      environment:
+        WAZUH_MANAGER: "wazuh.i.morawskim.pl"
+    - name: systemd daemon reload
+      systemd_service:
+        daemon_reload: true
+    - name: Start wazuh-agent
+      service: name=wazuh-agent state=started enabled=yes
+
     - name: Install fzf 0.29
       unarchive:
         src: https://github.com/junegunn/fzf/releases/download/0.29.0/fzf-0.29.0-linux_amd64.tar.gz
