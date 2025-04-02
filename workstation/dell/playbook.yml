@@ -197,6 +197,7 @@
           - phpstorm
           - kubectl
           - pycharm-professional
+          - flutter
         classic: yes
         state: present
     - name: Install wazuh-agent
