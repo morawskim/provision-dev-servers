@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: cloudwatch-exporter
+  name: cloudwatch-exporter
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cloudwatch-exporter
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: cloudwatch-exporter
+    spec:
+      volumes:
+      - name: config
+        configMap:
+          name: cloudwatch-exporter
+          items:
+            - key: config.yml
+              path: config.yml
+      containers:
+      - image: quay.io/prometheus/cloudwatch-exporter
+        imagePullPolicy: Always
+        name: metrics
+        resources:
+          limits:
+            cpu: 400m
+            memory: 180Mi
+          requests:
+            cpu: 100m
+            memory: 16Mi
+        volumeMounts:
+          - name: config
+            mountPath: /etc/cloudwatch_exporter
+        args:
+          - /etc/cloudwatch_exporter/config.yml
+        envFrom:
+          - secretRef:
+              name: cloudwatch-exporter
+        env:
+          - name: AWS_DEFAULT_REGION
+            value: eu-west-1
+status: {}
