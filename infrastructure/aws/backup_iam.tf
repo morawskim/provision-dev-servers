@@ -3,6 +3,7 @@ resource "aws_iam_role" "backup" {
   tags = {
     Project = "backup"
   }
+  max_session_duration = 14400
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
