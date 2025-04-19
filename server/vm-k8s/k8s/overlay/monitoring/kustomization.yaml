@@ -11,5 +11,6 @@ resources:
 - ../../base/mysqld-exporter
 - ../../base/cloudwatch_exporter
 - ./cloudwatchExporterSealedSecret.yml
+- ./grafanacloudSealedSecret.yml
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization

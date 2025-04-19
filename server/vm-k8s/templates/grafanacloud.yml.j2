@@ -1,0 +1,10 @@
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: grafanacloud
+  namespace: monitoring
+data:
+  GRAFANA_ALERTMANAGER_USERNAME: {{ GRAFANA_ALERTMANAGER_USERNAME | b64encode}}
+  GRAFANA_ALERTMANAGER_PASSWORD: {{ GRAFANA_ALERTMANAGER_PASSWORD | b64encode}}
+type: Opaque

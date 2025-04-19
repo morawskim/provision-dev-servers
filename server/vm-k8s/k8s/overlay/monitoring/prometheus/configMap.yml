@@ -946,6 +946,13 @@ data:
         - static_configs:
           - targets:
             - alertmanager:80
+        - scheme: https
+          basic_auth:
+            username_file: "/grafanacloud/GRAFANA_ALERTMANAGER_USERNAME"
+            password_file: "/grafanacloud/GRAFANA_ALERTMANAGER_PASSWORD"
+          static_configs:
+            - targets:
+              - alertmanager-eu-west-0.grafana.net:443
   alertmanager.yml: |
     route:
       # `group_wait` default is 30s, indicating the duration to hold off before sending an alert notification.

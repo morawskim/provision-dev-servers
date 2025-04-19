@@ -37,6 +37,9 @@ spec:
       - name: secrets
         secret:
           secretName: prometheus
+      - name: grafanacloud
+        secret:
+          secretName: grafanacloud
       containers:
       - image: prom/prometheus:v2.55.1
         name: prometheus
@@ -68,6 +71,9 @@ spec:
             subPath: "embedded_exporter.yml"
           - name: secrets
             mountPath: /secrets
+            readOnly: true
+          - name: grafanacloud
+            mountPath: /grafanacloud
             readOnly: true
         ports:
         - containerPort: 9090
