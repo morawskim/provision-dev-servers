@@ -49,3 +49,10 @@ resource "grafana_dashboard" "smartctl_exporter20204" {
   folder = grafana_folder.saas.id
   overwrite = true
 }
+
+
+resource "grafana_dashboard" "alertmanager" {
+  config_json = replace(file("dashboard/alertmanager.json"), "$${datasource}", local.prometheus_uid)
+  folder = grafana_folder.saas.id
+  overwrite = true
+}
