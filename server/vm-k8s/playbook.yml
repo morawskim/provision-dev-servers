@@ -86,6 +86,13 @@
         mode: '0640'
       become: no
     - import_tasks: ../common/wazuh-agent.yml
+    - import_tasks: ../common/fluent-bit.yml
+    - name: Configure fluentbit
+      template:
+        src: templates/fluent-bit-custom.conf.j2
+        dest: "/etc/fluent-bit/custom.conf"
+        backup: true
+        mode: 0644
   handlers:
     - name: Restart node_exporter
       service:

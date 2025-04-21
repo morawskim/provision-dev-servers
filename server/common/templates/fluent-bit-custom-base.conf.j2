@@ -1,0 +1,21 @@
+[INPUT]
+    Name   kmsg
+    Tag    kernel
+
+[INPUT]
+    Name   systemd
+    Tag    systemd
+    Read_From_Tail On
+
+[OUTPUT]
+    name  loki
+    #match kernel
+    Match_Regex (kernel|systemd)
+    host {{ LOKI_AUTH_URL | urlsplit("hostname") }}
+    port {{ LOKI_AUTH_URL | urlsplit("port") }}
+    tls         on
+    tls.verify  on
+    http_user {{ LOKI_AUTH_URL | urlsplit("username") }}
+    http_passwd {{ LOKI_AUTH_URL | urlsplit("password") }}
+
+    labels job=fluent-bit, host={{ ansible_hostname }}, source=$TAG, SYSTEMD_UNIT=$_SYSTEMD_UNIT

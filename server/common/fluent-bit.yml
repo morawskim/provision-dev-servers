@@ -1,0 +1,41 @@
+- name: Add fluent-bit gpg key
+  apt_key:
+    url: https://packages.fluentbit.io/fluentbit.key
+    state: present
+- name: Add fluent-bit repository
+  apt_repository:
+    repo: deb https://packages.fluentbit.io/ubuntu/{{ ansible_facts['distribution_release'] }} {{ ansible_facts['distribution_release'] }} main
+    state: present
+- name: Install fluent-bit
+  package:
+    name: fluent-bit
+    state: present
+- name: Ensure fluent-bit custom config file exists
+  copy:
+    content: ""
+    dest: /etc/fluent-bit/custom.conf
+    force: false
+    group: root
+    owner: root
+    mode: 0744
+- name: Add a line to the fluent-bit configuration
+  lineinfile:
+    path: /etc/fluent-bit/fluent-bit.conf
+    line: '@INCLUDE custom.conf'
+# Note (?m) which turns on MULTILINE mode so ^ matches any line's beginning
+- name: Comment OUTPUT section block
+  replace:
+    path: /etc/fluent-bit/fluent-bit.conf
+    after: '(?m)^\[OUTPUT\]'
+    #before: '(^\r?\n)|(^[^\s])'
+    before: '^[^\s]'
+    regexp: '^(.+)$'
+    replace: '# \1'
+    backup: true
+- name: Comment OUTPUT section
+  replace:
+    path: /etc/fluent-bit/fluent-bit.conf
+    regexp: '^\[OUTPUT\]'
+    replace: '# [OUTPUT]'
+- name: Start fluent-bit
+  service: name=fluent-bit state=started enabled=yes
