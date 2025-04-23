@@ -292,14 +292,14 @@ data:
             summary: Prometheus AlertManager config not synced (instance {{ $labels.instance }})
             description: "Configurations of AlertManager cluster instances are out of sync\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 
-        - alert: PrometheusAlertmanagerE2eDeadManSwitch
-          expr: 'vector(1)'
-          for: 0m
-          labels:
-            severity: critical
-          annotations:
-            summary: Prometheus AlertManager E2E dead man switch (instance {{ $labels.instance }})
-            description: "Prometheus DeadManSwitch is an always-firing alert. It's used as an end-to-end test of Prometheus through the Alertmanager.\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+        # - alert: PrometheusAlertmanagerE2eDeadManSwitch
+        #   expr: 'vector(1)'
+        #   for: 0m
+        #   labels:
+        #     severity: critical
+        #   annotations:
+        #     summary: Prometheus AlertManager E2E dead man switch (instance {{ $labels.instance }})
+        #     description: "Prometheus DeadManSwitch is an always-firing alert. It's used as an end-to-end test of Prometheus through the Alertmanager.\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 
         - alert: PrometheusNotConnectedToAlertmanager
           expr: 'prometheus_notifications_alertmanagers_discovered < 1'
@@ -746,14 +746,14 @@ data:
               summary: Host conntrack limit (instance {{ $labels.instance }})
               description: The number of conntrack is approching limit\n  VALUE = {{ $value }}
 
-          - alert: HostClockSkew
-            expr: (node_timex_offset_seconds > 0.05 and deriv(node_timex_offset_seconds[5m]) >= 0) or (node_timex_offset_seconds < -0.05 and deriv(node_timex_offset_seconds[5m]) <= 0)
-            for: 2m
-            labels:
-              severity: warning
-            annotations:
-              summary: Host clock skew (instance {{ $labels.instance }})
-              description: Clock skew detected. Clock is out of sync.\n  VALUE = {{ $value }}
+          # - alert: HostClockSkew
+          #   expr: (node_timex_offset_seconds > 0.05 and deriv(node_timex_offset_seconds[5m]) >= 0) or (node_timex_offset_seconds < -0.05 and deriv(node_timex_offset_seconds[5m]) <= 0)
+          #   for: 2m
+          #   labels:
+          #     severity: warning
+          #   annotations:
+          #     summary: Host clock skew (instance {{ $labels.instance }})
+          #     description: Clock skew detected. Clock is out of sync.\n  VALUE = {{ $value }}
 
           - alert: HostClockNotSynchronising
             expr: min_over_time(node_timex_sync_status[1m]) == 0 and node_timex_maxerror_seconds >= 16
@@ -783,10 +783,10 @@ data:
         # The HTTP resource path on which to fetch metrics from targets.
         metrics_path: /metrics
         # Configures the protocol scheme used for requests.
-        scheme: https
+        scheme: http
         # List of labeled statically configured targets for this job.
         static_configs:
-          - targets: ["kindle.morawskim.pl"]
+          - targets: ["webpage2kindle.prod"]
 
       # The job name assigned to scraped metrics by default.
       - job_name: gitlab-exporter
@@ -847,17 +847,17 @@ data:
           - targets:
             - "intel.morawskim.pl:9633"
 
-      - job_name: k8s
-        # The HTTP resource path on which to fetch metrics from targets.
-        metrics_path: /metrics
-        # Configures the protocol scheme used for requests.
-        scheme: https
-        tls_config:
-          insecure_skip_verify: true
-        bearer_token: "{{ K8S_TOKEN_TO_FETCH_METRICS }}"
-        # List of labeled statically configured targets for this job.
-        static_configs:
-          - targets: ["k8s.pck.internal:16443"]
+      #- job_name: k8s
+      #  # The HTTP resource path on which to fetch metrics from targets.
+      #  metrics_path: /metrics
+      #  # Configures the protocol scheme used for requests.
+      #  scheme: https
+      #  tls_config:
+      #    insecure_skip_verify: true
+      #  bearer_token: "{{ K8S_TOKEN_TO_FETCH_METRICS }}"
+      #  # List of labeled statically configured targets for this job.
+      #  static_configs:
+      #    - targets: ["k8s.pck.internal:16443"]
 
       - job_name: prometheus
         # The HTTP resource path on which to fetch metrics from targets.
@@ -868,14 +868,14 @@ data:
         static_configs:
           - targets: ["127.0.0.1:9090"]
 
-      - job_name: kube-state-metrics
-        # The HTTP resource path on which to fetch metrics from targets.
-        metrics_path: /metrics
-        # Configures the protocol scheme used for requests.
-        scheme: http
-        # List of labeled statically configured targets for this job.
-        static_configs:
-          - targets: ["kube-state-metrics.docker:81"]
+      #- job_name: kube-state-metrics
+      #  # The HTTP resource path on which to fetch metrics from targets.
+      #  metrics_path: /metrics
+      #  # Configures the protocol scheme used for requests.
+      #  scheme: http
+      #  # List of labeled statically configured targets for this job.
+      #  static_configs:
+      #    - targets: ["kube-state-metrics.docker:81"]
 
       - job_name: nextcloud
         scrape_interval: 120s
