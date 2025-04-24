@@ -836,6 +836,7 @@ data:
             - "gitlab.pck.internal:9100"
             - "k8s.pck.internal:9100"
             - "intel.morawskim.pl:9100"
+            - "wazuh.pck.internal:9100"
 
       - job_name: smartctl_exporter
         # The HTTP resource path on which to fetch metrics from targets.
