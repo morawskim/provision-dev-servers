@@ -103,6 +103,13 @@
        template: src=templates/mmo-runner.toml dest=/etc/gitlab-runner/config.toml
        notify: restart gitlab-runner
        when: gitlab_runner_docker.changed and gitlab_runner_shell.changed
+     - import_tasks: ../common/fluent-bit.yml
+     - name: Configure fluentbit
+       template:
+         src: templates/fluent-bit-custom.conf.j2
+         dest: "/etc/fluent-bit/custom.conf"
+         backup: true
+         mode: 0644
   handlers:
     - name: restart gitlab-runner
       service: name=gitlab-runner state=restarted
