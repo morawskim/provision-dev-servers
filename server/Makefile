@@ -14,7 +14,7 @@ define macro-deploy-k8s
 endef
 
 define macro-deploy-wazuh
-	ANSIBLE_ROLES_PATH=$(PWD)/ansible/roles ansible-playbook --inventory $(1) vm-wazuh/playbook.yml
+	ANSIBLE_ROLES_PATH=$(PWD)/ansible/roles ansible-playbook --inventory $(1) --ask-vault-pass vm-wazuh/playbook.yml
 endef
 
 setup-ansible-modules:
