@@ -3,6 +3,10 @@
   become: true
   vars_files:
     - parameters/secrets.yml
+  pre_tasks:
+    - name: Set a hostname
+      hostname:
+        name: "{{ vagrant_hostname | default('vm-wazuh') }}"
   tasks:
     - name: Install node-exporter
       package:
@@ -14,8 +18,13 @@
         url: https://packages.wazuh.com/4.11/wazuh-install.sh
         dest: /root/wazuh-install.sh
         mode: '0755'
+    - name: Is wazuh installed
+      stat:
+        path: /var/ossec
+      register: wazuh_dir
     - name: Install wazuh
       command: /root/wazuh-install.sh --all-in-one
+      when: not wazuh_dir.stat.exists
     - import_tasks: ../common/fluent-bit.yml
     - name: Configure fluentbit
       template:
