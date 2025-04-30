@@ -16,7 +16,7 @@ spec:
         app: price-tracker-exporter
     spec:
       containers:
-      - image: ghcr.io/morawskim/price-tracker:v0.2
+      - image: ghcr.io/morawskim/price-tracker:v0.2.1
         name: price-tracker-exporter
         imagePullPolicy: Always
         env:
