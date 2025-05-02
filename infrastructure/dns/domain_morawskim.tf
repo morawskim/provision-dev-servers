@@ -37,7 +37,7 @@ resource "ovh_domain_zone_record" "external" {
   subdomain = "external"
   fieldtype = "A"
   ttl       = "60"
-  target    = "100.118.69.98"
+  target    = "100.112.120.36"
 }
 
 resource "ovh_domain_zone_record" "intel_sshfp_rsa_sha" {
