@@ -1,7 +1,7 @@
-# This file is maintained automatically by "terraform init".
+# This file is maintained automatically by "tofu init".
 # Manual edits may be lost in future updates.
 
-provider "registry.terraform.io/cloudamqp/cloudamqp" {
+provider "registry.opentofu.org/cloudamqp/cloudamqp" {
   version     = "1.27.0"
   constraints = "1.27.0"
   hashes = [
