@@ -57,6 +57,10 @@ configMapGenerator:
   - TTRSS_SELF_URL_PATH=https://ttrss.morawskim.pl
   name: ttrss
 
+# images:
+#    - name: registry.gitlab.com/morawskim/webpage2kindle/symfony-app
+#      newTag: rabbitmq
+
 patches:
 - patch: |-
     - op: replace
