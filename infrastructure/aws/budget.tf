@@ -3,7 +3,7 @@ variable "budget_notification_email" {}
 resource "aws_budgets_budget" "budget" {
   name              = "limit"
   budget_type       = "COST"
-  limit_amount      = "2.5"
+  limit_amount      = "3.0"
   limit_unit        = "USD"
   time_unit         = "MONTHLY"
   cost_types {
