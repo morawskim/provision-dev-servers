@@ -22,6 +22,7 @@
     csvq_version: v1.18.1
     websocat_version: 1.13.0
     operator_sdk_version: 1.38.0
+    logcli_version: 3.4.4
   tasks:
     # Setup docker
     - name: Update apt-get repo and cache
@@ -278,6 +279,9 @@
     - name: Install dive
       apt:
         deb: https://github.com/wagoodman/dive/releases/download/v{{ dive_version | replace('v', '') }}/dive_{{ dive_version | replace('v', '') }}_linux_amd64.deb
+    - name: Install logcli
+      apt:
+        deb: https://github.com/grafana/loki/releases/download/v{{ logcli_version }}/logcli_{{ logcli_version }}_amd64.deb
     - name: Install okteto
       get_url:
         url: https://github.com/okteto/okteto/releases/download/{{okteto_version}}/okteto-Linux-x86_64
