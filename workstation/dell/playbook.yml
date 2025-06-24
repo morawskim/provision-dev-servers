@@ -131,6 +131,7 @@
           - vagrant
           - imagemagick
           - mysql-client-core-8.0
+          - ncdu
         state: present
     - name: Install hardware packages
       package:
