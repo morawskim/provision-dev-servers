@@ -15,6 +15,7 @@
         - { repo: 'https://github.com/Bash-it/bash-it.git', dest: '/home/marcin/.local/share/bash-it', version: 'master' }
         - { repo: 'https://github.com/tmux-plugins/tpm.git', dest: '/home/marcin/.tmux/plugins/tpm', version: 'master' }
         - { repo: 'https://github.com/facebook/PathPicker.git', dest: '/home/marcin/.local/share/PathPicker', version: '0.9.2' }
+        - { repo: 'https://github.com/lucmos/UltrawideWindows.git', dest: '/home/marcin/.local/share/UltrawideWindows', version: '5.0' }
 
     - name: Create local bin dir
       file:
@@ -64,3 +65,8 @@
         path: /home/marcin/.bashrc
         regexp: '^test -f ~/.config/bash/boot.sh'
         line: test -f ~/.config/bash/boot.sh && source ~/.config/bash/boot.sh
+
+    - name: Install KWin script using plasmapkg2
+      command: plasmapkg2 --type=kwinscript -i .
+      args:
+        chdir: /home/marcin/.local/share/UltrawideWindows
