@@ -80,6 +80,18 @@
         repo: deb [arch=amd64 signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com {{ ansible_facts['distribution_release'] }} main
         state: present
         update_cache: true
+
+    - name: Fetch the brave GPG key
+      get_url:
+        url: https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
+        dest: /usr/share/keyrings/brave-browser-archive-keyring.gpg
+        mode: 0644
+    - name: Add brave repository
+      apt_repository:
+        repo: deb [arch=amd64 signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg] https://brave-browser-apt-release.s3.brave.com stable main
+        state: present
+        update_cache: true
+
     - name: Update apt
       apt: update_cache=yes
 
@@ -169,6 +181,7 @@
           - kdiff3
           - xsel
           - chromium-browser
+          - brave-browser
         state: present
     - name: Install starship
       unarchive:
