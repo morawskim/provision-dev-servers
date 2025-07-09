@@ -320,6 +320,26 @@
     - name: Install minikube
       apt:
         deb: https://storage.googleapis.com/minikube/releases/latest/minikube_latest_amd64.deb
+    # install gcloud
+    - name: Fetch the gcloud GPG key
+      get_url:
+        url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+        dest: /tmp/gcloud-gpg-key.asc
+        mode: 0644
+    - name: Convert gcloud GPG key to binary format
+      command: gpg --dearmor -o /usr/share/keyrings/cloud.google.gpg /tmp/gcloud-gpg-key.asc
+      args:
+        creates: /usr/share/keyrings/cloud.google.gpg
+    - name: Add gcloud repository
+      apt_repository:
+        repo: deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main
+        state: present
+        update_cache: true
+    - name: Install google-cloud-cli
+      package:
+        name:
+          - google-cloud-cli
+
     # install awscli
     - name: Get awscliv2 installer
       unarchive:
