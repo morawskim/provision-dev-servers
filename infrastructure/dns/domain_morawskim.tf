@@ -14,6 +14,8 @@ locals {
     "index": "noip.morawskim.pl.",
     memos: "noip.morawskim.pl.",
   }
+  ovh_ipv4 = "94.23.89.116"
+  ovh_ipv6 = "2001:41d0:301:5::100"
 }
 
 resource "ovh_domain_zone_record" "test" {
@@ -37,7 +39,7 @@ resource "ovh_domain_zone_record" "external" {
   subdomain = "external"
   fieldtype = "A"
   ttl       = "60"
-  target    = "100.112.120.36"
+  target    = "100.112.216.33"
 }
 
 resource "ovh_domain_zone_record" "intel_sshfp_rsa_sha" {
@@ -90,12 +92,33 @@ resource "ovh_domain_zone_record" "moje_cert_pl" {
   target    = "mojecertpl-site-verification-6XFhvOBN6ECE3ex5MHepkimFev0IYnpJ"
 }
 
+resource "ovh_domain_zone_record" "morawskim" {
+  zone      = "morawskim.pl"
+  subdomain = ""
+  fieldtype = "A"
+  ttl       = "600"
+  target    = local.ovh_ipv4
+}
+resource "ovh_domain_zone_record" "morawskimAAAA" {
+  zone      = "morawskim.pl"
+  subdomain = ""
+  fieldtype = "AAAA"
+  ttl       = "600"
+  target    = local.ovh_ipv6
+}
 resource "ovh_domain_zone_record" "rpm" {
   zone      = "morawskim.pl"
   subdomain = "rpm"
-  fieldtype = "CNAME"
-  ttl       = "3600"
-  target    = "u100.hostinghouse.pl."
+  fieldtype = "A"
+  ttl       = "600"
+  target    = local.ovh_ipv4
+}
+resource "ovh_domain_zone_record" "rpmAAAA" {
+  zone      = "morawskim.pl"
+  subdomain = "rpm"
+  fieldtype = "AAAA"
+  ttl       = "600"
+  target    = local.ovh_ipv6
 }
 
 resource "ovh_domain_zone_record" "preview" {
@@ -120,6 +143,14 @@ resource "ovh_domain_zone_record" "demo" {
   fieldtype = "CNAME"
   ttl       = "60"
   target    = "noip.morawskim.pl."
+}
+
+resource "ovh_domain_zone_record" "ovhcontrol" {
+  zone      = "morawskim.pl"
+  subdomain = "ovhcontrol"
+  fieldtype = "TXT"
+  ttl       = "3600"
+  target    = "6HofDwn8QItpcZByFAXeBQ"
 }
 
 resource "ovh_domain_zone_record" "alias" {
