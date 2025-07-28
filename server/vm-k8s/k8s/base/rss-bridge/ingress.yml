@@ -1,0 +1,18 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: rss-bridge
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`rss-bridge.10.0.2.15.nip.io`)
+      services:
+        - kind: Service
+          name: rss-bridge
+          port: 80
+      middlewares:
+        - name: add-x-forwarded-proto
+  tls:
+    certResolver: myresolver

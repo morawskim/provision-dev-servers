@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: rss-bridge
+  name: rss-bridge
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rss-bridge
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: rss-bridge
+    spec:
+      volumes:
+      - name: config-certs
+        configMap:
+          name: rss-bridge
+          items:
+            - key: ca-certificates.crt
+              path: ca-certificates.crt
+      - name: config-app
+        configMap:
+          name: rss-bridge
+          items:
+            - key: config.ini.php
+              path: config.ini.php
+      containers:
+      - image: morawskim/rss-bridge:latest
+        name: rss-bridge
+        imagePullPolicy: Always
+        volumeMounts:
+          - name: config-certs
+            mountPath: /etc/ssl/certs/ca-certificates.crt
+            subPath: ca-certificates.crt
+          - name: config-app
+            mountPath: /app/config.ini.php
+            subPath: config.ini.php
+        resources: {}
+status: {}
