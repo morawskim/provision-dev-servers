@@ -13,6 +13,7 @@ locals {
     demo: "noip.morawskim.pl.",
     "index": "noip.morawskim.pl.",
     memos: "noip.morawskim.pl.",
+    rss-bridge: "noip.morawskim.pl.",
   }
   ovh_ipv4 = "94.23.89.116"
   ovh_ipv6 = "2001:41d0:301:5::100"
@@ -39,7 +40,7 @@ resource "ovh_domain_zone_record" "external" {
   subdomain = "external"
   fieldtype = "A"
   ttl       = "60"
-  target    = "100.112.216.33"
+  target    = "100.112.232.1"
 }
 
 resource "ovh_domain_zone_record" "intel_sshfp_rsa_sha" {
