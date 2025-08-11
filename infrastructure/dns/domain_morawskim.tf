@@ -32,7 +32,7 @@ resource "ovh_domain_zone_record" "intel" {
   subdomain = "intel"
   fieldtype = "A"
   ttl       = "60"
-  target    = "192.168.50.50"
+  target    = "192.168.33.4"
 }
 
 resource "ovh_domain_zone_record" "external" {
