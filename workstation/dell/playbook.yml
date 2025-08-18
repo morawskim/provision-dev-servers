@@ -145,6 +145,7 @@
           - mysql-client-core-8.0
           - ncdu
           - lftp
+          - gh
         state: present
     - name: Install hardware packages
       package:
