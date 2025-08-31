@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: opentelemetry-collector
+spec:
+  selector:
+    app: opentelemetry-collector
+  type: ClusterIP
+  ports:
+    - port: 1888
+      targetPort: 1888 # pprof extension
+      protocol: TCP
+      name: pprof
+    - port: 8888
+      targetPort: 8888 # Prometheus metrics exposed by the Collector
+      protocol: TCP
+      name: metrics
+    - port: 8889
+      targetPort: 8889 # Prometheus exporter metrics
+      protocol: TCP
+      name: prometheus-exporter
+    - port: 13133
+      targetPort: 13133 # health_check extension
+      protocol: TCP
+      name: health-check
+    - port: 4317
+      targetPort: 4317 # OTLP gRPC receiver
+      protocol: TCP
+      name: otlp-grpc
+    - port: 4318
+      targetPort: 4318 # OTLP http receiver
+      protocol: TCP
+      name: otlp-http
+    - port: 55679
+      targetPort: 55679 # zpages extension
+      protocol: TCP
+      name: zpages

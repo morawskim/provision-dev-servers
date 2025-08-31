@@ -1,0 +1,11 @@
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: opentelemetry-collector
+  namespace: monitoring
+data:
+  GRAFANA_CLOUD_OTLP_ENDPOINT: {{ GRAFANA_CLOUD_OT_ENDPOINT | b64encode }}
+  GRAFANA_CLOUD_INSTANCE_ID: {{ GRAFANA_CLOUD_OT_INSTANCE_ID | b64encode}}
+  GRAFANA_CLOUD_TOKEN: {{ GRAFANA_CLOUD_OT_TOKEN | b64encode}}
+type: Opaque

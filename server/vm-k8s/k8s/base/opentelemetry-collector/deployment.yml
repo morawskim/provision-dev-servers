@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: opentelemetry-collector
+  name: opentelemetry-collector
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: opentelemetry-collector
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: opentelemetry-collector
+    spec:
+      volumes:
+      - name: config
+        configMap:
+          name: opentelemetry-collector
+          items:
+            - key: otel-collector-confing.yml
+              path: otel-collector-confing.yml
+      containers:
+      - image: otel/opentelemetry-collector-contrib:0.133.0
+        name: opentelemetry-collector
+        imagePullPolicy: Always
+        volumeMounts:
+          - name: config
+            mountPath: /etc/otelcol-contrib/config.yaml
+            subPath: otel-collector-confing.yml
+        envFrom:
+        - secretRef:
+            name: opentelemetry-collector
+        resources:
+          limits:
+            cpu: 400m
+            memory: 100Mi
+          requests:
+            cpu: 100m
+            memory: 16Mi
+status: {}
