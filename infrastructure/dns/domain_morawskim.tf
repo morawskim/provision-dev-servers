@@ -1,7 +1,7 @@
 locals {
   aliases = {
     hosting: "u100.hostinghouse.pl.",
-    noip: "external.morawskim.pl.",
+    noip: "morawskim.ddns.net.",
     print: "intel.morawskim.pl.",
     kindle: "noip.morawskim.pl.",
     nextcloud: "noip.morawskim.pl.",
@@ -32,7 +32,7 @@ resource "ovh_domain_zone_record" "intel" {
   subdomain = "intel"
   fieldtype = "A"
   ttl       = "60"
-  target    = "192.168.33.4"
+  target    = "192.168.33.11"
 }
 
 resource "ovh_domain_zone_record" "external" {
