@@ -102,6 +102,7 @@
           - tmux
           - pipx
           - python3-venv
+          - python3-mysqldb # requires by ansible community.mysql
           - vim
           - whois
           - ipcalc
