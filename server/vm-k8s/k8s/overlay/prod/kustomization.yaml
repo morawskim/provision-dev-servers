@@ -53,6 +53,10 @@ configMapGenerator:
   - DATABASE_URL=sqlite:///%kernel.project_dir%/var/data/data.db
   - NODE_MICROSERVICE_URL=http://webpage2kindle-node-microservice
   - GO_READABILITY_MICROSERVICE_URL=http://go-readability-api:8080
+  - OTEL_PHP_AUTOLOAD_ENABLED=true
+  - OTEL_EXPORTER_OTLP_PROTOCOL=http/protobuf
+  - OTEL_EXPORTER_OTLP_ENDPOINT=http://opentelemetry-collector.monitoring:4318
+  - OTEL_SERVICE_NAME=webpage2kindle
   name: webpage2kindle-php-config
 - behavior: merge
   literals:
