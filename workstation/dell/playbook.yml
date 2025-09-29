@@ -121,7 +121,7 @@
           - yadm
           - fd-find
           - bat
-          - golang-1.23
+          - golang-1.24
           - libxml2-utils
           - dialog
           - sqlite3
@@ -147,6 +147,7 @@
           - ncdu
           - lftp
           - gh
+          - apache2-utils
         state: present
     - name: Install hardware packages
       package:
