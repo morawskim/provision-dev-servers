@@ -148,6 +148,7 @@
           - lftp
           - gh
           - apache2-utils
+          - mysqltuner
         state: present
     - name: Install hardware packages
       package:
