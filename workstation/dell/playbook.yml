@@ -149,6 +149,7 @@
           - gh
           - apache2-utils
           - mysqltuner
+          - delve
         state: present
     - name: Install hardware packages
       package:
