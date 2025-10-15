@@ -166,6 +166,9 @@ spec:
           - --http
           - :8080
         resources: {}
+        envFrom:
+        - configMapRef:
+            name: webpage2kindle-go-config
 ---
 apiVersion: apps/v1
 kind: Deployment
