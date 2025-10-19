@@ -46,6 +46,7 @@ resources:
 - ../../base/resnet101-image-labels
 - ../../base/memos
 - ../../base/rss-bridge
+- ../../base/homeassistant
 
 configMapGenerator:
 - literals:

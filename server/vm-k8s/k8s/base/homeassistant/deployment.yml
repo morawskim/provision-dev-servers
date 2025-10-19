@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: homeassistant
+  name: homeassistant
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: homeassistant
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: homeassistant
+    spec:
+      volumes:
+        - name: zigbee
+          hostPath:
+            path: /dev/ttyUSB0
+        - name: config
+          persistentVolumeClaim:
+            claimName: homeassistant
+      containers:
+      - image: homeassistant/home-assistant:2025.10
+        name: homeassistant
+        imagePullPolicy: Always
+        securityContext:
+          privileged: true
+        volumeMounts:
+          - name: zigbee
+            mountPath: /dev/ttyUSB0
+          - name: config
+            mountPath: /config
+        resources:
+          limits:
+            cpu: 1500m
+            memory: 650Mi
+          requests:
+            cpu: 100m
+            memory: 16Mi
+status: {}
