@@ -64,3 +64,8 @@ metadata:
   annotations:
     meta.helm.sh/release-name: "tekton"
     meta.helm.sh/release-namespace: "tekton-pipelines"
+---
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: pihole

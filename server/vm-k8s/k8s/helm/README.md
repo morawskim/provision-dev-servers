@@ -56,6 +56,16 @@ Return to parent directory (where is stored this README) and install tekton `hel
 Install tekton dashboard - `kubectl apply -f ../static-yaml/tekton-dashboard-full-v0.53.0.yaml`.
 [Source of this file](https://storage.googleapis.com/tekton-releases/dashboard/previous/v0.53.0/release-full.yaml)
 
+## pihole
+
+Add chart repository `helm repo add mojo2600 https://mojo2600.github.io/pihole-kubernetes/`
+
+Go to directory `cd ./charts` and run download chart `helm pull mojo2600/pihole --untar`
+
+Return to parent directory (where is stored this README) and install pihole `helm install -n pihole pihole ./charts/pihole -f pihole-values.yml`
+
+To upgrade replace install with upgrade command.
+
 ## Troubleshooting
 
 ### Dump K8s resources
