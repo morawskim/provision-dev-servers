@@ -39,6 +39,8 @@ spec:
         env:
         - name: SERVER_NAME
           value: ":80"
+        - name: GOMEMLIMIT
+          value: "254MiB"
         envFrom:
         - secretRef:
             name: webpage2kindle-php
