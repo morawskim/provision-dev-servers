@@ -221,6 +221,7 @@
           - kubectl
           - pycharm-professional
           - flutter
+          - android-studio
         classic: yes
         state: present
     - name: Install wazuh-agent
