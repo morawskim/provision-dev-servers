@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: clair-postgres
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: clair-postgres
+  template:
+    metadata:
+      labels:
+        app: clair-postgres
+    spec:
+      containers:
+      - name: postgres
+        image: postgres:14
+        env:
+        - name: POSTGRES_PASSWORD
+          value: password
+          # valueFrom:
+          #   secretKeyRef:
+          #     name: clair-postgres-secret
+          #     key: postgres-password
+        - name: POSTGRES_DB
+          value: clair
+        ports:
+        - containerPort: 5432
+        volumeMounts:
+        - name: pg-data
+          mountPath: /var/lib/postgresql/data
+        resources:
+          requests:
+            memory: 50M
+          limits:
+            memory: 500M
+      volumes:
+      - name: pg-data
+        emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: clair-postgres
+spec:
+  ports:
+  - port: 5432
+  selector:
+    app: clair-postgres

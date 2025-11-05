@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: clair
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: clair
+  template:
+    metadata:
+      labels:
+        app: clair
+    spec:
+      containers:
+      - name: clair
+        image: quay.io/projectquay/clair:4.7.4
+        # command: ["/clair"]
+        # args: ["-conf", "/config/config.yaml"]
+        ports:
+        # - containerPort: 8080
+        # - containerPort: 8089
+        - containerPort: 6060
+        volumeMounts:
+        - name: config
+          mountPath: /config
+        env:
+          - name: CLAIR_MODE
+            value: combo
+      volumes:
+      - name: config
+        configMap:
+          name: clair-config

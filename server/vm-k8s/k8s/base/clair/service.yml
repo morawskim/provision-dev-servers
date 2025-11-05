@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: clair
+spec:
+  selector:
+    app: clair
+  ports:
+  - name: http
+    port: 6060
+  - name: introspection
+    port: 8089
