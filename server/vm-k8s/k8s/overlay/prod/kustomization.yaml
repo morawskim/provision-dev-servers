@@ -26,6 +26,8 @@ resources:
 - memos/ingress.yml
 - rss-bridge/configMap.yml
 - ../../base/tapo-metrics
+- clair/sealedSecret.yml
+- clair/ingress.yml
 - ../../base/noip
 - ../../base/ots
 - ../../base/jsonplaceholder
@@ -47,6 +49,7 @@ resources:
 - ../../base/memos
 - ../../base/rss-bridge
 - ../../base/homeassistant
+- ../../base/clair
 
 configMapGenerator:
 - literals:

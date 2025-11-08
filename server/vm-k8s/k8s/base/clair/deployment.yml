@@ -18,16 +18,36 @@ spec:
         # command: ["/clair"]
         # args: ["-conf", "/config/config.yaml"]
         ports:
-        # - containerPort: 8080
-        # - containerPort: 8089
         - containerPort: 6060
         volumeMounts:
         - name: config
           mountPath: /config
+        - name: config-base
+          mountPath: /config/config.yaml.d
+        - name: config-extra
+          mountPath: /config/config.yaml.d/10-db-connstring.yaml
+          subPath: 10-db-connstring.yaml
         env:
           - name: CLAIR_MODE
             value: combo
+          - name: GOMEMLIMIT
+            value: "850MiB"
+        resources:
+          requests:
+            cpu: 50m
+            memory: 50M
+          limits:
+            cpu: 1000m
+            memory: 1524M
       volumes:
+      -  name: config-base
+         emptyDir: {}
       - name: config
         configMap:
           name: clair-config
+      - name: config-extra
+        secret:
+          secretName: clair
+          items:
+            - key: 10-db-connstring.yaml
+              path: 10-db-connstring.yaml

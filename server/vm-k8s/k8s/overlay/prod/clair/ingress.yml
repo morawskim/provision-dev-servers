@@ -1,0 +1,17 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: clair
+spec:
+  entryPoints:
+    - internal
+  routes:
+    - kind: Rule
+      match: Host(`clair.i.morawskim.pl`)
+      services:
+        - kind: Service
+          name: clair
+          port: 6060
+      middlewares:
+        #- name: openid-auth
+        #- name: add-x-forwarded-proto

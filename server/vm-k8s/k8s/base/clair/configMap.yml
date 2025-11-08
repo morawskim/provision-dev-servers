@@ -8,23 +8,25 @@ data:
     http_listen_addr: ":6060"
     log_level: debug
 
-    # updaters:
-    #   sets:
-    #     - ubuntu
-    #     - alpine
-    #     - redhat
-    #     - debian
-
+    updaters:
+      sets:
+        - ubuntu
+        - alpine
+        - redhat
+        - debian
 
     indexer:
-        connstring: "postgres://postgres:password@clair-postgres:5432/clair?sslmode=disable"
+        connstring: "postgres://postgres:tooverwrite@clair-postgres:5432/clair?sslmode=disable"
         migrations: true
+        layer_scan_concurrency: 1
     matcher:
-        connstring: "postgres://postgres:password@clair-postgres:5432/clair?sslmode=disable"
+        connstring: "postgres://postgrestooverwrite@clair-postgres:5432/clair?sslmode=disable"
         indexer_addr: http://localhost:6060/
         migrations: true
+        update_retention: 2
+        period: 8h
     notifier:
-        connstring: "postgres://postgres:password@clair-postgres:5432/clair?sslmode=disable"
+        connstring: "postgres://postgrestooverwrite@clair-postgres:5432/clair?sslmode=disable"
         migrations: true
         indexer_addr: http://localhost:6060/
         matcher_addr: http://localhost:6060/

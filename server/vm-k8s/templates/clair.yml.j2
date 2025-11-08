@@ -1,0 +1,19 @@
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: clair
+  namespace: prod
+data:
+  POSTGRES_PASSWORD: {{CLAIR_POSTGRES_PASSWORD | b64encode}}
+  10-db-connstring.yaml: |
+{% set encoded_content %}
+indexer:
+    connstring: "postgres://postgres:{{ CLAIR_POSTGRES_PASSWORD | urlencode }}@clair-postgres:5432/clair?sslmode=disable"
+matcher:
+    connstring: "postgres://postgres:{{ CLAIR_POSTGRES_PASSWORD | urlencode }}@clair-postgres:5432/clair?sslmode=disable"
+notifier:
+    connstring: "postgres://postgres:{{ CLAIR_POSTGRES_PASSWORD | urlencode }}@clair-postgres:5432/clair?sslmode=disable"
+{% endset %}
+    {{ encoded_content | b64encode }}
+type: Opaque
