@@ -1,0 +1,8 @@
+- name: Install cp210x module
+  package:
+    name: linux-modules-extra-{{ ansible_kernel }}
+- name: Add the cp210x module
+  community.general.modprobe:
+    name: cp210x
+    state: present
+    persistent: present
