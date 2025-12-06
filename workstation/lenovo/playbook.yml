@@ -1,0 +1,22 @@
+---
+- hosts: all
+  become: true
+  #connection: local
+  vars:
+  tasks:
+    - name: Enable the ppa:obsproject/obs-studio repo on Ubuntu systems
+      apt_repository:
+        repo: ppa:obsproject/obs-studio
+        update_cache: true
+    - name: Update apt
+      apt: update_cache=yes
+
+    - name: Install required packages
+      package:
+        name:
+          - tmux
+          - vim
+          - obs-studio=30.0*
+          - libmfx1
+          - libmfx-tools
+        state: present

@@ -1,0 +1,5 @@
+all:
+  hosts:
+    lenovo:
+      ansible_host: marcin-Lenovo-B50-80.local
+      ansible_user: marcin
