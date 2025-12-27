@@ -1,5 +1,17 @@
 apiVersion: v1
 data:
+  custom_alerts: |
+    groups:
+    - name: CustomAlerts
+      rules:
+        -  alert: NodeKernelReleaseChanged
+           expr: 'sum(node_uname_info) by (instance, release) unless sum(node_uname_info offset 1h) by (instance, release)'
+           for: 0m
+           labels:
+             severity: warning
+           annotations:
+             summary: The kernel version has been changed (instance {{ $labels.instance }})
+             description: "The kernel version has been changed {{ $labels.instance }} new kernel {{ $labels.release }}\n  LABELS = {{ $labels }}"
   smartctl_exporter_alerts: |
     groups:
     - name: SmartctlExporter
@@ -923,6 +935,7 @@ data:
       - /etc/prometheus/mysqld_exporter.yml
       - /etc/prometheus/smartctl_exporter.yml
       - /etc/prometheus/embedded_exporter.yml
+      - /etc/prometheus/custom_alerts.yml
 
     remote_write:
       - url: https://prometheus-prod-01-eu-west-0.grafana.net/api/prom/push

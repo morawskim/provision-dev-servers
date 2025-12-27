@@ -34,6 +34,8 @@ spec:
               path: smartctl_exporter.yml
             - key: embedded_exporter_alerts
               path: embedded_exporter.yml
+            - key: custom_alerts
+              path: custom_alerts.yml
       - name: secrets
         secret:
           secretName: prometheus
@@ -69,6 +71,9 @@ spec:
           - name: config
             mountPath: /etc/prometheus/embedded_exporter.yml
             subPath: "embedded_exporter.yml"
+          - name: config
+            mountPath: /etc/prometheus/custom_alerts.yml
+            subPath: "custom_alerts.yml"
           - name: secrets
             mountPath: /secrets
             readOnly: true
