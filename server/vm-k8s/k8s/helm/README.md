@@ -66,6 +66,18 @@ Return to parent directory (where is stored this README) and install pihole `hel
 
 To upgrade replace install with upgrade command.
 
+## Knative
+
+Add chart repository `helm repo add knative-operator https://knative.github.io/operator`
+
+Go to directory `cd ./charts` and run download chart `helm pull knative-operator/knative-operator --untar`
+
+Return to parent directory (where is stored this README) and install pihole `helm install -n knative-operator --create-namespace knative-operator ./charts/knative-operator`
+
+To upgrade replace install with upgrade command.
+
+To show chart configuration `helm show values -n knative-operator knative-operator/knative-operator`
+
 ## Troubleshooting
 
 ### Dump K8s resources
