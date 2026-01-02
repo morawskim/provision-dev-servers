@@ -11,6 +11,7 @@ locals {
     jsonplaceholder: "noip.morawskim.pl.",
     matomo: "noip.morawskim.pl.",
     demo: "noip.morawskim.pl.",
+    knative-serving: "noip.morawskim.pl.",
     "index": "noip.morawskim.pl.",
     memos: "noip.morawskim.pl.",
     rss-bridge: "noip.morawskim.pl.",
@@ -142,6 +143,14 @@ resource "ovh_domain_zone_record" "internal" {
 resource "ovh_domain_zone_record" "demo" {
   zone      = "morawskim.pl"
   subdomain = "*.demo"
+  fieldtype = "CNAME"
+  ttl       = "60"
+  target    = "noip.morawskim.pl."
+}
+
+resource "ovh_domain_zone_record" "knative_serving" {
+  zone      = "morawskim.pl"
+  subdomain = "*.knative-serving"
   fieldtype = "CNAME"
   ttl       = "60"
   target    = "noip.morawskim.pl."
