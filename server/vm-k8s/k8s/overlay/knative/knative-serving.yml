@@ -27,3 +27,6 @@ spec:
       "morawskim.pl": ""
     network:
       ingress-class: "kourier.ingress.networking.knative.dev"
+    observability:
+      metrics-protocol: prometheus
+      request-metrics-protocol: prometheus

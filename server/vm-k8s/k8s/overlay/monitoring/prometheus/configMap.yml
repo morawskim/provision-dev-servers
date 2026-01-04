@@ -930,6 +930,32 @@ data:
         static_configs:
           - targets: ['alertmanager.monitoring']
 
+      # knative monitoring
+      - job_name: knative-activator
+        metrics_path: /metrics
+        static_configs:
+          - targets: ['activator-service.knative-serving.svc.cluster.local:9090']
+      - job_name: knative-autoscaler
+        metrics_path: /metrics
+        static_configs:
+          - targets: ['autoscaler.knative-serving.svc.cluster.local:9090']
+      - job_name: knative-autoscaler-hpa
+        metrics_path: /metrics
+        static_configs:
+          - targets: ['autoscaler-hpa.knative-serving.svc.cluster.local:9090']
+      - job_name: knative-controller
+        metrics_path: /metrics
+        static_configs:
+          - targets: ['controller.knative-serving.svc.cluster.local:9090']
+      - job_name: knative-net-kourier-controller
+        metrics_path: /metrics
+        static_configs:
+          - targets: ['net-kourier-controller.knative-serving.svc.cluster.local:9090']
+      - job_name: knative-webhook
+        metrics_path: /metrics
+        static_configs:
+          - targets: ['webhook.knative-serving.svc.cluster.local:9090']
+
     rule_files:
       - /etc/prometheus/node_exporter.yml
       - /etc/prometheus/mysqld_exporter.yml
