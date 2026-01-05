@@ -56,3 +56,15 @@ resource "grafana_dashboard" "alertmanager" {
   folder = grafana_folder.saas.id
   overwrite = true
 }
+
+resource "grafana_dashboard" "knative_serving_efficiency" {
+  config_json = replace(file("dashboard/knative-serving-efficiency.json"), "$${datasource}", local.prometheus_uid)
+  folder = grafana_folder.saas.id
+  overwrite = true
+}
+
+resource "grafana_dashboard" "knative_serving_reconciler" {
+  config_json = replace(file("dashboard/knative-serving-reconciler.json"), "$${datasource}", local.prometheus_uid)
+  folder = grafana_folder.saas.id
+  overwrite = true
+}
