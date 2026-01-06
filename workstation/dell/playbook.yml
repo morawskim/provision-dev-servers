@@ -151,6 +151,7 @@
           - apache2-utils
           - mysqltuner
           - delve
+          - jsonnet # eg. build grafana dashbord for knative
         state: present
     - name: Install hardware packages
       package:
