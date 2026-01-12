@@ -46,6 +46,11 @@ tlsStore:
     defaultCertificate:
       secretName: certs
 
+metrics:
+  prometheus:
+    service:
+      enabled: true
+
 deployment:
   initContainers:
     - name: volume-permissions

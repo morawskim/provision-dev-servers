@@ -929,6 +929,10 @@ data:
         metrics_path: /metrics
         static_configs:
           - targets: ['alertmanager.monitoring']
+      - job_name: traefik
+        metrics_path: /metrics
+        static_configs:
+          - targets: ['traefik-metrics.traefik:9100']
 
       # knative monitoring
       - job_name: knative-activator
