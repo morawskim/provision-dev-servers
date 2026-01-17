@@ -76,3 +76,10 @@ resource "grafana_dashboard" "traefik" {
   folder = grafana_folder.saas.id
   overwrite = true
 }
+
+# https://grafana.com/grafana/dashboards/14279-cronjobs/
+resource "grafana_dashboard" "k8s_cronjobs" {
+  config_json = replace(file("dashboard/k8s-cronjobs.json"), "$${DS_PROMETHEUS}", local.prometheus_uid)
+  folder = grafana_folder.saas.id
+  overwrite = true
+}
