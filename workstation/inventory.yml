@@ -3,3 +3,7 @@ all:
     lenovo:
       ansible_host: marcin-Lenovo-B50-80.local
       ansible_user: marcin
+    gmktec:
+      ansible_host: ai-gmktec.local
+      #ansible_host: 192.168.33.23
+      ansible_user: marcin

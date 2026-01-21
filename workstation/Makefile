@@ -5,3 +5,7 @@ ping:
 .PHONY: lenovo
 lenovo:
 	ansible-playbook --ask-pass --ask-become-pass -i ./inventory.yml --limit lenovo lenovo/playbook.yml
+
+.PHONY: gmktec
+gmktec:
+	ansible-playbook --ask-pass --ask-become-pass -i ./inventory.yml --limit gmktec gmktec/playbook.yml

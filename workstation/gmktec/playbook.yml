@@ -1,0 +1,61 @@
+---
+- hosts: all
+  become: true
+  #connection: local
+  vars:
+    linux_kernel_package_name: linux-image-6.14.0-1017-oem
+    amdgpu_install_url: https://repo.radeon.com/amdgpu-install/7.1.1/ubuntu/noble/amdgpu-install_7.1.1.70101-1_all.deb
+    amdgpu_sha256_checksum: 2c746ffc31a5beb441b9c8a7078b5ae0404e9e8fb74f95906565b9e2fa235877
+  tasks:
+    - name: Update cache and upgrade
+      apt:
+        update_cache: yes
+        upgrade: yes
+
+    - name: Install required packages
+      package:
+        name:
+          - tmux
+          - vim
+          - avahi-daemon
+        state: present
+    - name: Start avahi-daemon
+      service: name=avahi-daemon state=started enabled=yes
+
+    # - name: is radeontop exists
+    #   stat:
+    #     path: /usr/bin/radeontop
+    #   register: radeontop_file
+    - name: Install AMD ROCm
+      # when: not radeontop_file.stat.exists
+      block:
+        - name: Install 6.14 OEM kernel
+          package:
+            name: "{{ linux_kernel_package_name }}"
+          register: oem_kernel
+        - name: Reboot
+          reboot:
+            reboot_timeout: 300
+          when: oem_kernel.changed
+        - name: Download amdgpu deb package
+          get_url:
+            url: "{{ amdgpu_install_url }}"
+            dest: /tmp/amdgpu-install.deb
+            mode: '0644'
+            checksum: sha256:{{ amdgpu_sha256_checksum }}
+        - name: Install amdgpu deb package
+          apt:
+            deb: /tmp/amdgpu-install.deb
+        - name: Set up ROCm usecase
+          command: amdgpu-install -y --usecase=rocm --no-dkms
+          args:
+            creates: /usr/bin/rocminfo
+        - name: Append groups to user
+          user:
+            name: marcin
+            groups: render,video
+            append: yes
+          register: user_groups
+        - name: Install radeontop
+          package:
+            name: radeontop
