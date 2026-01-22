@@ -59,3 +59,73 @@
         - name: Install radeontop
           package:
             name: radeontop
+    - name: Install ollama
+      block:
+        - name: Install ollama
+          unarchive:
+            src: https://ollama.com/download/ollama-linux-amd64.tar.zst
+            dest: /usr/
+            remote_src: yes
+            creates: /usr/bin/ollama
+        - name: Install ollama AMD ROCm
+          unarchive:
+            src: https://ollama.com/download/ollama-linux-amd64-rocm.tar.zst
+            dest: /usr/
+            remote_src: yes
+            creates: /usr/lib/ollama/rocm
+        - name: Create group "ollama" exists
+          group:
+            name: ollama
+            state: present
+            system: true
+        - name: Create a user ollama
+          user:
+            name: ollama
+            shell: /bin/false
+            system: true
+            create_home: yes
+            home: /usr/share/ollama
+            group: ollama
+            groups: render,video
+            append: yes
+        - name: Append ollama group to user
+          user:
+            name: marcin
+            groups: ollama
+            append: yes
+        - name: Create systemd service for ollama
+          copy:
+            dest: /etc/systemd/system/ollama.service
+            content: |
+              [Unit]
+              Description=Ollama Service
+              After=network-online.target
+
+              [Service]
+              ExecStart=/usr/bin/ollama serve
+              User=ollama
+              Group=ollama
+              Restart=always
+              RestartSec=3
+              Environment="PATH=$PATH"
+
+              [Install]
+              WantedBy=multi-user.target
+            owner: root
+            group: root
+            mode: '0644'
+          register: systemd_ollama
+        - name: Reload systemd
+          systemd:
+            daemon_reload: yes
+          when: systemd_ollama.changed
+        - name: Start and enable service ollama
+          service:
+            name: ollama
+            state: started
+            enabled: yes
+        - name: Pull Ollama models
+          command: ollama pull {{ item }}
+          loop:
+            - gpt-oss:20b
+            - llama3.1:70b
