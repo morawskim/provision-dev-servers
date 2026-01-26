@@ -18,9 +18,20 @@
           - tmux
           - vim
           - avahi-daemon
+          - podman
         state: present
     - name: Start avahi-daemon
       service: name=avahi-daemon state=started enabled=yes
+    - name: Ensure directories
+      file:
+        path: "{{ item.path }}"
+        state: directory
+        owner: "{{ item.owner }}"
+        group: "{{ item.group }}"
+        mode: "{{ item.mode }}"
+      loop:
+        - { path: "/srv", owner: "root", group: "root", mode: "0755" }
+        - { path: "/srv/docker", owner: "root", group: "root", mode: "0755" }
 
     # - name: is radeontop exists
     #   stat:
@@ -108,6 +119,7 @@
               Restart=always
               RestartSec=3
               Environment="PATH=$PATH"
+              Environment="OLLAMA_HOST=0.0.0.0"
 
               [Install]
               WantedBy=multi-user.target
@@ -129,3 +141,62 @@
           loop:
             - gpt-oss:20b
             - llama3.1:70b
+    - name: Install Open WebUI
+      block:
+        - name: Ensure user open-webui exists
+          user:
+            name: open-webui
+            shell: /bin/false
+            system: true
+            create_home: no
+        - name: Get UID of open-webui
+          getent:
+            database: passwd
+            key: open-webui
+          register: openwebui_info
+        - name: Ensure /srv/docker/open-webui exists
+          file:
+            path: /srv/docker/open-webui
+            state: directory
+            owner: marcin
+            group: root
+            mode: "0750"
+        - name: Run Open-WebUI container
+          # become: false
+          # become_user: open-webui
+          containers.podman.podman_container:
+            name: open-webui
+            image: ghcr.io/open-webui/open-webui:v0.7.2-slim
+            state: started
+            detach: true
+            publish:
+              - "3000:8080"
+            add_hosts:
+              "host.docker.internal": "host-gateway"
+            volume:
+              - "/srv/docker/open-webui:/app/backend/data"
+            env:
+              OLLAMA_BASE_URL: http://host.docker.internal:11434
+        - name: Check if open-webui systemd unit exists
+          stat:
+            path: /etc/systemd/system/open-webui.service
+          register: openwebui_service_file
+        - name: Generate systemd unit from podman
+          # become: false
+          command: podman generate systemd --name open-webui --new
+          register: openwebui_unit
+          #when: not openwebui_service_file.stat.exists
+        - name: Install systemd service
+          copy:
+            dest: /etc/systemd/system/open-webui.service
+            content: "{{ openwebui_unit.stdout }}"
+            owner: root
+            group: root
+            mode: "0644"
+          when: openwebui_unit.changed
+        - name: Enable Open-WebUI
+          systemd_service:
+            name: open-webui
+            enabled: true
+            state: started
+            daemon_reload: true
