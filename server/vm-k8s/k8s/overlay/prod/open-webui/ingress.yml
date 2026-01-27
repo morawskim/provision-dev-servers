@@ -1,0 +1,19 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: open-webui
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`chat.morawskim.pl`)
+      services:
+        - kind: Service
+          name: open-webui-external
+          port: 3000
+      middlewares:
+      #   - name: openid-auth
+        - name: add-x-forwarded-proto
+  tls:
+    certResolver: myresolver

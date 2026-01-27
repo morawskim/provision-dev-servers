@@ -28,6 +28,8 @@ resources:
 - ../../base/tapo-metrics
 - clair/sealedSecret.yml
 - clair/ingress.yml
+- open-webui/service.yml
+- open-webui/ingress.yml
 - ../../base/noip
 - ../../base/ots
 - ../../base/jsonplaceholder
