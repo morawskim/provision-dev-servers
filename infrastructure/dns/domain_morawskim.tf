@@ -16,6 +16,7 @@ locals {
     memos: "noip.morawskim.pl.",
     rss-bridge: "noip.morawskim.pl.",
     ha: "noip.morawskim.pl.",
+    chat: "noip.morawskim.pl.",
   }
   ovh_ipv4 = "94.23.89.116"
   ovh_ipv6 = "2001:41d0:301:5::100"
