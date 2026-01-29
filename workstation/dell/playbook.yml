@@ -160,6 +160,10 @@
           - yubikey-manager
           - opensc-pkcs11
           - libpam-u2f
+          - lm-sensors # check CPU temperature
+          - pipewire # bluetooth headset
+          - pipewire-audio-client-libraries
+          - pulseaudio-utils # for command pactl info
         state: present
     - name: Add docker to the user's groups
       user:
