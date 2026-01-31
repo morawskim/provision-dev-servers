@@ -26,6 +26,7 @@ resources:
 - memos/ingress.yml
 - rss-bridge/configMap.yml
 - ../../base/tapo-metrics
+- homeassistant/ingress.yml
 - clair/sealedSecret.yml
 - clair/ingress.yml
 - open-webui/service.yml
