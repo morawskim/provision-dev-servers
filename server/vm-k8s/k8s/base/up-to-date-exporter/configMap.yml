@@ -8,6 +8,9 @@ data:
       Luzifer/ots: 1.11.0
       traefik/traefik-helm-chart: 30.0.2
       fluent/helm-charts: 0.47.5
+      knative/operator: 1.20.1
+      google/cadvisor: 0.55.1
+      open-webui/open-webui: 0.7.2
     docker_images:
       library/php: 8.2.0
       morawskim/htrace.sh: 1.1.7
