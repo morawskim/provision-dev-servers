@@ -11,6 +11,7 @@ data:
       knative/operator: 1.20.1
       google/cadvisor: 0.55.1
       open-webui/open-webui: 0.7.2
+      home-assistant/core: 2026.1.0
     docker_images:
       library/php: 8.2.0
       morawskim/htrace.sh: 1.1.7
