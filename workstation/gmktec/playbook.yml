@@ -11,7 +11,22 @@
       apt:
         update_cache: yes
         upgrade: yes
-
+    - name: Configure eno1 interface
+      copy:
+        dest: /etc/netplan/99-custom.yaml
+        content: |
+          network:
+            version: 2
+            ethernets:
+              eno1:
+                wakeonlan: true
+                addresses:
+                  - 192.168.33.201/24
+                nameservers:
+                  addresses: [9.9.9.9, 149.112.112.112]
+        owner: root
+        group: root
+        mode: "0600"
     - name: Install required packages
       package:
         name:
