@@ -77,6 +77,22 @@ spec:
         envFrom:
         - secretRef:
             name: freshrss-mysql
+        livenessProbe:
+          exec:
+            command:
+            - sh
+            - -c
+            - "mysqladmin ping -h 127.0.0.1 -uroot -p$MYSQL_ROOT_PASSWORD"
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          exec:
+            command:
+            - sh
+            - -c
+            - "mysql -h 127.0.0.1 -uroot -p$MYSQL_ROOT_PASSWORD -e 'SELECT 1;'"
+          initialDelaySeconds: 10
+          periodSeconds: 5
   volumeClaimTemplates:
   - metadata:
       name: mysql
