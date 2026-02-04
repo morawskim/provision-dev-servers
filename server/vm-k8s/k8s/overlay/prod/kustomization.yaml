@@ -1,8 +1,6 @@
 namespace: prod
 
 resources:
-- tapo/sealed-secret.yml
-- tapo/ingress.yml
 - webpage2kindle/sealed-secret.yml
 - noip/sealed-secret.yml
 - ddns-updater/sealed-secret.yml
@@ -25,7 +23,6 @@ resources:
 - resnet101-image-labels/ingress.yml
 - memos/ingress.yml
 - rss-bridge/configMap.yml
-- ../../base/tapo-metrics
 - homeassistant/ingress.yml
 - clair/sealedSecret.yml
 - clair/ingress.yml
