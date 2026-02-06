@@ -1,0 +1,11 @@
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: grafana-pdc-agent
+  namespace: grafana-pdc
+data:
+  token: {{GRAFANA_CLOUD_PDC_SIGNING_TOKEN | b64encode}}
+  hosted-grafana-id: {{GRAFANA_CLOUD_HOSTED_GRAFANA_ID | b64encode }}
+  cluster: {{GRAFANA_CLOUD_PDC_CLUSTER | b64encode }}
+type: Opaque

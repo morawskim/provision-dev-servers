@@ -1,0 +1,30 @@
+namespace: grafana-pdc
+
+resources:
+- ./namespace.yml
+- ./sealedSecret.yml
+- ../../base/grafana-pdc
+patches:
+  - target:
+      kind: Deployment
+      name: grafana-pdc-agent
+    patch: |
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: grafana-pdc-agent
+      spec:
+        template:
+          spec:
+            containers:
+              - name: grafana-pdc-agent
+                resources:
+                  limits:
+                    memory: 64Mi
+                    cpu: "500m"
+                  requests:
+                    memory: 32Mi
+                    cpu: "100m"
+
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
