@@ -30,6 +30,12 @@ spec:
         volumeMounts:
           - name: config
             mountPath: /etc/mysqld-exporter
+        env:
+        - name: FRESH_RSS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: FRESH_RSS_PASSWORD
+              name: mysqld-exporter
         args:
           - --config.my-cnf
           - /etc/mysqld-exporter/.my.cnf

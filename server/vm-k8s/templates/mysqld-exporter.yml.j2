@@ -1,5 +1,7 @@
 apiVersion: v1
 data:
+  # see https://github.com/prometheus/mysqld_exporter/issues/1004
+  FRESH_RSS_PASSWORD: {{FRESHRSS_MYSQL_ROOT_PASSWORD | b64encode}}
   .my.cnf: |
 {% set encoded_content %}
 [client.nextcloud]
@@ -11,6 +13,9 @@ password = {{ TTRRSS_MYSQL_ROOT_PASSWORD }}
 [client.matomo]
 user = root
 password = {{ MATOMO_DB_ROOT_PASSWORD }}
+[client.freshrss]
+user = root
+password = '$FRESH_RSS_PASSWORD'
 {% endset %}
     {{ encoded_content | b64encode }}
 kind: Secret

@@ -921,6 +921,14 @@ data:
           target: ["matomo-mysql.prod:3306"]
         static_configs:
           - targets: ['mysqld-exporter.monitoring']
+      - job_name: mysqld-exporter-freshrss
+        metrics_path: /probe
+        params:
+          auth_module: ["client.freshrss"]
+          target: ["freshrss-mysql.prod:3306"]
+        static_configs:
+          - targets: ['mysqld-exporter.monitoring']
+
       - job_name: cloudwatch-exporter
         metrics_path: /metrics
         static_configs:
