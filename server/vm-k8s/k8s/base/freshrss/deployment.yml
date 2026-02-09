@@ -60,6 +60,12 @@ spec:
         image: mysql:8.4
         args:
           - --mysql-native-password=ON
+          - --innodb-buffer-pool-size=32M
+          - --innodb-buffer-pool-chunk-size=32M
+          - --key-buffer-size=1M
+          - --performance-schema=OFF
+          - --max-connections=5
+          - --binlog-expire-logs-seconds=43200
         ports:
         - containerPort: 3306
           name: mysql
@@ -67,10 +73,10 @@ spec:
         - name: mysql
           mountPath: /var/lib/mysql
         resources:
-          # requests:
-          #   memory: 128M
+          requests:
+            memory: 320M
           limits:
-            memory: 480M
+            memory: 320M
         env:
         - name: TZ
           value: Europe/Warsaw
