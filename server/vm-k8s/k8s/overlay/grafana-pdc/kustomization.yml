@@ -3,6 +3,7 @@ namespace: grafana-pdc
 resources:
 - ./namespace.yml
 - ./sealedSecret.yml
+- ./grafana-pdc/networkPolicy.yml
 - ../../base/grafana-pdc
 patches:
   - target:
