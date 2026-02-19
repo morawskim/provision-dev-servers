@@ -29,6 +29,7 @@ resources:
 - open-webui/service.yml
 - open-webui/ingress.yml
 - freshrss/sealedSecret.yml
+- freshrss/cronJob.yml
 - ../../base/noip
 - ../../base/ots
 - ../../base/jsonplaceholder
