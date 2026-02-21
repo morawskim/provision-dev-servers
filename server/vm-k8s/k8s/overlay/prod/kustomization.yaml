@@ -30,6 +30,8 @@ resources:
 - open-webui/ingress.yml
 - freshrss/sealedSecret.yml
 - freshrss/cronJob.yml
+- donetick/sealedSecret.yml
+- donetick/ingress.yml
 - ../../base/noip
 - ../../base/ots
 - ../../base/jsonplaceholder
@@ -53,6 +55,7 @@ resources:
 - ../../base/homeassistant
 - ../../base/clair
 - ../../base/freshrss
+- ../../base/donetick
 
 configMapGenerator:
 - literals:

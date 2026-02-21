@@ -1,0 +1,8 @@
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: donetick
+  namespace: prod
+data:
+  DT_JWT_SECRET: {{ DONETICK_JWT_SECRET | b64encode}}

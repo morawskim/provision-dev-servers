@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: donetick
+  name: donetick
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: donetick
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: donetick
+    spec:
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: donetick
+      containers:
+      - image: donetick/donetick:v0.1.74
+        name: donetick
+        env:
+        - name: DT_ENV
+          value: "selfhosted"
+        - name: DT_SQLITE_PATH
+          value: "/donetick-data/donetick.db"
+        - name: TZ
+          value: "Europe/Warsaw"
+        envFrom:
+        - secretRef:
+            name: donetick
+        volumeMounts:
+        - name: data
+          mountPath: /donetick-data
+        resources:
+          requests:
+            memory: 45Mi
+          limits:
+            memory: 64Mi
+status: {}
+#DT_SERVER_CORS_ALLOW_ORIGINS=http://localhost:5173,http://localhost:7926,https://localhost,capacitor://localhost
