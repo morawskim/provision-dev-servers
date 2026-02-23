@@ -152,6 +152,8 @@
           - mysqltuner
           - delve
           - jsonnet # eg. build grafana dashbord for knative
+          - percona-toolkit
+          - goaccess
         state: present
     - name: Install hardware packages
       package:
