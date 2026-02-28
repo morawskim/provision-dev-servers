@@ -1,0 +1,33 @@
+---
+- hosts: localhost
+  tasks:
+    - name: Search for freshrss pod
+      kubernetes.core.k8s_info:
+        kind: Pod
+        label_selectors:
+          - app=freshrss
+      register: pod
+    - name: "Extract pod name"
+      set_fact:
+        podName: "{{pod.resources[0].metadata.name}}"
+    - name: Display pod name
+      debug:
+        msg: "{{podName}}"
+    - name: Fetch extension
+      kubernetes.core.k8s_exec:
+        namespace: prod
+        pod: "{{podName}}"
+        command: sh -c "curl -L -s -o '{{item.file}}' '{{item.url}}'"
+      loop:
+      - url: https://github.com/ravenscroftj/freshrss-flaresolverr-extension/archive/refs/heads/main.tar.gz
+        file: /tmp/flaresolverr-extension.tar.gz
+    - name: Extract extension
+      kubernetes.core.k8s_exec:
+        namespace: prod
+        pod: "{{podName}}"
+        command: sh -c "mkdir -p /var/www/FreshRSS/extensions/{{item.name}} && tar -xf {{item.file}} -C /var/www/FreshRSS/extensions/{{item.name}} --strip-components 1"
+      with_items:
+      - file: /tmp/flaresolverr-extension.tar.gz
+        name: flaresolverr
+
+# python3-kubernetes

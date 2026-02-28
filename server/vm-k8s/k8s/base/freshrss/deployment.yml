@@ -36,6 +36,9 @@ spec:
           - name: freshrss-extensions
             mountPath: /var/www/FreshRSS/extensions
         resources: {}
+      - image: ghcr.io/flaresolverr/flaresolverr:latest
+        name: flaresolverr
+        resources: {}
 status: {}
 ---
 apiVersion: apps/v1
