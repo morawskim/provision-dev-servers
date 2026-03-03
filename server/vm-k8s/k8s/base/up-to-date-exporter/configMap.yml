@@ -17,6 +17,7 @@ data:
       morawskim/htrace.sh: 1.1.7
       library/redis: 7.0.0
       dgtlmoon/changedetection.io: 0.48.05
+      donetick/donetick: 0.1.74
     github_tags:
       stasiu20/ssorder: 2.21.0
       morawskim/faker-images: 0.8.0
