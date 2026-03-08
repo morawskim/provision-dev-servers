@@ -8,7 +8,6 @@ resources:
 - gitlab-ci-pipelines-exporter/sealed-secret.yml
 - gitlab-ci-pipelines-exporter/ingress.yml
 - maddy/sealed-secret.yml
-- ttrss/sealed-secret.yml
 - nextcloud/sealed-secret.yml
 - up-to-date-exporter/ingress.yml
 - price-tracker/config-sealed-secret.yml
@@ -40,7 +39,6 @@ resources:
 - ../../base/ddns-updater
 - ../../base/gitlab-ci-pipelines-exporter
 - ../../base/maddy
-- ../../base/ttrss
 - ../../base/traefik-middlewares
 - ../../base/nextcloud
 - ../../base/price-tracker
@@ -125,13 +123,6 @@ patches:
   target:
     kind: IngressRoute
     name: roundcube
-- patch: |-
-    - op: replace
-      path: /spec/routes/0/match
-      value: Host(`ttrss.morawskim.pl`)
-  target:
-    kind: IngressRoute
-    name: ttrss
 - patch: |-
     - op: replace
       path: /spec/routes/0/match
