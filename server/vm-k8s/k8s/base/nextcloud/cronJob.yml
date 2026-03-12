@@ -44,7 +44,7 @@ spec:
                   key: MYSQL_DATABASE
             envFrom:
             - secretRef:
-                name: backup-ttrss-restic
+                name: backup-restic
 status: {}
 ---
 apiVersion: batch/v1
@@ -101,7 +101,7 @@ spec:
                   key: MYSQL_DATABASE
             envFrom:
             - secretRef:
-                name: backup-ttrss-restic
+                name: backup-restic
 status: {}
 ---
 apiVersion: batch/v1
@@ -138,4 +138,4 @@ spec:
               value: eu-central-1
             envFrom:
             - secretRef:
-                name: backup-ttrss-restic
+                name: backup-restic

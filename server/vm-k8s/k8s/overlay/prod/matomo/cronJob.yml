@@ -44,5 +44,5 @@ spec:
                   key: MYSQL_DATABASE
             envFrom:
             - secretRef:
-                name: backup-ttrss-restic
+                name: backup-restic
 status: {}
