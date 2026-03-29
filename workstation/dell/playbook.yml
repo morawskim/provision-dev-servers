@@ -154,6 +154,7 @@
           - jsonnet # eg. build grafana dashbord for knative
           - percona-toolkit
           - goaccess
+          - mkcert
         state: present
     - name: Install hardware packages
       package:
@@ -166,6 +167,7 @@
           - pipewire # bluetooth headset
           - pipewire-audio-client-libraries
           - pulseaudio-utils # for command pactl info
+          - v4l2loopback-dkms
         state: present
     - name: Add docker to the user's groups
       user:
@@ -230,6 +232,10 @@
           - flutter
           - android-studio
         classic: yes
+        state: present
+    - name: Install cursor
+      apt:
+        deb: https://api2.cursor.sh/updates/download/golden/linux-x64-deb/cursor/2.6
         state: present
     - name: Install wazuh-agent
       apt:
