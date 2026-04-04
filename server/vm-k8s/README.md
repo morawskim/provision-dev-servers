@@ -34,3 +34,41 @@ Finally you can check the decoded value of secret from cluster - `kubectl get se
 ## Tips
 
 Many services are exposed by NodePort. To list all used ports use command `kubectl get svc --all-namespaces -o go-template='{{range .items}}{{range.spec.ports}}{{if .nodePort}}{{.nodePort}}{{"\n"}}{{end}}{{end}}{{end}}'`
+
+## Disaster recovery
+
+### FreshRSS
+
+```
+version: '3.4'
+services:
+  freshrss:
+    image: freshrss/freshrss:latest
+    ports:
+      - "8080:80"
+    environment:
+      - TZ=Europe/Warsaw
+      - CRON_MIN=*/20
+      - FRESHRSS_DB_TYPE=mysql
+      - FRESHRSS_DB_HOST=mysql
+      - FRESHRSS_DB_USER=freshrss
+      - FRESHRSS_DB_PASSWORD=freshrss_password
+      - FRESHRSS_DB_NAME=freshrss
+    depends_on:
+      - mysql
+  mysql:
+    image: mysql:8.0
+    environment:
+      - MYSQL_ROOT_PASSWORD=root_password
+      - MYSQL_DATABASE=freshrss
+      - MYSQL_USER=freshrss
+      - MYSQL_PASSWORD=freshrss_password
+    volumes:
+      - mysql_data:/var/lib/mysql
+    command: --default-authentication-plugin=mysql_native_password
+volumes:
+  mysql_data:
+```
+
+Restore database:
+`zcat freshrss.sql.gz | docker exec -i 31ad304bd53d /usr/bin/mysql -ufreshrss --password=freshrss_password -Dfreshrss`
