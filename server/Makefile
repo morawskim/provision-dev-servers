@@ -17,6 +17,10 @@ define macro-deploy-wazuh
 	ANSIBLE_ROLES_PATH=$(PWD)/ansible/roles ansible-playbook --inventory $(1) --ask-vault-pass vm-wazuh/playbook.yml
 endef
 
+define macro-deploy-srv1
+	ANSIBLE_ROLES_PATH=$(PWD)/ansible/roles ansible-playbook --inventory $(1) --ask-vault-pass --ask-become-pass srv1/playbook.yml
+endef
+
 setup-ansible-modules:
 	test -d ansible || mkdir ansible
 	mkdir -p ansible/{modules,roles}
@@ -36,6 +40,9 @@ deploy-wazuh: setup-ansible-modules
 
 deploy-k8s: setup-ansible-modules
 	$(call macro-deploy-k8s, "./inventory.ini")
+
+deploy-srv1: setup-ansible-modules
+	$(call macro-deploy-srv1, "./inventory.ini")
 
 deploy-nuc-vagrant: setup-ansible-modules
 	$(call macro-deploy-nuc, "./inventory-vagrant.ini")
