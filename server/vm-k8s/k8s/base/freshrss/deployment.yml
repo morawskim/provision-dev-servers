@@ -23,7 +23,7 @@ spec:
           persistentVolumeClaim:
             claimName: freshrss-extensions
       containers:
-      - image: freshrss/freshrss:1.28.0
+      - image: freshrss/freshrss:1.29.0
         name: freshrss
         env:
         - name: TZ
