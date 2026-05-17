@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: openai-exporter
+  name: openai-exporter
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: openai-exporter
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: openai-exporter
+    spec:
+      containers:
+      - image: foxdalas/openai-exporter:v0.0.11
+        imagePullPolicy: Always
+        name: exporter
+        envFrom:
+        - secretRef:
+            name: openai-exporter
+        args:
+          - -scrape.interval
+          - 60m
+          #- -log.level debug
+        resources:
+          requests:
+            memory: 16Mi
+          limits:
+            memory: 24Mi
+status: {}

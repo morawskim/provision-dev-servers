@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: openai-exporter
+spec:
+  selector:
+    app: openai-exporter
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: 9185
+      protocol: TCP

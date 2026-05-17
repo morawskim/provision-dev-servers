@@ -13,6 +13,8 @@ resources:
 - ./cloudwatchExporterSealedSecret.yml
 - ./grafanacloudSealedSecret.yml
 - ../../base/opentelemetry-collector
+- ../../base/openai-exporter
 - ./opentelemetryCollectorSealedSecret.yml
+- ./exporters/openaiSealedSecret.yml
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization

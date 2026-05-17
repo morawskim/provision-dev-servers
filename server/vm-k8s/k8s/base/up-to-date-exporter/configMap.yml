@@ -13,6 +13,7 @@ data:
       open-webui/open-webui: 0.7.2
       home-assistant/core: 2026.1.0
       FreshRSS/FreshRSS: 1.29.0
+      foxdalas/openai-exporter: 0.0.14
     docker_images:
       library/php: 8.2.0
       morawskim/htrace.sh: 1.1.7
