@@ -16,7 +16,7 @@ spec:
         app: openai-exporter
     spec:
       containers:
-      - image: foxdalas/openai-exporter:v0.0.11
+      - image: foxdalas/openai-exporter:v0.0.16
         imagePullPolicy: Always
         name: exporter
         envFrom:
