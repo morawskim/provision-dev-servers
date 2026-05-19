@@ -141,6 +141,12 @@ spec:
         envFrom:
         - secretRef:
             name: webpage2kindle-node
+        command:
+            - node
+        args:
+            # - --import
+            # - /app/instrument.mjs
+            - /app/microservice.js
         resources: {}
 ---
 apiVersion: apps/v1
