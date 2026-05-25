@@ -23,8 +23,6 @@ resources:
 - memos/ingress.yml
 - rss-bridge/configMap.yml
 - homeassistant/ingress.yml
-- clair/sealedSecret.yml
-- clair/ingress.yml
 - open-webui/service.yml
 - open-webui/ingress.yml
 - freshrss/sealedSecret.yml
@@ -52,7 +50,6 @@ resources:
 - ../../base/memos
 - ../../base/rss-bridge
 - ../../base/homeassistant
-- ../../base/clair
 - ../../base/freshrss
 - ../../base/donetick
 
