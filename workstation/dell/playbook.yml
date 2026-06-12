@@ -18,6 +18,8 @@
     kube_prompt_version: v1.0.11
     # see https://github.com/bitnami-labs/sealed-secrets/releases
     sealed_secrets_version: v0.26.3
+    # see https://github.com/lima-vm/lima/releases
+    lima_version: v2.1.1
     # see https://github.com/mithrandie/csvq/releases
     csvq_version: v1.18.1
     websocat_version: 1.13.0
@@ -305,6 +307,14 @@
         dest: /usr/local/bin/
         remote_src: yes
         creates: /kube-prompt
+
+    - name: Install lima
+      unarchive:
+        src: https://github.com/lima-vm/lima/releases/download/v{{ lima_version | replace('v', '') }}/lima-{{ lima_version | replace('v', '') }}-Linux-x86_64.tar.gz
+        dest: /usr/local/
+        remote_src: yes
+        creates: /bin/limactl
+
     - name: Install teller
       unarchive:
         src: https://github.com/tellerops/teller/releases/download/v{{ teller_version | replace('v', '') }}/teller-x86_64-linux.tar.xz
