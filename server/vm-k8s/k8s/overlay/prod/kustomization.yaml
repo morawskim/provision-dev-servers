@@ -63,6 +63,7 @@ configMapGenerator:
   - OTEL_EXPORTER_OTLP_PROTOCOL=http/protobuf
   - OTEL_EXPORTER_OTLP_ENDPOINT=http://opentelemetry-collector.monitoring:4318
   - OTEL_SERVICE_NAME=webpage2kindle
+  - OTEL_PHP_INSTRUMENTATION_PDO_DISTRIBUTE_STATEMENT_TO_LINKED_SPANS=true
   name: webpage2kindle-php-config
 - literals:
   - OTEL_EXPORTER_OTLP_PROTOCOL=http/protobuf
