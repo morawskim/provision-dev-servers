@@ -69,10 +69,6 @@ configMapGenerator:
   - OTEL_EXPORTER_OTLP_ENDPOINT=http://opentelemetry-collector.monitoring:4318
   - OTEL_SERVICE_NAME=webpage2kindle-go
   name: webpage2kindle-go-config
-- behavior: merge
-  literals:
-  - TTRSS_SELF_URL_PATH=https://ttrss.morawskim.pl
-  name: ttrss
 
 # images:
 #    - name: registry.gitlab.com/morawskim/webpage2kindle/symfony-app
