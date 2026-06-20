@@ -10,7 +10,7 @@ data:
       fluent/helm-charts: 0.47.5
       knative/operator: 1.20.1
       google/cadvisor: 0.55.1
-      open-webui/open-webui: 0.7.2
+      open-webui/open-webui: 0.9.6
       home-assistant/core: 2026.1.0
       FreshRSS/FreshRSS: 1.29.0
       foxdalas/openai-exporter: 0.0.16
