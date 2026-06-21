@@ -1,0 +1,9 @@
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: euro-office
+  namespace: prod
+data:
+  JWT_SECRET: {{EURO_OFFICE_JWT_SECRET | b64encode}}
+type: Opaque

@@ -1,0 +1,36 @@
+---
+- hosts: localhost
+  tasks:
+    - name: Search for euro-office pod
+      kubernetes.core.k8s_info:
+        kind: Pod
+        label_selectors:
+          - app=euro-office
+      register: pod
+    - name: "Extract pod name"
+      set_fact:
+        podName: "{{pod.resources[0].metadata.name}}"
+    - name: Display pod name
+      debug:
+        msg: "{{podName}}"
+    - name: Start adminpanel
+      kubernetes.core.k8s_exec:
+        namespace: prod
+        pod: "{{podName}}"
+        command: "sudo supervisorctl start adminpanel"
+    - name: Autostart adminpanel
+      kubernetes.core.k8s_exec:
+        namespace: prod
+        pod: "{{podName}}"
+        command: >-
+          sudo sed 's,autostart=false,autostart=true,' -i /etc/supervisor/conf.d/ds-adminpanel.conf
+    - name: Extract adminpanel token
+      kubernetes.core.k8s_exec:
+        namespace: prod
+        pod: "{{podName}}"
+        command: >-
+          grep -i 'Bootstrap code:' /var/log/euro-office/documentserver/adminpanel/out.log
+      register: adminpanel_token
+    - name: Display adminpanel token
+      debug:
+        msg: "{{ adminpanel_token.stdout }}"

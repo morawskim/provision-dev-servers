@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: euro-office
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: euro-office
+  template:
+    metadata:
+      labels:
+        app: euro-office
+    spec:
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: euro-office-data
+        - name: config
+          persistentVolumeClaim:
+            claimName: euro-office-config
+      containers:
+      - name: euro-office
+        image: ghcr.io/euro-office/documentserver:v9.3.1
+        ports:
+        - containerPort: 80
+        env:
+          - name: EXAMPLE_ENABLED
+            value: "true"
+        envFrom:
+        - secretRef:
+            name: euro-office
+        resources:
+          requests:
+            cpu: 50m
+            memory: 50M
+          limits:
+            cpu: 800m
+            memory: 1200M
+        volumeMounts:
+          # - name: config
+          #   mountPath: /etc/euro-office/documentserver
+          - name: data
+            mountPath: /var/lib/euro-office/documentserver
