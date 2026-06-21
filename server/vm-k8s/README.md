@@ -72,3 +72,13 @@ volumes:
 
 Restore database:
 `zcat freshrss.sql.gz | docker exec -i 31ad304bd53d /usr/bin/mysql -ufreshrss --password=freshrss_password -Dfreshrss`
+
+## Nextcloud
+
+### Update Nextcloud
+
+Update the image version in `k8s/base/nextcloud/deployment.yml`, or in the prod overlay directory if it is overridden there.
+
+Navigate to the `k8s/overlay` directory and apply the changes: `kubectl apply -f ./prod`
+
+Attach to the `nextcloud` container in the pod `nextcloud-XXXXXX-YYYY` and run the upgrade command: `su -s /bin/bash www-data -c './occ upgrade'`
