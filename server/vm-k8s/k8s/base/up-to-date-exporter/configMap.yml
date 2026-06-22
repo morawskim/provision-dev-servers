@@ -15,7 +15,7 @@ data:
       FreshRSS/FreshRSS: 1.29.0
       foxdalas/openai-exporter: 0.0.16
       Euro-Office/DocumentServer: 9.3.1
-      nextcloud/server: 25.0.13
+      nextcloud/server: 27.1.11
     docker_images:
       library/php: 8.2.0
       morawskim/htrace.sh: 1.1.7
