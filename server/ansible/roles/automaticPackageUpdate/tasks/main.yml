@@ -1,0 +1,54 @@
+---
+# tasks file for automaticPackageUpdate
+- name: Install msmtp-mta
+  ansible.builtin.package:
+    state: present
+    name:
+      - msmtp-mta
+- name: Configure msmtp
+  ansible.builtin.copy:
+    dest: /etc/msmtprc
+    owner: root
+    group: root
+    mode: '0644'
+    content: |
+      defaults
+      auth off
+      tls off
+      #logfile /var/log/msmtp.log
+
+      account default
+      host 127.0.0.1
+      port 25
+      from not-important-if-use-gosmtp@example.com
+- name: Configure unattended-upgrades
+  ansible.builtin.copy:
+    dest: /etc/apt/apt.conf.d/99-unattended-upgrades
+    owner: root
+    group: root
+    mode: '0644'
+    content: |
+      Unattended-Upgrade::Mail "user@example.com";
+      Unattended-Upgrade::Allowed-Origins {
+        "${distro_id}:${distro_codename}";
+        "${distro_id}:${distro_codename}-security";
+        // Extended Security Maintenance; doesn't necessarily exist for
+        // every release and this system may not have it installed, but if
+        // available, the policy for updates is such that unattended-upgrades
+        // should also install from here by default.
+        "${distro_id}ESMApps:${distro_codename}-apps-security";
+        "${distro_id}ESM:${distro_codename}-infra-security";
+        "${distro_id}:${distro_codename}-updates";
+        //"${distro_id}:${distro_codename}-proposed";
+        //"${distro_id}:${distro_codename}-backports";
+        "packages.gitlab.com/runner/gitlab-runner:${distro_codename}";
+      };
+- name: Install gosmtp
+  apt:
+    deb: https://rpm.morawskim.pl/gosmtp_1.0.0_amd64.deb
+    state: present
+- name: Enable and start gosmtp
+  ansible.builtin.service:
+    name: gosmtp
+    enabled: yes
+    state: started
