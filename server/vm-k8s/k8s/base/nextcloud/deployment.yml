@@ -38,7 +38,7 @@ spec:
               secretKeyRef:
                 name: nextcloud
                 key: NEXTCLOUD_EXPORTER_TOKEN
-      - image: nextcloud:31-apache
+      - image: nextcloud:33-apache
         name: nextcloud
         volumeMounts:
         - name: nextcloud-data
