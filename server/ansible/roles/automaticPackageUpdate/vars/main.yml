@@ -1,3 +1,4 @@
 ---
 # vars file for automaticPackageUpdate
 notification_url: 'this is secret value'
+additional_repository_origins: []
