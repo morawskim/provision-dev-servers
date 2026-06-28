@@ -1,2 +1,7 @@
 ---
 # handlers file for automaticPackageUpdate
+- name: Reload and restart gosmtp
+  ansible.builtin.systemd_service:
+    name: gosmtp
+    daemon_reload: true
+    state: restarted

@@ -48,6 +48,26 @@
   apt:
     deb: https://rpm.morawskim.pl/gosmtp_1.0.0_amd64.deb
     state: present
+- name: Create systemd override directory
+  ansible.builtin.file:
+    path: /etc/systemd/system/gosmtp.service.d
+    state: directory
+    mode: "0755"
+- name: Create /etc/gosmtp-notification-url
+  ansible.builtin.copy:
+    dest: /etc/gosmtp-notification-url
+    owner: root
+    group: root
+    mode: '0600'
+    content: "{{ notification_url }}"
+- name: Add LoadCredential override
+  ansible.builtin.copy:
+    dest: /etc/systemd/system/gosmtp.service.d/override.conf
+    mode: "0644"
+    content: |
+      [Service]
+      LoadCredential=notification_url:/etc/gosmtp-notification-url
+  notify: Reload and restart gosmtp
 - name: Enable and start gosmtp
   ansible.builtin.service:
     name: gosmtp
