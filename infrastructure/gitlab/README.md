@@ -45,7 +45,10 @@ Add scheduler in GitLab.
 Add CI/CD variable `SSH_PRIVATE_KEY_FOR_SYNC` with content of your private ssh key.
 Run pipeline, your repositories should be synced.
 
+## webpage2kindle
+
+Set GitLab CI/CD environment variable `API_URL_FOR_WEB_EXTENSION` pointing to the API endpoint.
 
 ## Apply changes
 
-`GITLAB_TOKEN=<token-from-gitlab> terraform apply`
+`GITLAB_TOKEN=<token-from-gitlab> TF_VAR_passphrase=<passphrase> terraform apply`
