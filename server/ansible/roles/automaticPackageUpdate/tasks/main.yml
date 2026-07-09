@@ -1,10 +1,14 @@
 ---
 # tasks file for automaticPackageUpdate
-- name: Install msmtp-mta
+- name: Validate supported OS family for msmtp package mapping
+  ansible.builtin.assert:
+    that:
+      - ansible_os_family in msmtp_package_map
+    fail_msg: "Unsupported OS family '{{ ansible_os_family }}'. No msmtp package mapping defined."
+- name: Install msmtp
   ansible.builtin.package:
     state: present
-    name:
-      - msmtp-mta
+    name: "{{ msmtp_package_map[ansible_os_family] }}"
 - name: Configure msmtp
   ansible.builtin.copy:
     dest: /etc/msmtprc
@@ -21,35 +25,23 @@
       host 127.0.0.1
       port 25
       from not-important-if-use-gosmtp@example.com
-- name: Configure unattended-upgrades
-  ansible.builtin.copy:
-    dest: /etc/apt/apt.conf.d/99-unattended-upgrades
-    owner: root
-    group: root
-    mode: '0644'
-    content: |
-      Unattended-Upgrade::Mail "user@example.com";
-      Unattended-Upgrade::MailReport "on-change";
-      Unattended-Upgrade::Allowed-Origins {
-        "${distro_id}:${distro_codename}";
-        "${distro_id}:${distro_codename}-security";
-        // Extended Security Maintenance; doesn't necessarily exist for
-        // every release and this system may not have it installed, but if
-        // available, the policy for updates is such that unattended-upgrades
-        // should also install from here by default.
-        "${distro_id}ESMApps:${distro_codename}-apps-security";
-        "${distro_id}ESM:${distro_codename}-infra-security";
-        "${distro_id}:${distro_codename}-updates";
-        //"${distro_id}:${distro_codename}-proposed";
-        //"${distro_id}:${distro_codename}-backports";
-      {% for repo in additional_repository_origins %}
-        "{{ repo }}";
-      {% endfor %}
-      };
+
+- name: Validate supported OS family for gosmtp package url mapping
+  ansible.builtin.assert:
+    that:
+      - ansible_os_family in gosmtp_package_url
+    fail_msg: "Unsupported OS family '{{ ansible_os_family }}'. No gosmtp package mapping defined."
 - name: Install gosmtp
   apt:
-    deb: https://rpm.morawskim.pl/gosmtp_1.0.0_amd64.deb
+    deb: "{{ gosmtp_package_url[ansible_os_family] }}"
     state: present
+  when: ansible_os_family == "Debian"
+- name: Install gosmtp
+  ansible.builtin.dnf:
+    name: "{{ gosmtp_package_url[ansible_os_family] }}"
+    state: present
+    disable_gpg_check: true
+  when: ansible_os_family == 'RedHat'
 - name: Create systemd override directory
   ansible.builtin.file:
     path: /etc/systemd/system/gosmtp.service.d
@@ -75,3 +67,30 @@
     name: gosmtp
     enabled: yes
     state: started
+
+- name: Configure unattended-upgrades
+  ansible.builtin.copy:
+    dest: /etc/apt/apt.conf.d/99-unattended-upgrades
+    owner: root
+    group: root
+    mode: '0644'
+    content: |
+      Unattended-Upgrade::Mail "user@example.com";
+      Unattended-Upgrade::MailReport "on-change";
+      Unattended-Upgrade::Allowed-Origins {
+        "${distro_id}:${distro_codename}";
+        "${distro_id}:${distro_codename}-security";
+        // Extended Security Maintenance; doesn't necessarily exist for
+        // every release and this system may not have it installed, but if
+        // available, the policy for updates is such that unattended-upgrades
+        // should also install from here by default.
+        "${distro_id}ESMApps:${distro_codename}-apps-security";
+        "${distro_id}ESM:${distro_codename}-infra-security";
+        "${distro_id}:${distro_codename}-updates";
+        //"${distro_id}:${distro_codename}-proposed";
+        //"${distro_id}:${distro_codename}-backports";
+      {% for repo in additional_repository_origins %}
+        "{{ repo }}";
+      {% endfor %}
+      };
+  when: ansible_os_family == "Debian"

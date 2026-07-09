@@ -7,6 +7,10 @@
     - name: Set a hostname
       hostname:
         name: "{{ vagrant_hostname | default('vm-wazuh') }}"
+  roles:
+    - name: automaticPackageUpdate
+      vars:
+        notification_url: "{{ GOSMTP_NOTIFICATION_URL }}"
   tasks:
     - name: Install node-exporter
       package:

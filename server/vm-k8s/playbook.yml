@@ -17,6 +17,11 @@
         nrinfragent_config:
           license_key: "{{ NEWRELIC_LICENSE_KEY }}"
       when: "(vagrant_hostname is not defined) or (vagrant_hostname|length == 0)"
+    - name: automaticPackageUpdate
+      vars:
+        notification_url: "{{ GOSMTP_NOTIFICATION_URL }}"
+        additional_repository_origins:
+          - ". ${distro_codename}:${distro_codename}" # Fluent Bit
   tasks:
     - name: Install node-exporter
       package:
