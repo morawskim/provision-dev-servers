@@ -1,11 +1,13 @@
-- name: Add fluent-bit gpg key
-  apt_key:
-    url: https://packages.fluentbit.io/fluentbit.key
+- name: Add fluent-bit repo
+  ansible.builtin.deb822_repository:
+    name: fluentbit
+    types: [deb]
+    uris: "https://packages.fluentbit.io/ubuntu/{{ ansible_distribution_release }}"
+    signed_by: https://packages.fluentbit.io/fluentbit.key
+    suites: "{{ ansible_distribution_release }}"
+    components: [main]
     state: present
-- name: Add fluent-bit repository
-  apt_repository:
-    repo: deb https://packages.fluentbit.io/ubuntu/{{ ansible_facts['distribution_release'] }} {{ ansible_facts['distribution_release'] }} main
-    state: present
+    enabled: true
 - name: Install fluent-bit
   package:
     name: fluent-bit
