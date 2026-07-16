@@ -1,38 +1,44 @@
-Role Name
-=========
+# Ansible Role: Automatic Package Update
 
-A brief description of the role goes here.
+An Ansible role that configures automatic package updates and notification relay on Debian and RedHat based systems.
 
-Requirements
-------------
+Features
+--------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+- **MTA Configuration**: Installs and configures `msmtp` to handle local mail delivery.
+- **Notification Relay**: Installs `gosmtp` to relay local emails to notification services (using the `shoutrrr` library).
+- **Unattended Upgrades**: (Debian only) Configures `unattended-upgrades` to automatically install security and package updates.
 
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+The following variables are defined in `vars/main.yml`:
 
-Dependencies
-------------
-
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+| Variable | Default Value | Description |
+|----------|---------------|-------------|
+| `notification_url` | `'this is secret value'` | The shoutrrr notification URL used by gosmtp to relay emails (e.g., telegram, slack, etc.). |
+| `msmtp_package_map` | (OS mapping) | Dictionary mapping OS families to `msmtp` package names. |
+| `gosmtp_package_url` | (OS mapping) | Dictionary mapping OS families to `gosmtp` package download URLs. |
+| `additional_repository_origins` | `[]` | (Debian only) List of additional repository origins to allow in `unattended-upgrades`. |
 
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+```yaml
+---
+- hosts: all
+  become: true
+  roles:
+    - name: automaticPackageUpdate
+      vars:
+        notification_url: "telegram://BBBBBBBB:AAAA@telegram?chats=-XXXXXXXX&preview=No"
 
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+```
 
-License
--------
+Verification
+------------
 
-BSD
-
-Author Information
-------------------
-
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+You can test the mail configuration using:
+```bash
+echo "test mail" | sendmail -v root@example.com
+```

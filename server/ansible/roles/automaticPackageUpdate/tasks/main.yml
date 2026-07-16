@@ -5,6 +5,12 @@
     that:
       - ansible_os_family in msmtp_package_map
     fail_msg: "Unsupported OS family '{{ ansible_os_family }}'. No msmtp package mapping defined."
+
+- name: Install epel-release
+  ansible.builtin.package:
+    state: present
+    name: "epel-release"
+  when: ansible_os_family == "RedHat"
 - name: Install msmtp
   ansible.builtin.package:
     state: present
@@ -54,6 +60,7 @@
     group: root
     mode: '0600'
     content: "{{ notification_url }}"
+  notify: Reload and restart gosmtp
 - name: Add LoadCredential override
   ansible.builtin.copy:
     dest: /etc/systemd/system/gosmtp.service.d/override.conf

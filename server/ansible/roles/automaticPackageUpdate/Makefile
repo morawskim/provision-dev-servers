@@ -1,0 +1,4 @@
+.PHONY: ansible
+
+ansible:
+	ANSIBLE_ROLES_PATH=$(PWD)/../ ansible-playbook -J -i tests/inventory.yml tests/test.yml

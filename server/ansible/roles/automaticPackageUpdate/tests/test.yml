@@ -1,5 +1,7 @@
 ---
-- hosts: localhost
-  remote_user: root
+- hosts: all
+  become: true
   roles:
-    - automaticPackageUpdate
+    - name: automaticPackageUpdate
+      vars:
+        notification_url: "{{ GOSMTP_NOTIFICATION_URL }}"
