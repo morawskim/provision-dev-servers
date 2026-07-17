@@ -75,6 +75,40 @@
     enabled: yes
     state: started
 
+- name: Install dnf-automatic
+  package:
+    name: dnf-automatic
+    state: present
+  when: ansible_os_family == 'RedHat'
+- name: dnf-automatic - looking for all available updates
+  community.general.ini_file:
+    path: /etc/dnf/automatic.conf
+    section: commands
+    option: upgrade_type
+    value: "default"
+  when: ansible_os_family == 'RedHat'
+- name: dnf-automatic - set emit_via to email
+  community.general.ini_file:
+    path: /etc/dnf/automatic.conf
+    section: emitters
+    option: emit_via
+    value: "email"
+  when: ansible_os_family == 'RedHat'
+- name: Enable automatic updates
+  community.general.ini_file:
+    path: /etc/dnf/automatic.conf
+    section: email
+    option: email_to
+    value: "root@example.com"
+  when: ansible_os_family == 'RedHat'
+- name: Enable and start dnf-automatic-install.timer
+  ansible.builtin.systemd:
+    name: dnf-automatic-install.timer
+    enabled: true
+    state: started
+    daemon_reload: true
+  when: ansible_os_family == 'RedHat'
+
 - name: Configure unattended-upgrades
   ansible.builtin.copy:
     dest: /etc/apt/apt.conf.d/99-unattended-upgrades
