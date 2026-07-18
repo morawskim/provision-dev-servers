@@ -9,3 +9,15 @@ resource "github_repository" "php_guzzle_metrics_middleware" {
   has_wiki = false
   topics = ["guzzle", "guzzlehttp", "prometheus-metrics", "guzzle-middleware"]
 }
+
+resource "github_repository" "php_guzzle_middlewares" {
+  name        = "guzzle-middlewares"
+  description = ""
+  visibility = "public"
+
+  has_issues = true
+  has_discussions = false
+  has_projects = false
+  has_wiki = false
+  topics = ["guzzle", "guzzlehttp", "guzzle-middleware"]
+}
