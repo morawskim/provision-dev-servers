@@ -157,6 +157,7 @@
           - percona-toolkit
           - goaccess
           - mkcert
+          - zbar-tools
         state: present
     - name: Install hardware packages
       package:
@@ -200,6 +201,7 @@
           - xsel
           - chromium-browser
           - brave-browser
+          - flameshot
         state: present
     - name: Install starship
       unarchive:
