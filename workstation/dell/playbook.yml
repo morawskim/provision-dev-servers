@@ -25,6 +25,7 @@
     websocat_version: 1.13.0
     operator_sdk_version: 1.38.0
     logcli_version: 3.4.4
+    obsidian_version: 1.12.7
   tasks:
     # Setup docker
     - name: Update apt-get repo and cache
@@ -280,6 +281,12 @@
         owner: root
         group: root
         mode: '0755'
+
+    - name: Install obsidian
+      apt:
+        deb: https://github.com/obsidianmd/obsidian-releases/releases/download/v{{ obsidian_version }}/obsidian_{{ obsidian_version }}_amd64.deb
+        state: present
+
     - name: Install csvq
       unarchive:
         src: https://github.com/mithrandie/csvq/releases/download/{{ csvq_version }}/csvq-{{ csvq_version }}-linux-amd64.tar.gz
