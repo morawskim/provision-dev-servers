@@ -837,14 +837,14 @@ data:
         static_configs:
           - targets: ["maddy-metrics.prod"]
 
-      - job_name: tapo
-        # The HTTP resource path on which to fetch metrics from targets.
-        metrics_path: /metrics
-        # Configures the protocol scheme used for requests.
-        scheme: http
-        # List of labeled statically configured targets for this job.
-        static_configs:
-          - targets: ["tapo-metrics.prod:80"]
+      #- job_name: tapo
+      #  # The HTTP resource path on which to fetch metrics from targets.
+      #  metrics_path: /metrics
+      #  # Configures the protocol scheme used for requests.
+      #  scheme: http
+      #  # List of labeled statically configured targets for this job.
+      #  static_configs:
+      #    - targets: ["tapo-metrics.prod:80"]
 
       - job_name: node_exporter
         # The HTTP resource path on which to fetch metrics from targets.
