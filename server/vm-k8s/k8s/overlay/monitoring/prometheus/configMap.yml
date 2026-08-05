@@ -12,6 +12,15 @@ data:
            annotations:
              summary: The kernel version has been changed (instance {{ $labels.instance }})
              description: "The kernel version has been changed {{ $labels.instance }} new kernel {{ $labels.release }}\n  LABELS = {{ $labels }}"
+        - alert: NodeRebooted
+          expr: (time() - node_boot_time_seconds) < 180
+          for: 0m
+          labels:
+            severity: info
+          annotations:
+            summary: "{{ $labels.instance }} rebooted"
+            description: "Node uptime is less than 3 minutes."
+
   smartctl_exporter_alerts: |
     groups:
     - name: SmartctlExporter
