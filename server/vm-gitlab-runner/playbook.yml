@@ -21,6 +21,10 @@
           - "packages.gitlab.com/runner/gitlab-runner:${distro_codename}"
           - ". ${distro_codename}:${distro_codename}" # Fluent Bit
         automatic_reboot: true
+    - name: node_exporter
+      vars:
+        node_exporter_args:
+          - --collector.processes
   tasks:
      - name: Add entry to /etc/hosts
        ansible.builtin.lineinfile:
@@ -54,11 +58,6 @@
 
      - import_tasks: ../common/wazuh-agent.yml
 
-     - name: Install node-exporter
-       package:
-         name: prometheus-node-exporter
-     - name: Start node-exporter
-       service: name=prometheus-node-exporter enabled=true state=started
      - name: Install required packages
        package:
         name:

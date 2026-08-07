@@ -12,12 +12,8 @@
       vars:
         notification_url: "{{ GOSMTP_NOTIFICATION_URL }}"
         automatic_reboot: true
+    - name: node_exporter
   tasks:
-    - name: Install node-exporter
-      package:
-        name: prometheus-node-exporter
-    - name: Start node-exporter
-      service: name=prometheus-node-exporter enabled=true state=started
     - name: Fetch wazuh install script
       get_url:
         url: https://packages.wazuh.com/4.11/wazuh-install.sh

@@ -8,7 +8,7 @@
   ansible.builtin.lineinfile:
     path: /etc/default/prometheus-node-exporter
     regexp: '^\s*ARGS='
-    line: 'ARGS="{{ node_exporter_args | join(" ") }}"'
+    line: 'ARGS={{ node_exporter_args | join(" ") }}'
     backup: true
   notify:
     - Restart prometheus-node-exporter

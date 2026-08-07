@@ -22,19 +22,14 @@
         notification_url: "{{ GOSMTP_NOTIFICATION_URL }}"
         additional_repository_origins:
           - ". ${distro_codename}:${distro_codename}" # Fluent Bit
+    - name: node_exporter
+      vars:
+        node_exporter_args:
+          - --collector.processes
+          - --collector.netdev.device-exclude="cali.*"
+          - --collector.netclass.ignored-devices="cali.*"
+          # --collector.arp.exclude="cali.*" requires 1.4.0+
   tasks:
-    - name: Install node-exporter
-      package:
-        name: prometheus-node-exporter
-    - name: Configure node-exporter
-      lineinfile:
-        path: /etc/default/prometheus-node-exporter
-        regexp: '^ARGS='
-        line: ARGS=--collector.netdev.device-exclude="cali.*" --collector.netclass.ignored-devices="cali.*"
-        # --collector.arp.exclude="cali.*" requires 1.4.0+
-      notify: Restart node_exporter
-    - name: Start node-exporter
-      service: name=prometheus-node-exporter enabled=true state=started
     - name: Install required packages
       snap:
         name:
