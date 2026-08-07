@@ -20,6 +20,7 @@
         additional_repository_origins:
           - "packages.gitlab.com/runner/gitlab-runner:${distro_codename}"
           - ". ${distro_codename}:${distro_codename}" # Fluent Bit
+        automatic_reboot: true
   tasks:
      - name: Add entry to /etc/hosts
        ansible.builtin.lineinfile:

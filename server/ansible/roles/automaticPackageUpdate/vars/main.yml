@@ -8,3 +8,4 @@ gosmtp_package_url:
   Debian: https://rpm.morawskim.pl/gosmtp_1.0.1_amd64.deb
   RedHat: https://rpm.morawskim.pl/gosmtp-1.0.1-1.x86_64.rpm
 additional_repository_origins: []
+automatic_reboot: false

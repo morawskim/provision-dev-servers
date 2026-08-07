@@ -11,6 +11,7 @@
     - name: automaticPackageUpdate
       vars:
         notification_url: "{{ GOSMTP_NOTIFICATION_URL }}"
+        automatic_reboot: true
   tasks:
     - name: Install node-exporter
       package:

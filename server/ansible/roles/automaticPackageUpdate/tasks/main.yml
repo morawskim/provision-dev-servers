@@ -116,6 +116,9 @@
     group: root
     mode: '0644'
     content: |
+      {% if automatic_reboot %}
+      Unattended-Upgrade::Automatic-Reboot "true";
+      {% endif %}
       Unattended-Upgrade::Mail "user@example.com";
       Unattended-Upgrade::MailReport "on-change";
       Unattended-Upgrade::Allowed-Origins {
