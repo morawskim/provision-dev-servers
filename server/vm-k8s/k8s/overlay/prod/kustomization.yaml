@@ -19,7 +19,6 @@ resources:
 - changedetection/ingress.yml
 - jupyter/ingress.yml
 - demo-index/ingress.yml
-- resnet101-image-labels/ingress.yml
 - memos/ingress.yml
 - rss-bridge/configMap.yml
 - homeassistant/ingress.yml
@@ -47,7 +46,6 @@ resources:
 - ../../base/changedetection
 - ../../base/jupyter
 - ../../base/demo-index
-- ../../base/resnet101-image-labels
 - ../../base/memos
 - ../../base/rss-bridge
 - ../../base/homeassistant
