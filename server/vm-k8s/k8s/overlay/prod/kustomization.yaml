@@ -71,7 +71,9 @@ configMapGenerator:
   - OTEL_SERVICE_NAME=webpage2kindle-go
   name: webpage2kindle-go-config
 
-# images:
+images:
+  - name: morawskim/up-to-date-exporter
+    newTag: otel
 #    - name: registry.gitlab.com/morawskim/webpage2kindle/symfony-app
 #      newTag: rabbitmq
 
