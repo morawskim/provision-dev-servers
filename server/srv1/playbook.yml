@@ -101,6 +101,7 @@
           port-type=bridge
 
           [ethernet]
+          wake-on-lan=magic
 
           [bridge-port]
     - name: Disable autoconnect for {{nicName}}

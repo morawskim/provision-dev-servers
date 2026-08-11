@@ -18,7 +18,7 @@ define macro-deploy-wazuh
 endef
 
 define macro-deploy-srv1
-	ANSIBLE_ROLES_PATH=$(PWD)/ansible/roles ansible-playbook --inventory $(1) --ask-vault-pass --ask-become-pass srv1/playbook.yml
+	ANSIBLE_ROLES_PATH=$(PWD)/ansible/roles ansible-playbook --inventory $(1) --ask-become-pass srv1/playbook.yml
 endef
 
 setup-ansible-modules:
