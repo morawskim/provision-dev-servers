@@ -12,15 +12,27 @@ data:
            annotations:
              summary: The kernel version has been changed (instance {{ $labels.instance }})
              description: "The kernel version has been changed {{ $labels.instance }} new kernel {{ $labels.release }}\n  LABELS = {{ $labels }}"
-        - alert: NodeRebooted
-          expr: (time() - node_boot_time_seconds) < 180
+
+  price_tracker_alerts: |
+    groups:
+    - name: PriceTracker
+      rules:
+        - alert: PriceHasChanged
+          expr: 'last_over_time(price_tracker{job="price-tracker-exporter"}[12h]) and on(instance, job, Product) changes(price_tracker{job="price-tracker-exporter"}[12h]) > 0'
           for: 0m
           labels:
-            severity: info
+            severity: warning
           annotations:
-            summary: "{{ $labels.instance }} rebooted"
-            description: "Node uptime is less than 3 minutes."
-
+            summary: Price has been changed for product {{ $labels.Product }}
+            description: 'Price has been changed for product "{{ $labels.Product }}"\n  VALUE = {{ $value }}'
+        - alert: ProductScraperFailed
+          expr: 'last_over_time(product_scraper{}[12h]) == 0'
+          for: 0m
+          labels:
+            severity: warning
+          annotations:
+            summary: Scrape failed for product {{ $labels.Product }}
+            description: 'Scrape failed for product "{{ $labels.Product }}"\n  VALUE = {{ $value }}'
   smartctl_exporter_alerts: |
     groups:
     - name: SmartctlExporter
@@ -785,6 +797,14 @@ data:
               summary: Host clock not synchronising (instance {{ $labels.instance }})
               description: Clock not synchronising.\n  VALUE = {{ $value }}
 
+          - alert: HostRebooted
+            expr: (time() - node_boot_time_seconds) < 180
+            for: 0m
+            labels:
+              severity: info
+            annotations:
+              summary: Host rebooted (instance {{ $labels.instance }})
+              description: "Node {{ $labels.instance }} uptime is less than 3 minutes.\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 
   config.yml: |
     global:
@@ -992,6 +1012,7 @@ data:
       - /etc/prometheus/smartctl_exporter.yml
       - /etc/prometheus/embedded_exporter.yml
       - /etc/prometheus/custom_alerts.yml
+      - /etc/prometheus/price_tracker.yml
 
     remote_write:
       - url: https://prometheus-prod-01-eu-west-0.grafana.net/api/prom/push
