@@ -24,9 +24,9 @@ spec:
         image: ghcr.io/euro-office/documentserver:v9.3.1
         ports:
         - containerPort: 80
-        env:
-          - name: EXAMPLE_ENABLED
-            value: "true"
+        # env:
+        #   - name: EXAMPLE_ENABLED
+        #     value: "true"
         envFrom:
         - secretRef:
             name: euro-office
