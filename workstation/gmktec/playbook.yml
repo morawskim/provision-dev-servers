@@ -4,8 +4,8 @@
   #connection: local
   vars:
     linux_kernel_package_name: linux-image-6.14.0-1017-oem
-    amdgpu_install_url: https://repo.radeon.com/amdgpu-install/7.1.1/ubuntu/noble/amdgpu-install_7.1.1.70101-1_all.deb
-    amdgpu_sha256_checksum: 2c746ffc31a5beb441b9c8a7078b5ae0404e9e8fb74f95906565b9e2fa235877
+    amdgpu_install_url: https://repo.radeon.com/amdgpu-install/7.2.4/ubuntu/noble/amdgpu-install_7.2.4.70204-1_all.deb
+    amdgpu_sha256_checksum: 53c7ec5cace439f1ea97efebd59a3b32aa288c5c0bf76f57ab3cd7159dd98fad
   tasks:
     - name: Update cache and upgrade
       apt:
@@ -135,6 +135,7 @@
               RestartSec=3
               Environment="PATH=$PATH"
               Environment="OLLAMA_HOST=0.0.0.0"
+              Environment="OLLAMA_CONTEXT_LENGTH=32768"
 
               [Install]
               WantedBy=multi-user.target
@@ -156,6 +157,7 @@
           loop:
             - gpt-oss:20b
             - llama3.1:70b
+            - qwen3.8:27b
     - name: Install Open WebUI
       block:
         - name: Ensure user open-webui exists
