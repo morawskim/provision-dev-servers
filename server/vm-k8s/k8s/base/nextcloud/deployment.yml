@@ -15,6 +15,11 @@ spec:
       labels:
         app: nextcloud
     spec:
+      hostAliases:
+        - ip: "192.168.111.129"
+          hostnames:
+          - "office.morawskim.pl"
+          - "nextcloud.morawskim.pl"
       volumes:
       - name: nextcloud-data
         persistentVolumeClaim:

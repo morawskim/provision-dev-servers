@@ -24,6 +24,7 @@
       - calendar
       - notes
       - bruteforcesettings
+      - eurooffice
     - name: Set serverinfo token
       kubernetes.core.k8s_exec:
         namespace: prod

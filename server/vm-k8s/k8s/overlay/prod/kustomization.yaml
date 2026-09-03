@@ -30,6 +30,7 @@ resources:
 - donetick/ingress.yml
 - restic/sealedSecret.yml
 - euro-office/sealedSecret.yml
+- euro-office/ingress.yml
 - ../../base/noip
 - ../../base/ots
 - ../../base/jsonplaceholder
