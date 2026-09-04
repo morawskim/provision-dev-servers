@@ -4,7 +4,7 @@ data:
     #!/bin/sh
     # install-packages.sh
     echo "Installing custom pip packages"
-    pip install --no-cache-dir torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
+    #pip install --no-cache-dir torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
     touch /tmp/ready
 kind: ConfigMap
 metadata:
