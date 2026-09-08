@@ -5,6 +5,7 @@
   vars:
     user: marcin
     nicName: enp3s0
+    storagePoolPath: /var/lib/libvirt/storage
 
   tasks:
     - name: Check connection
@@ -117,7 +118,7 @@
     # {{{ libvirt pool
     - name: Create directory for images and disks
       ansible.builtin.file:
-        path: /var/lib/libvirt/storage
+        path: "{{ storagePoolPath }}"
         state: directory
         owner: root
         group: root
@@ -130,7 +131,7 @@
           <pool type='dir'>
             <name>storage</name>
             <target>
-              <path>/var/lib/libvirt/storage</path>
+              <path>{{ storagePoolPath }}</path>
             </target>
           </pool>
     - name: Start a storage pool
@@ -165,3 +166,15 @@
         name: bridge
         autostart: true
     # }}}
+
+    - name: Download images
+      get_url:
+        url: "{{ item.url }}"
+        dest: "{{ storagePoolPath }}/{{ item.fileName }}"
+        mode: "0644"
+        owner: "qemu"
+        group: "qemu"
+      loop:
+        - { url: https://cloud-images.ubuntu.com/noble/current/noble-server-cloudimg-amd64.img, fileName: ubuntu24lts.img }
+        - { url: https://dl.rockylinux.org/vault/rocky/10.1/images/x86_64/Rocky-10-GenericCloud-Base.latest.x86_64.qcow2, fileName: rocky10.qcow2 }
+        - { url: https://sourceforge.net/projects/openmediavault/files/iso/8.3.1/openmediavault_8.3.1-amd64.iso, fileName: openmediavault8_3.iso }
