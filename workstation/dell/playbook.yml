@@ -119,6 +119,7 @@
           - php8.3-xdebug
           - php8.3-mbstring
           - php8.3-opentelemetry
+          - php8.3-mysql
           - bind9-dnsutils
           - whois
           - skopeo
