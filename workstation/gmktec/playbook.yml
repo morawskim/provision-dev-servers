@@ -34,6 +34,7 @@
           - vim
           - avahi-daemon
           - podman
+          - python3.12-venv
         state: present
     - name: Start avahi-daemon
       service: name=avahi-daemon state=started enabled=yes
