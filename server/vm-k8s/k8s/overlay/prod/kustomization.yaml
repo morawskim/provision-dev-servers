@@ -31,6 +31,7 @@ resources:
 - restic/sealedSecret.yml
 - euro-office/sealedSecret.yml
 - euro-office/ingress.yml
+- httpbin/ingress.yml
 - ../../base/noip
 - ../../base/ots
 - ../../base/jsonplaceholder
@@ -53,6 +54,7 @@ resources:
 - ../../base/freshrss
 - ../../base/donetick
 - ../../base/euro-office
+- ../../base/httpbin
 
 configMapGenerator:
 - literals:
