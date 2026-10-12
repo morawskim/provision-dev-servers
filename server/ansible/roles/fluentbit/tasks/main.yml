@@ -1,0 +1,46 @@
+---
+- name: Add fluent-bit repo
+  ansible.builtin.deb822_repository:
+    name: fluentbit
+    types: [deb]
+    uris: "https://packages.fluentbit.io/ubuntu/{{ ansible_distribution_release }}"
+    signed_by: https://packages.fluentbit.io/fluentbit.key
+    suites: "{{ ansible_distribution_release }}"
+    components: [main]
+    state: present
+    enabled: true
+- name: Update apt cache
+  ansible.builtin.apt:
+    update_cache: yes
+- name: Install fluent-bit
+  package:
+    name: fluent-bit
+    state: present
+- name: Create custom config file for fluent-bit
+  copy:
+    content: "{{ fluentbit_custom_config_file_content | default('') }}"
+    dest: "{{ fluentbit_custom_config_file_path }}"
+    group: root
+    owner: root
+    mode: 0640
+  notify: Restart fluent-bit
+- name: Add a line to the fluent-bit configuration
+  lineinfile:
+    path: /etc/fluent-bit/fluent-bit.conf
+    line: "@INCLUDE {{ fluentbit_custom_config_file_path }}"
+# Note (?m) which turns on MULTILINE mode so ^ matches any line's beginning
+- name: Comment OUTPUT section block
+  replace:
+    path: /etc/fluent-bit/fluent-bit.conf
+    after: '(?m)^\[OUTPUT\]'
+    before: '^[^\s]'
+    regexp: '^(.+)$'
+    replace: '# \1'
+    backup: true
+- name: Comment OUTPUT section
+  replace:
+    path: /etc/fluent-bit/fluent-bit.conf
+    regexp: '^\[OUTPUT\]'
+    replace: '# [OUTPUT]'
+- name: Start fluent-bit
+  service: name=fluent-bit state=started enabled=yes

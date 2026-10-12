@@ -1,0 +1,17 @@
+---
+- hosts: all
+  remote_user: root
+  become: true
+  roles:
+    - name: fluentbit
+      fluentbit_custom_config_file_content: |
+        [INPUT]
+            Name   kmsg
+            Tag    kernel
+        [INPUT]
+            Name   systemd
+            Tag    systemd
+            Read_From_Tail On
+        [OUTPUT]
+            name stdout
+            Match_Regex (kernel|systemd)
