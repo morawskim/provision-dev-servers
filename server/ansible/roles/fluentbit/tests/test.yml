@@ -4,14 +4,40 @@
   become: true
   roles:
     - name: fluentbit
+      fluentbit_credentials:
+        - name: FOO
+          value: "FOO_SECRET"
+        - name: BAR
+          value: "BAR_SECRET"
       fluentbit_custom_config_file_content: |
-        [INPUT]
-            Name   kmsg
-            Tag    kernel
-        [INPUT]
-            Name   systemd
-            Tag    systemd
-            Read_From_Tail On
-        [OUTPUT]
-            name stdout
-            Match_Regex (kernel|systemd)
+        env:
+          - name: FOO
+            uri: file:///run/credentials/fluent-bit.service/FOO
+          - name: BAR
+            uri: file:///run/credentials/fluent-bit.service/BAR.cred
+
+        pipeline:
+          inputs:
+            - name: kmsg
+              tag: kernel
+
+            - name: systemd
+              tag: systemd
+              read_from_tail: on
+          outputs:
+            # - name: stdout
+            #   match_regex: '^(kernel|systemd)$'
+            - name: loki
+              match_regex: '^(kernel|systemd)$'
+              host: logs-prod-eu-west-0.grafana.net
+              port: 443
+              tls: on
+              tls.verify: on
+              http_user: ${FOO}
+              http_passwd: ${BAR}
+              labels: job=fluent-bit, host=vagrant2, source=$TAG, SYSTEMD_UNIT=$_SYSTEMD_UNIT
+
+# systemd-run -P --wait -p LoadCredential=FOO:/etc/fluent-bit/FOO.cred /opt/fluent-bit/bin/fluent-bit -c //etc/fluent-bit/custom.yaml
+# systemd-run -P --wait -p LoadCredential=abc:/etc/hosts env
+# /run/credentials
+# [2026/10/13 19:13:41.091] [error] [env] file ${CREDENTIALS_DIRECTORY}/FOO.cred not found

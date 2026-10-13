@@ -24,6 +24,39 @@
     owner: root
     mode: 0640
   notify: Restart fluent-bit
+
+- name: Create systemd override directory
+  ansible.builtin.file:
+    path: /etc/systemd/system/fluent-bit.service.d
+    state: directory
+    mode: "0755"
+  when:
+    - fluentbit_credentials is defined
+    - fluentbit_credentials | length > 0
+- name: Include credential task
+  ansible.builtin.include_tasks: credential.yml
+  loop: "{{ fluentbit_credentials }}"
+  loop_control:
+    loop_var: credential
+  when:
+    - fluentbit_credentials is defined
+    - fluentbit_credentials | length > 0
+- name: Add LoadCredential override
+  ansible.builtin.copy:
+    dest: /etc/systemd/system/fluent-bit.service.d/override.conf
+    mode: "0644"
+    content: |
+      [Service]
+      ExecStart=
+      ExecStart=/opt/fluent-bit/bin/fluent-bit -c //etc/fluent-bit/custom.yaml
+      {% for credential in fluentbit_credentials %}
+      LoadCredential={{ credential.name }}:/etc/fluent-bit/{{ credential.name }}.cred
+      {% endfor %}
+  notify: Restart fluent-bit
+  when:
+    - fluentbit_credentials is defined
+    - fluentbit_credentials | length > 0
+
 - name: Add a line to the fluent-bit configuration
   lineinfile:
     path: /etc/fluent-bit/fluent-bit.conf
