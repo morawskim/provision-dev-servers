@@ -4,14 +4,39 @@
   become: true
   roles:
     - name: fluentbit
+      fluentbit_credentials:
+        - name: GRAFANA_LOKI_USER
+          value: "XXXX"
+        - name: GRAFANA_LOKI_PASSWORD
+          # Sign-in to Grafana Cloud
+          # From left menu -> Administration -> Users and access -> Cloud access policies
+          # Create a new access policy with "logs:write" scope.
+          # Create a temporay token and paste below
+          value: "set-temporary-token-in-grafana"
       fluentbit_custom_config_file_content: |
-        [INPUT]
-            Name   kmsg
-            Tag    kernel
-        [INPUT]
-            Name   systemd
-            Tag    systemd
-            Read_From_Tail On
-        [OUTPUT]
-            name stdout
-            Match_Regex (kernel|systemd)
+        env:
+          - name: GRAFANA_LOKI_USER
+            uri: file:///run/credentials/fluent-bit.service/GRAFANA_LOKI_USER
+          - name: GRAFANA_LOKI_PASSWORD
+            uri: file:///run/credentials/fluent-bit.service/GRAFANA_LOKI_PASSWORD
+
+        pipeline:
+          inputs:
+            - name: kmsg
+              tag: kernel
+
+            - name: systemd
+              tag: systemd
+              read_from_tail: on
+          outputs:
+            # - name: stdout
+            #   match_regex: '^(kernel|systemd)$'
+            - name: loki
+              match_regex: '^(kernel|systemd)$'
+              host: logs-prod-eu-west-0.grafana.net
+              port: 443
+              tls: on
+              tls.verify: on
+              http_user: ${GRAFANA_LOKI_USER}
+              http_passwd: ${GRAFANA_LOKI_PASSWORD}
+              labels: job=fluent-bit, host=vagrant, source=$TAG, SYSTEMD_UNIT=$_SYSTEMD_UNIT
