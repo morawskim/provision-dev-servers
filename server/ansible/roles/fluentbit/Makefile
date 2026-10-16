@@ -1,4 +1,4 @@
 .PHONY: ansible
 
 ansible:
-	ANSIBLE_ROLES_PATH=$(PWD)/../ ansible-playbook -i tests/inventory.yml tests/test.yml
+	ANSIBLE_ROLES_PATH=$(PWD)/../ ansible-playbook -i tests/inventory.yml tests/test.yml $(if $(LIMIT),--limit $(LIMIT),)

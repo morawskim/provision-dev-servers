@@ -1,21 +1,13 @@
 ---
-- name: Add fluent-bit repo
-  ansible.builtin.deb822_repository:
-    name: fluentbit
-    types: [deb]
-    uris: "https://packages.fluentbit.io/ubuntu/{{ ansible_distribution_release }}"
-    signed_by: https://packages.fluentbit.io/fluentbit.key
-    suites: "{{ ansible_distribution_release }}"
-    components: [main]
-    state: present
-    enabled: true
-- name: Update apt cache
-  ansible.builtin.apt:
-    update_cache: yes
-- name: Install fluent-bit
-  package:
-    name: fluent-bit
-    state: present
+- name: Install fluent-bit (Ubuntu)
+  ansible.builtin.include_tasks: ubuntu.yml
+  when:
+    - ansible_os_family == "Debian"
+- name: Install fluent-bit (Rocky)
+  ansible.builtin.include_tasks: rocky.yml
+  when:
+    - ansible_os_family == "RedHat"
+
 - name: Create custom config file for fluent-bit
   copy:
     content: "{{ fluentbit_custom_config_file_content | default('') }}"

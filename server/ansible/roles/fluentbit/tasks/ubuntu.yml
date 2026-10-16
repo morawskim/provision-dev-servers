@@ -1,0 +1,17 @@
+- name: Add fluent-bit repo
+  ansible.builtin.deb822_repository:
+    name: fluentbit
+    types: [deb]
+    uris: "https://packages.fluentbit.io/ubuntu/{{ ansible_distribution_release }}"
+    signed_by: https://packages.fluentbit.io/fluentbit.key
+    suites: "{{ ansible_distribution_release }}"
+    components: [main]
+    state: present
+    enabled: true
+- name: Update apt cache
+  ansible.builtin.apt:
+    update_cache: yes
+- name: Install fluent-bit
+  package:
+    name: fluent-bit
+    state: present

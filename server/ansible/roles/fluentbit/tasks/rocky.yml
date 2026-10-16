@@ -1,0 +1,13 @@
+- name: Add repository
+  ansible.builtin.yum_repository:
+    name: fluent-bit
+    description: Fluent Bit
+    baseurl: https://packages.fluentbit.io/rockylinux/$releasever/
+    gpgcheck: true
+    gpgkey: https://packages.fluentbit.io/fluentbit.key
+    repo_gpgcheck: true
+    enabled: true
+- name: Install fluent-bit
+  package:
+    name: fluent-bit
+    state: present

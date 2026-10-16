@@ -39,4 +39,4 @@
               tls.verify: on
               http_user: ${GRAFANA_LOKI_USER}
               http_passwd: ${GRAFANA_LOKI_PASSWORD}
-              labels: job=fluent-bit, host=vagrant, source=$TAG, SYSTEMD_UNIT=$_SYSTEMD_UNIT
+              labels: job=fluent-bit, host=vagrant-{{ ansible_os_family }}, source=$TAG, SYSTEMD_UNIT=$_SYSTEMD_UNIT
