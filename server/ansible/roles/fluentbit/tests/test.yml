@@ -14,6 +14,12 @@
           # Create a temporay token and paste below
           value: "set-temporary-token-in-grafana"
       fluentbit_custom_config_file_content: |
+        service:
+          #flush: 1
+          #log_level: info
+          # Configure this to load your custom parser if required
+          parsers_file: {{ fluentbit_parser_file_path }}
+
         env:
           - name: GRAFANA_LOKI_USER
             uri: file:///run/credentials/fluent-bit.service/GRAFANA_LOKI_USER
@@ -40,3 +46,10 @@
               http_user: ${GRAFANA_LOKI_USER}
               http_passwd: ${GRAFANA_LOKI_PASSWORD}
               labels: job=fluent-bit, host=vagrant-{{ ansible_os_family }}, source=$TAG, SYSTEMD_UNIT=$_SYSTEMD_UNIT
+      fluentbit_parser_file_content: |
+        parsers:
+          - name: unattended_upgrades
+            format: regex
+            regex: '^(?<timestamp>\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2},\d{3}) (?<level>[A-Z]+) (?<message>.*)$'
+            time_key: timestamp
+            time_format: '%Y-%m-%d %H:%M:%S,%L'

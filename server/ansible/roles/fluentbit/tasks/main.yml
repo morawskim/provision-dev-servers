@@ -16,6 +16,17 @@
     owner: root
     mode: 0640
   notify: Restart fluent-bit
+- name: Create parser file for fluent-bit
+  copy:
+    content: "{{ fluentbit_parser_file_content | default('') }}"
+    dest: "{{ fluentbit_parser_file_path }}"
+    group: root
+    owner: root
+    mode: 0640
+  notify: Restart fluent-bit
+  when:
+    - fluentbit_parser_file_path is defined
+    - fluentbit_parser_file_path | length > 0
 
 - name: Create systemd override directory
   ansible.builtin.file:
