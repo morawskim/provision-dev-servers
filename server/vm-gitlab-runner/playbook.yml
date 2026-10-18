@@ -25,6 +25,75 @@
       vars:
         node_exporter_args:
           - --collector.processes
+    - name: fluentbit
+      vars:
+        fluentbit_credentials:
+          - name: GRAFANA_LOKI_USER
+            value: "{{ LOKI_AUTH_URL | urlsplit('username') }}"
+          - name: GRAFANA_LOKI_PASSWORD
+            value: "{{ LOKI_AUTH_URL | urlsplit('password') }}"
+        fluentbit_custom_config_file_content: |
+          service:
+            #flush: 1
+            #log_level: info
+            # Configure this to load your custom parser if required
+            parsers_file: {{ fluentbit_parser_file_path }}
+
+          env:
+            - name: GRAFANA_LOKI_USER
+              uri: file:///run/credentials/fluent-bit.service/GRAFANA_LOKI_USER
+            - name: GRAFANA_LOKI_PASSWORD
+              uri: file:///run/credentials/fluent-bit.service/GRAFANA_LOKI_PASSWORD
+
+          pipeline:
+            inputs:
+              - name: kmsg
+                tag: kernel
+
+              - name: systemd
+                tag: systemd
+                read_from_tail: on
+
+              - name: tail
+                tag: unattended-upgrades
+                path: /var/log/unattended-upgrades/unattended-upgrades.log
+                multiline.parser: unattended_upgrades
+                read_from_head: true
+            filters:
+              - name: parser
+                match: 'unattended-upgrades'
+                key_name: log
+                parser: unattended_upgrades
+            outputs:
+              - name: loki
+                match_regex: '^(kernel|systemd|unattended-upgrades)$'
+                host: {{ LOKI_AUTH_URL | urlsplit("hostname") }}
+                port: {{ LOKI_AUTH_URL | urlsplit("port") }}
+                tls: on
+                tls.verify: on
+                http_user: ${GRAFANA_LOKI_USER}
+                http_passwd: ${GRAFANA_LOKI_PASSWORD}
+                labels: job=fluent-bit, host={{ ansible_hostname }}, source=$TAG, SYSTEMD_UNIT=$_SYSTEMD_UNIT
+        fluentbit_parser_file_content: |
+          parsers:
+            - name: unattended_upgrades
+              format: regex
+              regex: '^(?<timestamp>\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2},\d{3}) (?<level>[A-Z]+) (?<message>.*)$'
+              time_key: timestamp
+              time_format: '%Y-%m-%d %H:%M:%S,%L'
+          multiline_parsers:
+            - name: unattended_upgrades
+              type: regex
+              flush_timeout: 1000
+
+              rules:
+                - state: start_state
+                  regex: '/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2},\d{3} [A-Z]+ /'
+                  next_state: cont
+                - state: cont
+                  regex: '/^(?!\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2},\d{3} [A-Z]+ ).*/'
+                  next_state: cont
+
   tasks:
      - name: Add entry to /etc/hosts
        ansible.builtin.lineinfile:
@@ -117,13 +186,13 @@
        template: src=templates/mmo-runner.toml dest=/etc/gitlab-runner/config.toml
        notify: restart gitlab-runner
        when: gitlab_runner_docker.changed and gitlab_runner_shell.changed
-     - import_tasks: ../common/fluent-bit.yml
-     - name: Configure fluentbit
-       template:
-         src: templates/fluent-bit-custom.conf.j2
-         dest: "/etc/fluent-bit/custom.conf"
-         backup: true
-         mode: 0644
+     # - import_tasks: ../common/fluent-bit.yml
+     # - name: Configure fluentbit
+     #   template:
+     #     src: templates/fluent-bit-custom.conf.j2
+     #     dest: "/etc/fluent-bit/custom.conf"
+     #     backup: true
+     #     mode: 0644
   handlers:
     - name: restart gitlab-runner
       service: name=gitlab-runner state=restarted
