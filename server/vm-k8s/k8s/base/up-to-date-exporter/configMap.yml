@@ -12,7 +12,7 @@ data:
       google/cadvisor: 0.55.1
       open-webui/open-webui: 0.9.6
       home-assistant/core: 2026.1.0
-      FreshRSS/FreshRSS: 1.29.0
+      FreshRSS/FreshRSS: 1.30.3
       foxdalas/openai-exporter: 0.0.16
       Euro-Office/DocumentServer: 9.3.1
       nextcloud/server: 33.0.5
