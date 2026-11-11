@@ -30,6 +30,8 @@ spec:
           value: Europe/Warsaw
         - name: CRON_MIN
           value: "3,18,33,48"
+        - name: INTERNAL_HOST_ALLOWLIST
+          value: "rss-bridge.prod:80 localhost:80"
         volumeMounts:
           - name: freshrss-data
             mountPath: /var/www/FreshRSS/data
