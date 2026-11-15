@@ -75,8 +75,8 @@ configMapGenerator:
   name: webpage2kindle-go-config
 
 images:
-#    - name: registry.gitlab.com/morawskim/webpage2kindle/symfony-app
-#      newTag: rabbitmq
+    - name: registry.gitlab.com/morawskim/webpage2kindle/symfony-app
+      newTag: messengerMigration
 
 patches:
 - patch: |-

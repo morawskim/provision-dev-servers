@@ -92,7 +92,7 @@ spec:
       containers:
       - image: registry.gitlab.com/morawskim/webpage2kindle/symfony-app:main
         name: consumer
-        command: [ "/app/bin/console", "rabbitmq:multiple-consumer", "-m", "50", "pipeline" ]
+        command: [ "/app/bin/console", "messenger:consume", "--all", "--limit", "50", "--time-limit", "3600", "--exclude-receivers", "failed" ]
         envFrom:
         - secretRef:
             name: webpage2kindle-php
@@ -103,11 +103,11 @@ spec:
           mountPath: /app/var/data
         resources:
           requests:
-            cpu: 200m
+            cpu: 100m
             memory: 32M
           limits:
             cpu: 500m
-            memory: 64M
+            memory: 96M
         livenessProbe:
           exec:
             command:
