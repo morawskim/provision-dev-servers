@@ -18,7 +18,7 @@ resources:
 - games/ingress.yml
 - changedetection/ingress.yml
 - jupyter/ingress.yml
-- demo-index/ingress.yml
+#- demo-index/ingress.yml
 - memos/ingress.yml
 - rss-bridge/configMap.yml
 - homeassistant/ingress.yml
@@ -47,7 +47,7 @@ resources:
 - ../../base/games
 - ../../base/changedetection
 - ../../base/jupyter
-- ../../base/demo-index
+#- ../../base/demo-index
 - ../../base/memos
 - ../../base/rss-bridge
 - ../../base/homeassistant
@@ -77,6 +77,10 @@ configMapGenerator:
 images:
     - name: registry.gitlab.com/morawskim/webpage2kindle/symfony-app
       newTag: messengerMigration
+
+# replicas:
+#   - name: myapp
+#     count: 0
 
 patches:
 - patch: |-
