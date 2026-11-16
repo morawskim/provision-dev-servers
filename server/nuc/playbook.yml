@@ -19,6 +19,13 @@
           license_key: "{{ NEWRELIC_LICENSE_KEY }}"
       when: "'guest' != ansible_facts.virtualization_role"
   tasks:
+    - name: Ensure persistent journal directory exists
+      ansible.builtin.file:
+        path: /var/log/journal
+        state: directory
+        owner: root
+        group: systemd-journal
+        mode: '2755'
     - name: Install required packages CLI
       package:
         name:
