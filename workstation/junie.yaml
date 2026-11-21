@@ -1,0 +1,30 @@
+---
+- hosts: localhost
+  become: false
+  connection: local
+  vars:
+    junie_directory: "{{ ansible_env.HOME }}/.local/share/junie"
+    junie_launcher_file_path: "{{ ansible_env.HOME }}/.local/bin/junie-local"
+    junie_download_url: https://github.com/JetBrains/junie/releases/download/4100.11/junie-release-4100.11-linux-amd64.zip
+  tasks:
+    - name: Download Junie
+      ansible.builtin.get_url:
+        url: "{{ junie_download_url }}"
+        dest: "/tmp/junie.zip"
+        mode: "0640"
+    - name: Create Junie directory
+      ansible.builtin.file:
+        path: "{{ junie_directory }}"
+        state: directory
+        mode: "0750"
+    - name: Extract Junie
+      ansible.builtin.unarchive:
+        src: "/tmp/junie.zip"
+        dest: "{{ junie_directory }}"
+    - name: Create Junie launcher
+      ansible.builtin.copy:
+        dest: "{{ junie_launcher_file_path }}"
+        mode: "0755"
+        content: |
+          #!/bin/sh
+          exec "{{ junie_directory }}/junie" "$@"
