@@ -1,0 +1,21 @@
+    - name: Download Junie
+      ansible.builtin.get_url:
+        url: "{{ junie.download_url }}"
+        dest: "/tmp/junie.zip"
+        mode: "0640"
+    - name: Create Junie directory
+      ansible.builtin.file:
+        path: "{{ junie.directory }}"
+        state: directory
+        mode: "0750"
+    - name: Extract Junie
+      ansible.builtin.unarchive:
+        src: "/tmp/junie.zip"
+        dest: "{{ junie.directory }}"
+    - name: Create Junie launcher
+      ansible.builtin.copy:
+        dest: "{{ junie.launcher_file_path }}"
+        mode: "0755"
+        content: |
+          #!/bin/sh
+          exec "{{ junie.directory }}/junie" "$@"

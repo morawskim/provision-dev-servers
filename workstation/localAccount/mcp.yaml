@@ -1,0 +1,11 @@
+    - name: Download mysql-mcp-server
+      ansible.builtin.get_url:
+        url: "{{ mysql_mcp_server.download_url }}"
+        dest: "/tmp/mysql-mcp-server.tar.gz"
+        mode: "0640"
+    - name: Extract mysql-mcp-server
+      ansible.builtin.unarchive:
+        src: "/tmp/mysql-mcp-server.tar.gz"
+        dest: "{{ mysql_mcp_server.bin_directory }}"
+        include:
+          - mysql-mcp-server

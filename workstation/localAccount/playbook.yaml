@@ -1,0 +1,15 @@
+---
+- hosts: localhost
+  become: false
+  connection: local
+  vars:
+    junie:
+      directory: "{{ ansible_env.HOME }}/.local/share/junie"
+      launcher_file_path: "{{ ansible_env.HOME }}/.local/bin/junie-local"
+      download_url: https://github.com/JetBrains/junie/releases/download/4100.11/junie-release-4100.11-linux-amd64.zip
+    mysql_mcp_server:
+      bin_directory: "{{ ansible_env.HOME }}/.local/bin"
+      download_url: https://github.com/askdba/mysql-mcp-server/releases/download/v1.9.0-rc.2/mysql-mcp-server_1.9.0-rc.2_linux_amd64.tar.gz
+  tasks:
+    - import_tasks: junie.yaml
+    - import_tasks: mcp.yaml

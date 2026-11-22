@@ -9,3 +9,7 @@ lenovo:
 .PHONY: gmktec
 gmktec:
 	ansible-playbook --ask-pass --ask-become-pass -i ./inventory.yml --limit gmktec gmktec/playbook.yml
+
+.PHONY: localAccount
+localAccount:
+	ansible-playbook ./localAccount/playbook.yaml
