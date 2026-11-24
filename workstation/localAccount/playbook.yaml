@@ -10,6 +10,10 @@
     mysql_mcp_server:
       bin_directory: "{{ ansible_env.HOME }}/.local/bin"
       download_url: https://github.com/askdba/mysql-mcp-server/releases/download/v1.9.0-rc.2/mysql-mcp-server_1.9.0-rc.2_linux_amd64.tar.gz
+    mysqldumpsplitter:
+      download_url: "https://raw.githubusercontent.com/kedarvj/mysqldumpsplitter/6abb69cf85cf19dc1ec45c2d0106fa16d495c0e7/mysqldumpsplitter.sh"
+      bin_file_path: "{{ ansible_env.HOME }}/.local/bin/mysqldumpsplitter.sh"
   tasks:
     - import_tasks: junie.yaml
     - import_tasks: mcp.yaml
+    - import_tasks: mysqldumpsplitter.yaml

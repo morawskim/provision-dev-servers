@@ -1,0 +1,5 @@
+- name: Download mysqldumpsplitter
+  ansible.builtin.get_url:
+    url: "{{ mysqldumpsplitter.download_url }}"
+    dest: "{{ mysqldumpsplitter.bin_directory }}"
+    mode: "0750"
