@@ -41,12 +41,14 @@
   apt:
     deb: "{{ gosmtp_package_url[ansible_os_family] }}"
     state: present
+  notify: Reload and restart gosmtp
   when: ansible_os_family == "Debian"
 - name: Install gosmtp
   ansible.builtin.dnf:
     name: "{{ gosmtp_package_url[ansible_os_family] }}"
     state: present
     disable_gpg_check: true
+  notify: Reload and restart gosmtp
   when: ansible_os_family == 'RedHat'
 - name: Create systemd override directory
   ansible.builtin.file:
